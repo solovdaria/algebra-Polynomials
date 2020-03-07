@@ -21,13 +21,18 @@ private:
 
 public:
     Polinom();
-    Polinom(int pow, std::vector<int> keys);
+    Polinom(int _power, std::vector<int> keys);
     ~Polinom();
 
-
+    PElement * getHead()const;
+    int getPower() const;
+    void setPower(int _power);
     void printPol();
     PElement * makeItem(int val);
+
+    Polinom addingPolinoms(Polinom pol1, Polinom pol2);
 };
+
 
 
 #endif //POLINOMS_POLINOM_H
