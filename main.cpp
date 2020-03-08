@@ -7,14 +7,23 @@ using std::endl;
 
 int main() {
 
-    Polinom a(4, {2, 5, 0, 7, 4});
-    Polinom b(3, {2, 4, 6, 3});
+    Polinom a(2, {-7, 4, 2});
+    Polinom b(3, {1, 1, -3, 4});
     a.printPol();
     b.printPol();
-    //a.printPol();
+
     Polinom c;
     c.addingPolinoms(a, b);
     c.printPol();
+
+    Polinom d;
+    d.differencePolinom(a, b);
+    d.printPol();
+
+    //Polinom e;
+    cout << "step 1" << endl;
+    Polinom e = e.multiplicatePolinom(a, b);
+    e.printPol();
 
     return 0;
 }

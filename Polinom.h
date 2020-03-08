@@ -25,14 +25,18 @@ public:
     ~Polinom();
 
     PElement * getHead()const;
+    void setHead(PElement * _head);
     int getPower() const;
     void setPower(int _power);
+
     void printPol();
-    PElement * makeItem(int val);
+    static PElement * makeItem(int val);
+    static void appendItem(PElement * head, PElement * el);
 
-    Polinom addingPolinoms(Polinom pol1, Polinom pol2);
+    Polinom addingPolinoms(Polinom& pol1, Polinom& pol2);
+    Polinom differencePolinom(Polinom& pol1, Polinom& pol2);
+    Polinom multiplicatePolinom(Polinom& pol1, Polinom& pol2);
 };
-
 
 
 #endif //POLINOMS_POLINOM_H
