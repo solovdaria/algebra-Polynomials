@@ -12,18 +12,15 @@ int main() {
     a.printPol();
     b.printPol();
 
-    Polinom c;
-    c.addingPolinoms(a, b);
+    //!before each action, re-declare the variable (for each action - new variable)
+    Polinom res = a+b;
+    res.printPol();
+
+    Polinom c = a-b;
     c.printPol();
 
-    Polinom d;
-    d.differencePolinom(a, b);
+    Polinom d = a*b;
     d.printPol();
-
-    //Polinom e;
-    cout << "step 1" << endl;
-    Polinom e = e.multiplicatePolinom(a, b);
-    e.printPol();
 
     return 0;
 }

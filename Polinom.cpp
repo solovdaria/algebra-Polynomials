@@ -2,6 +2,11 @@
 // Created by Taisiia on 07.03.2020.
 //
 
+/*!
+ * \file
+ * \brief C++ file with implementation of class Polinom
+ * \details Functional of polinoms, mathematical actions
+ */
 #include "Polinom.h"
 
 using std::cout;
@@ -57,7 +62,6 @@ void Polinom::printPol() {
 Polinom::~Polinom() {
     if (head)
         delete head->next;
-    cout << "in destructor" << endl;
 }
 
 Polinom::PElement *Polinom::getHead() const {
@@ -148,6 +152,20 @@ Polinom Polinom::multiplicatePolinom(Polinom &pol1, Polinom &pol2) {
         j = 0;
     }
 
-    Polinom pol3(pow, num);
-    return pol3;
+    return Polinom(pow, num);
+}
+
+Polinom operator*(Polinom &p1, Polinom &p2) {
+    Polinom c = c.multiplicatePolinom(p1, p2);
+    return c;
+}
+
+Polinom operator+(Polinom &p1, Polinom &p2) {
+    Polinom c = c.addingPolinoms(p1, p2);
+    return c;
+}
+
+Polinom operator-(Polinom &p1, Polinom &p2) {
+    Polinom c = c.differencePolinom(p1, p2);
+    return c;
 }
