@@ -4,21 +4,21 @@
 
 /*!
  * \file
- * \brief C++ file with implementation of class Polinom
+ * \brief C++ file with implementation of class Polynom
  * \details Functional of polinoms, mathematical actions
  */
-#include "Polinom.h"
+#include "Polynom.h"
 
 using std::cout;
 using std::cin;
 using std::endl;
 
-Polinom::Polinom() {
+Polynom::Polynom() {
     head = nullptr;
     power = 0;
 }
 
-Polinom::Polinom(int _power, std::vector<int> keys) {
+Polynom::Polynom(int _power, std::vector<int> keys) {
     power = _power;
     head = makeItem(keys[0]);
 
@@ -27,20 +27,20 @@ Polinom::Polinom(int _power, std::vector<int> keys) {
     }
 }
 
-Polinom::PElement *Polinom::makeItem(int value) {
+Polynom::PElement *Polynom::makeItem(int value) {
     auto *el = new PElement;
     el->key = value;
     el->next = nullptr;
     return el;
 }
 
-void Polinom::appendItem(Polinom::PElement *head, Polinom::PElement *el) {
+void Polynom::appendItem(Polynom::PElement *head, Polynom::PElement *el) {
     PElement *tmp = head;
     while (tmp->next != nullptr) tmp = tmp->next;
     tmp->next = el;
 }
 
-void Polinom::printPol() {
+void Polynom::printPol() {
     PElement *tmp = this->head;
     int i = 0, firstElIs0;
     while (tmp != nullptr) {
@@ -59,29 +59,29 @@ void Polinom::printPol() {
     cout << endl;
 }
 
-Polinom::~Polinom() {
+Polynom::~Polynom() {
     if (head)
         delete head->next;
 }
 
-Polinom::PElement *Polinom::getHead() const {
+Polynom::PElement *Polynom::getHead() const {
     return head;
 }
 
-void Polinom::setHead(Polinom::PElement *_head) {
+void Polynom::setHead(Polynom::PElement *_head) {
     head = _head;
 }
 
-int Polinom::getPower() const {
+int Polynom::getPower() const {
     return power;
 }
 
-void Polinom::setPower(int _power) {
+void Polynom::setPower(int _power) {
     power = _power;
 }
 
-Polinom Polinom::addingPolinoms(Polinom &pol1, Polinom &pol2) {
-    Polinom pol3;
+Polynom Polynom::addingPolinoms(Polynom &pol1, Polynom &pol2) {
+    Polynom pol3;
 
     power = (pol1.power > pol2.power) ? pol1.power : pol2.power;
     head = makeItem(pol1.head->key + pol2.head->key);
@@ -105,8 +105,8 @@ Polinom Polinom::addingPolinoms(Polinom &pol1, Polinom &pol2) {
     return pol3;
 }
 
-Polinom Polinom::differencePolinom(Polinom &pol1, Polinom &pol2) {
-    Polinom pol3;
+Polynom Polynom::differencePolinom(Polynom &pol1, Polynom &pol2) {
+    Polynom pol3;
 
     power = (pol1.power > pol2.power) ? pol1.power : pol2.power;
     head = makeItem(pol1.head->key - pol2.head->key);
@@ -130,7 +130,7 @@ Polinom Polinom::differencePolinom(Polinom &pol1, Polinom &pol2) {
     return pol3;
 }
 
-Polinom Polinom::multiplicatePolinom(Polinom &pol1, Polinom &pol2) {
+Polynom Polynom::multiplicatePolinom(Polynom &pol1, Polynom &pol2) {
 
     int pow = pol1.power * pol2.power - 1;
     std::vector<int> num(pow + 1);
@@ -152,20 +152,20 @@ Polinom Polinom::multiplicatePolinom(Polinom &pol1, Polinom &pol2) {
         j = 0;
     }
 
-    return Polinom(pow, num);
+    return Polynom(pow, num);
 }
 
-Polinom operator*(Polinom &p1, Polinom &p2) {
-    Polinom c = c.multiplicatePolinom(p1, p2);
+Polynom operator*(Polynom &p1, Polynom &p2) {
+    Polynom c = c.multiplicatePolinom(p1, p2);
     return c;
 }
 
-Polinom operator+(Polinom &p1, Polinom &p2) {
-    Polinom c = c.addingPolinoms(p1, p2);
+Polynom operator+(Polynom &p1, Polynom &p2) {
+    Polynom c = c.addingPolinoms(p1, p2);
     return c;
 }
 
-Polinom operator-(Polinom &p1, Polinom &p2) {
-    Polinom c = c.differencePolinom(p1, p2);
+Polynom operator-(Polynom &p1, Polynom &p2) {
+    Polynom c = c.differencePolinom(p1, p2);
     return c;
 }

@@ -3,12 +3,14 @@
 //
 /*!
  * \file
- * \brief Header file containing class Polinom
- * \details This file contains definition of the class Polinom
+ * \brief Header file containing class Polynom
+ * \details This file contains definition of the class Polynom
  */
 
-#ifndef POLINOMS_POLINOM_H
-#define POLINOMS_POLINOM_H
+#ifndef POLINOMS_POLYNOM_H
+#define POLINOMS_POLYNOM_H
+
+#include "longInt.h"
 
 #include <iostream>
 #include <vector>
@@ -16,7 +18,7 @@
 #include <algorithm>
 
 /*!
- * \brief class Polinom contains fields that describe polinom
+ * \brief class Polynom contains fields that describe polinom
  * \details Every object of this class describe separate polinom
  *
  * a + bx + cx^2
@@ -28,26 +30,26 @@
  * key - coefficient of term
  * next - pointer to next object of structure "PElement"
  */
-class Polinom {
+class Polynom {
 private:
     //!polynomial degree (maximum degree that a variable can have)
     int power;
-    //!Structure that shows every term of every object of class "Polinom"
+    //!Structure that shows every term of every object of class "Polynom"
     struct PElement {
         //!coefficient of terms of polinom
         int key;
         //!pointer to next term
         PElement * next;
     };
-    //!Pointer to the first term of every object of class "Polinom"
+    //!Pointer to the first term of every object of class "Polynom"
     PElement * head;
 
 public:
     //!empty constructor
-    Polinom();
+    Polynom();
     //!constructor that take power of polinom and vector of coefficients of this polinom
-    Polinom(int _power, std::vector<int> keys);
-    ~Polinom();
+    Polynom(int _power, std::vector<int> keys);
+    ~Polynom();
 
     //!Getter and Setters (for me they are useless, but still...they are)
     PElement * getHead()const;
@@ -62,14 +64,14 @@ public:
     //!Adding term to the end of the polinom
     static void appendItem(PElement * head, PElement * el);
 
-    Polinom addingPolinoms(Polinom& pol1, Polinom& pol2);
-    Polinom differencePolinom(Polinom& pol1, Polinom& pol2);
-    Polinom multiplicatePolinom(Polinom& pol1, Polinom& pol2);
+    Polynom addingPolinoms(Polynom& pol1, Polynom& pol2);
+    Polynom differencePolinom(Polynom& pol1, Polynom& pol2);
+    Polynom multiplicatePolinom(Polynom& pol1, Polynom& pol2);
 
-    friend Polinom operator *(Polinom& p1, Polinom& p2);
-    friend Polinom operator -(Polinom& p1, Polinom& p2);
-    friend Polinom operator +(Polinom& p1, Polinom& p2);
+    friend Polynom operator *(Polynom& p1, Polynom& p2);
+    friend Polynom operator -(Polynom& p1, Polynom& p2);
+    friend Polynom operator +(Polynom& p1, Polynom& p2);
 };
 
 
-#endif //POLINOMS_POLINOM_H
+#endif //POLINOMS_POLYNOM_H
