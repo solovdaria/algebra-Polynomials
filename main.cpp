@@ -5,17 +5,19 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-int main() {
 
-    Polynom a(2, { -7, 3, 2 });
-    Polynom b(3, { 1, 1, -3, 4 });
+int main() {
+    ModField* field = new ModField("3");
+
+    Polynom a(2, { LongModInt("-7", field), LongModInt("3", field), LongModInt("2", field) });
+    Polynom b(3, { LongModInt("1", field), LongModInt("1", field), LongModInt("-3", field), LongModInt("4", field) });
 
     cout << "1) f(x) = ";
     a.print();
-    cout << "f(4) = " << a.evaluate(4) << "\n\n";
+    cout << "f(4) = " << a.evaluate(LongModInt(4, field)) << "\n\n";
     cout << "2) g(x) = ";
     b.print();
-    cout << "g(4) = " << b.evaluate(4) << "\n\n";
+    cout << "g(4) = " << b.evaluate(LongModInt(4, field)) << "\n\n";
 
     //!before each action, re-declare the variable (for each action - new variable)
     Polynom res = a + b;

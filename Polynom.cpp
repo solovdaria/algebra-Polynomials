@@ -14,7 +14,7 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-int Polynom::getLastCoefficient()
+LongModInt Polynom::getLastCoefficient()
 {
     PElement* temp = head;
     while (temp->next != nullptr) temp = temp->next;
@@ -23,12 +23,14 @@ int Polynom::getLastCoefficient()
 
 Polynom::Polynom() {
     head = nullptr;
+    field = new ModField("3");
     power = 0;
 }
 
-Polynom::Polynom(int _power, std::vector<int> keys) {
+Polynom::Polynom(int _power, std::vector<LongModInt> keys) {
     power = _power;
     head = makeItem(keys[0]);
+    field = new ModField("3");
 
     for (int i = 1; i < keys.size(); i++) {
         appendItem(head, makeItem(keys[i]));
@@ -37,18 +39,18 @@ Polynom::Polynom(int _power, std::vector<int> keys) {
 }
 
 void Polynom::makeMod() {
-    PElement *tmp = head;
-    while (tmp != nullptr) {
-        if (tmp->key >= field)
-            tmp->key = tmp->key%field;
-        else while (tmp->key < 0) {
-                tmp->key = tmp->key + field;
-            }
-        tmp = tmp->next;
-    }
+    //PElement *tmp = head;
+    //while (tmp != nullptr) {
+    //    if (tmp->key.getNum() >= field->mod)
+    //        tmp->key = tmp->key / field;
+    //    else while (tmp->key < "0") {
+    //            tmp->key = tmp->key + field;
+    //        }
+    //    tmp = tmp->next;
+    //}
 }
 
-Polynom::PElement *Polynom::makeItem(int value) {
+Polynom::PElement *Polynom::makeItem(LongModInt value) {
     auto *el = new PElement;
     el->key = value;
     el->next = nullptr;
@@ -66,14 +68,14 @@ void Polynom::print() {
     int i = 0;
     bool isFirst = true;
     while (tmp != nullptr) {
-        if (tmp->key == 0) {
+        if (tmp->key == "0") {
             tmp = tmp->next;
             i++;
             continue;
         }
         if (!isFirst) cout << "+";
         else isFirst = false;
-        if (tmp->key != 1 || i == 0)
+        if (tmp->key != "1" || i == 0)
         cout << tmp->key;
         if (i != 0) cout << "x^" << i;
         tmp = tmp->next;
@@ -105,18 +107,23 @@ void Polynom::setPower(int _power) {
 
 void Polynom::valuate()
 {
-    int coeffecient = getLastCoefficient();
+    LongModInt coeffecient = getLastCoefficient();
     PElement* temp = head;
     while (head) temp->key = temp->key / coeffecient;
 }
 
-int Polynom::evaluate(int x)
+LongModInt Polynom::evaluate(LongModInt x)
 {
     PElement* temp = head;
-    int result = 0;
+    LongModInt result = LongModInt("0", field);
     int p = 0;
     while (temp != nullptr) {
-        result = result + temp->key * pow(x, p);
+        LongModInt power = LongModInt("1", field);
+        for (int i = 0; i < p; i++)
+        {
+            power = x * power;
+        }
+        result = result + temp->key * power;
         p++;
         temp = temp->next;
     }
@@ -162,7 +169,7 @@ void Polynom::differencePolinom(Polynom &pol1, Polynom &pol2) {
         tmp1 = tmp1->next;
     }
     while (tmp2) {
-        appendItem(head, makeItem(tmp2->key * (-1)));
+        appendItem(head, makeItem(tmp2->key * ("-1")));
         tmp2 = tmp2->next;
     }
 }
@@ -171,7 +178,7 @@ void Polynom::multiplicatePolinom(Polynom &pol1, Polynom &pol2) {
 
     power = pol1.power * pol2.power - 1;
     int pow = power;
-    std::vector<int> num(pow + 1);
+    std::vector<LongModInt> num(pow + 1);
 
     PElement *tmp1 = pol1.head;
     PElement *tmp2 = pol2.head;
@@ -180,7 +187,7 @@ void Polynom::multiplicatePolinom(Polynom &pol1, Polynom &pol2) {
     while (tmp1) {
         while (tmp2) {
             if ((i + j) < (power + 1))
-                num[i + j] += tmp1->key * tmp2->key;
+                num[i + j] = num[i+j] + tmp1->key * tmp2->key;
             j++;
             tmp2 = tmp2->next;
         }
@@ -206,8 +213,8 @@ Polynom &derivative(Polynom& pol1)
 
     while (temp) {
         if (power != 0) {
-            if (result->head != nullptr) Polynom::appendItem(result->head, Polynom::makeItem(temp->key * power));
-            else result->head = Polynom::makeItem(temp->key * power);
+            if (result->head != nullptr) Polynom::appendItem(result->head, Polynom::makeItem(temp->key * std::to_string(power)));
+            else result->head = Polynom::makeItem(temp->key * std::to_string(power));
         }
         temp = temp->next;
         power++;
