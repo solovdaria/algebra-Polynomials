@@ -80,8 +80,8 @@ void Polynom::setPower(int _power) {
     power = _power;
 }
 
-Polynom Polynom::addingPolinoms(Polynom &pol1, Polynom &pol2) {
-    Polynom pol3;
+void Polynom::addingPolinoms(Polynom &pol1, Polynom &pol2) {
+    //Polynom pol3;
 
     power = (pol1.power > pol2.power) ? pol1.power : pol2.power;
     head = makeItem(pol1.head->key + pol2.head->key);
@@ -102,11 +102,11 @@ Polynom Polynom::addingPolinoms(Polynom &pol1, Polynom &pol2) {
         appendItem(head, makeItem(tmp2->key));
         tmp2 = tmp2->next;
     }
-    return pol3;
+    //return pol3;
 }
 
-Polynom Polynom::differencePolinom(Polynom &pol1, Polynom &pol2) {
-    Polynom pol3;
+void Polynom::differencePolinom(Polynom &pol1, Polynom &pol2) {
+    //Polynom pol3;
 
     power = (pol1.power > pol2.power) ? pol1.power : pol2.power;
     head = makeItem(pol1.head->key - pol2.head->key);
@@ -127,12 +127,12 @@ Polynom Polynom::differencePolinom(Polynom &pol1, Polynom &pol2) {
         appendItem(head, makeItem(tmp2->key * (-1)));
         tmp2 = tmp2->next;
     }
-    return pol3;
 }
 
-Polynom Polynom::multiplicatePolinom(Polynom &pol1, Polynom &pol2) {
+void Polynom::multiplicatePolinom(Polynom &pol1, Polynom &pol2) {
 
-    int pow = pol1.power * pol2.power - 1;
+    power = pol1.power * pol2.power - 1;
+    int pow = power;
     std::vector<int> num(pow + 1);
 
     PElement *tmp1 = pol1.head;
@@ -151,21 +151,27 @@ Polynom Polynom::multiplicatePolinom(Polynom &pol1, Polynom &pol2) {
         tmp2 = pol2.head;
         j = 0;
     }
+    head = makeItem(num[0]);
 
-    return Polynom(pow, num);
+    for (int i = 1; i < num.size(); i++) {
+        appendItem(head, makeItem(num[i]));
+    }
 }
 
 Polynom operator*(Polynom &p1, Polynom &p2) {
-    Polynom c = c.multiplicatePolinom(p1, p2);
+    Polynom c;
+    c.multiplicatePolinom(p1, p2);
     return c;
 }
 
 Polynom operator+(Polynom &p1, Polynom &p2) {
-    Polynom c = c.addingPolinoms(p1, p2);
+    Polynom c;
+    c.addingPolinoms(p1, p2);
     return c;
 }
 
 Polynom operator-(Polynom &p1, Polynom &p2) {
-    Polynom c = c.differencePolinom(p1, p2);
+    Polynom c;
+    c.differencePolinom(p1, p2);
     return c;
 }

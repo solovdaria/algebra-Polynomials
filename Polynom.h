@@ -64,9 +64,9 @@ public:
     //!Adding term to the end of the polinom
     static void appendItem(PElement * head, PElement * el);
 
-    Polynom addingPolinoms(Polynom& pol1, Polynom& pol2);
-    Polynom differencePolinom(Polynom& pol1, Polynom& pol2);
-    Polynom multiplicatePolinom(Polynom& pol1, Polynom& pol2);
+    void addingPolinoms(Polynom& pol1, Polynom& pol2);
+    void differencePolinom(Polynom& pol1, Polynom& pol2);
+    void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
 
     friend Polynom operator *(Polynom& p1, Polynom& p2);
     friend Polynom operator -(Polynom& p1, Polynom& p2);
