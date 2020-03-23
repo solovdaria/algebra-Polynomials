@@ -64,13 +64,16 @@ void Polynom::appendItem(Polynom::PElement *head, Polynom::PElement *el) {
 void Polynom::print() {
     PElement *tmp = this->head;
     int i = 0;
+    bool isFirst = true;
     while (tmp != nullptr) {
         if (tmp->key == 0) {
             tmp = tmp->next;
             i++;
             continue;
         }
-        if ((tmp->key > 0) && (i != 0)) cout << "+";
+        if (!isFirst) cout << "+";
+        else isFirst = false;
+        if (tmp->key != 1 || i == 0)
         cout << tmp->key;
         if (i != 0) cout << "x^" << i;
         tmp = tmp->next;
