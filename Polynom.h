@@ -71,10 +71,10 @@ public:
     void differencePolinom(Polynom& pol1, Polynom& pol2);
     void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
 
-    friend Polynom derivative(Polynom& pol1);
-    friend Polynom operator *(Polynom& p1, Polynom& p2);
-    friend Polynom operator -(Polynom& p1, Polynom& p2);
-    friend Polynom operator +(Polynom& p1, Polynom& p2);
+    friend Polynom &derivative(Polynom& pol1);
+    friend Polynom &operator *(Polynom& p1, Polynom& p2);
+    friend Polynom &operator -(Polynom& p1, Polynom& p2);
+    friend Polynom &operator +(Polynom& p1, Polynom& p2);
 };
 
 

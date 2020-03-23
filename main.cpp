@@ -17,15 +17,6 @@ int main() {
     b.print();
     cout << "g(4) = " << b.evaluate(4) << "\n\n";
 
-
-    Polynom der1 = derivative(a);
-    cout << "f(x)' = ";
-    der1.print();
-
-    Polynom der2 = derivative(b);
-    cout << "g(x)' = ";
-    der2.print();
-
     //!before each action, re-declare the variable (for each action - new variable)
     Polynom res = a + b;
     cout << "f(x) + g(x) = ";
@@ -38,6 +29,14 @@ int main() {
     Polynom d = a * b;
     cout << "f(x) * g(x) = ";
     d.print();
+
+    Polynom der1 = derivative(a);
+    cout << "f(x)' = ";
+    der1.print();
+
+    Polynom der2 = derivative(b);
+    cout << "g(x)' = ";
+    der2.print();
 
     return 0;
 

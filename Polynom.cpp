@@ -8,6 +8,7 @@
  * \details Functional of polinoms, mathematical actions
  */
 #include "Polynom.h"
+#include "cmath"
 
 using std::cout;
 using std::cin;
@@ -67,8 +68,8 @@ void Polynom::print() {
 }
 
 Polynom::~Polynom() {
-    //if (head)
-    //    delete head->next;
+    if (head)
+        delete head->next;
 }
 
 Polynom::PElement *Polynom::getHead() const {
@@ -185,40 +186,40 @@ void Polynom::multiplicatePolinom(Polynom &pol1, Polynom &pol2) {
     }
 }
 
-Polynom derivative(Polynom& pol1)
+Polynom &derivative(Polynom& pol1)
 {
-    Polynom result;
+    Polynom *result = new Polynom();
     Polynom::PElement* temp = pol1.head;
-    result.power = pol1.power - 1;
+    result->power = pol1.power - 1;
 
     int power = 0;
 
     while (temp) {
         if (power != 0) {
-            if (result.head != NULL) Polynom::appendItem(result.head, Polynom::makeItem(temp->key * power));
-            else result.head = Polynom::makeItem(temp->key * power);
+            if (result->head != NULL) Polynom::appendItem(result->head, Polynom::makeItem(temp->key * power));
+            else result->head = Polynom::makeItem(temp->key * power);
         }
         temp = temp->next;
         power++;
     }
 
-    return result;
+    return *result;
 }
 
-Polynom operator*(Polynom &p1, Polynom &p2) {
-    Polynom c;
-    c.multiplicatePolinom(p1, p2);
-    return c;
+Polynom &operator*(Polynom &p1, Polynom &p2) {
+    Polynom *c = new Polynom();
+    c->multiplicatePolinom(p1, p2);
+    return *c;
 }
 
-Polynom operator+(Polynom &p1, Polynom &p2) {
-    Polynom c;
-    c.addingPolinoms(p1, p2);
-    return c;
+Polynom &operator+(Polynom &p1, Polynom &p2) {
+    Polynom *c = new Polynom();
+    c->addingPolinoms(p1, p2);
+    return *c;
 }
 
-Polynom operator-(Polynom &p1, Polynom &p2) {
-    Polynom c;
-    c.differencePolinom(p1, p2);
-    return c;
+Polynom &operator-(Polynom &p1, Polynom &p2) {
+    Polynom *c = new Polynom();
+    c->differencePolinom(p1, p2);
+    return *c;
 }
