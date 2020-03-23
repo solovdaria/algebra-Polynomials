@@ -50,6 +50,10 @@ public:
     Polynom(int _power, std::vector<int> keys);
     ~Polynom();
 
+    //mod of polynom
+    int field = 3;
+    void makeMod();
+
     //!Getter and Setters (for me they are useless, but still...they are)
     PElement *getHead()const;
     void setHead(PElement * _head);

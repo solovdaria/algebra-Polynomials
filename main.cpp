@@ -7,7 +7,7 @@ using std::endl;
 
 int main() {
 
-    Polynom a(2, { -7, 4, 2 });
+    Polynom a(2, { -7, 3, 2 });
     Polynom b(3, { 1, 1, -3, 4 });
 
     cout << "1) f(x) = ";

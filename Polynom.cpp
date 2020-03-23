@@ -33,6 +33,19 @@ Polynom::Polynom(int _power, std::vector<int> keys) {
     for (int i = 1; i < keys.size(); i++) {
         appendItem(head, makeItem(keys[i]));
     }
+    makeMod();
+}
+
+void Polynom::makeMod() {
+    PElement *tmp = head;
+    while (tmp != nullptr) {
+        if (tmp->key >= field)
+            tmp->key = tmp->key%field;
+        else while (tmp->key < 0) {
+                tmp->key = tmp->key + field;
+            }
+        tmp = tmp->next;
+    }
 }
 
 Polynom::PElement *Polynom::makeItem(int value) {
@@ -50,9 +63,8 @@ void Polynom::appendItem(Polynom::PElement *head, Polynom::PElement *el) {
 
 void Polynom::print() {
     PElement *tmp = this->head;
-    int i = 0, firstElIs0;
+    int i = 0;
     while (tmp != nullptr) {
-        //firstElIs0 = tmp->key;
         if (tmp->key == 0) {
             tmp = tmp->next;
             i++;
@@ -99,18 +111,16 @@ int Polynom::evaluate(int x)
 {
     PElement* temp = head;
     int result = 0;
-    int power = 0;
+    int p = 0;
     while (temp != nullptr) {
-        result = result + temp->key * pow(x, power);
-        power++;
+        result = result + temp->key * pow(x, p);
+        p++;
         temp = temp->next;
     }
     return result;
 }
 
 void Polynom::addingPolinoms(Polynom &pol1, Polynom &pol2) {
-    //Polynom pol3;
-
     power = (pol1.power > pol2.power) ? pol1.power : pol2.power;
     head = makeItem(pol1.head->key + pol2.head->key);
 
@@ -130,12 +140,9 @@ void Polynom::addingPolinoms(Polynom &pol1, Polynom &pol2) {
         appendItem(head, makeItem(tmp2->key));
         tmp2 = tmp2->next;
     }
-    //return pol3;
 }
 
 void Polynom::differencePolinom(Polynom &pol1, Polynom &pol2) {
-    //Polynom pol3;
-
     power = (pol1.power > pol2.power) ? pol1.power : pol2.power;
     head = makeItem(pol1.head->key - pol2.head->key);
 
@@ -181,14 +188,14 @@ void Polynom::multiplicatePolinom(Polynom &pol1, Polynom &pol2) {
     }
     head = makeItem(num[0]);
 
-    for (int i = 1; i < num.size(); i++) {
-        appendItem(head, makeItem(num[i]));
+    for (int n = 1; n < num.size(); n++) {
+        appendItem(head, makeItem(num[n]));
     }
 }
 
 Polynom &derivative(Polynom& pol1)
 {
-    Polynom *result = new Polynom();
+    auto *result = new Polynom();
     Polynom::PElement* temp = pol1.head;
     result->power = pol1.power - 1;
 
@@ -196,30 +203,33 @@ Polynom &derivative(Polynom& pol1)
 
     while (temp) {
         if (power != 0) {
-            if (result->head != NULL) Polynom::appendItem(result->head, Polynom::makeItem(temp->key * power));
+            if (result->head != nullptr) Polynom::appendItem(result->head, Polynom::makeItem(temp->key * power));
             else result->head = Polynom::makeItem(temp->key * power);
         }
         temp = temp->next;
         power++;
     }
-
+    result->makeMod();
     return *result;
 }
 
 Polynom &operator*(Polynom &p1, Polynom &p2) {
-    Polynom *c = new Polynom();
+    auto *c = new Polynom();
     c->multiplicatePolinom(p1, p2);
+    c->makeMod();
     return *c;
 }
 
 Polynom &operator+(Polynom &p1, Polynom &p2) {
-    Polynom *c = new Polynom();
+    auto *c = new Polynom();
     c->addingPolinoms(p1, p2);
+    c->makeMod();
     return *c;
 }
 
 Polynom &operator-(Polynom &p1, Polynom &p2) {
-    Polynom *c = new Polynom();
+    auto *c = new Polynom();
     c->differencePolinom(p1, p2);
+    c->makeMod();
     return *c;
 }
