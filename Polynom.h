@@ -10,8 +10,6 @@
 #ifndef POLINOMS_POLYNOM_H
 #define POLINOMS_POLYNOM_H
 
-#include "longInt.h"
-
 #include <iostream>
 #include <vector>
 #include <string>
@@ -39,11 +37,12 @@ private:
         //!coefficient of terms of polinom
         int key;
         //!pointer to next term
-        PElement * next;
+        PElement *next;
     };
     //!Pointer to the first term of every object of class "Polynom"
-    PElement * head;
+    PElement *head;
 
+    int getLastCoefficient();
 public:
     //!empty constructor
     Polynom();
@@ -52,22 +51,27 @@ public:
     ~Polynom();
 
     //!Getter and Setters (for me they are useless, but still...they are)
-    PElement * getHead()const;
+    PElement *getHead()const;
     void setHead(PElement * _head);
     int getPower() const;
     void setPower(int _power);
 
     //!output polinom
-    void printPol();
+    void print();
     //!Making term of structure "PElement" (element of polinom) using the value of coefficient
     static PElement * makeItem(int val);
     //!Adding term to the end of the polinom
     static void appendItem(PElement * head, PElement * el);
 
+    // Norming (valuation) of the polynom
+    void valuate();
+    int evaluate(int x);
+
     void addingPolinoms(Polynom& pol1, Polynom& pol2);
     void differencePolinom(Polynom& pol1, Polynom& pol2);
     void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
 
+    friend Polynom derivative(Polynom& pol1);
     friend Polynom operator *(Polynom& p1, Polynom& p2);
     friend Polynom operator -(Polynom& p1, Polynom& p2);
     friend Polynom operator +(Polynom& p1, Polynom& p2);

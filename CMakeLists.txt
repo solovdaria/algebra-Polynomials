@@ -3,4 +3,4 @@ project(Polinoms)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Polinoms main.cpp Polynom.cpp Polynom.h longInt.cpp longInt.h)
+add_executable(Polinoms main.cpp Polynom.cpp Polynom.h)

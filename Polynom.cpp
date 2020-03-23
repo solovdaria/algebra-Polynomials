@@ -13,6 +13,13 @@ using std::cout;
 using std::cin;
 using std::endl;
 
+int Polynom::getLastCoefficient()
+{
+    PElement* temp = head;
+    while (temp->next != nullptr) temp = temp->next;
+    return temp->key;
+}
+
 Polynom::Polynom() {
     head = nullptr;
     power = 0;
@@ -40,7 +47,7 @@ void Polynom::appendItem(Polynom::PElement *head, Polynom::PElement *el) {
     tmp->next = el;
 }
 
-void Polynom::printPol() {
+void Polynom::print() {
     PElement *tmp = this->head;
     int i = 0, firstElIs0;
     while (tmp != nullptr) {
@@ -60,8 +67,8 @@ void Polynom::printPol() {
 }
 
 Polynom::~Polynom() {
-    if (head)
-        delete head->next;
+    //if (head)
+    //    delete head->next;
 }
 
 Polynom::PElement *Polynom::getHead() const {
@@ -78,6 +85,26 @@ int Polynom::getPower() const {
 
 void Polynom::setPower(int _power) {
     power = _power;
+}
+
+void Polynom::valuate()
+{
+    int coeffecient = getLastCoefficient();
+    PElement* temp = head;
+    while (head) temp->key = temp->key / coeffecient;
+}
+
+int Polynom::evaluate(int x)
+{
+    PElement* temp = head;
+    int result = 0;
+    int power = 0;
+    while (temp != nullptr) {
+        result = result + temp->key * pow(x, power);
+        power++;
+        temp = temp->next;
+    }
+    return result;
 }
 
 void Polynom::addingPolinoms(Polynom &pol1, Polynom &pol2) {
@@ -156,6 +183,26 @@ void Polynom::multiplicatePolinom(Polynom &pol1, Polynom &pol2) {
     for (int i = 1; i < num.size(); i++) {
         appendItem(head, makeItem(num[i]));
     }
+}
+
+Polynom derivative(Polynom& pol1)
+{
+    Polynom result;
+    Polynom::PElement* temp = pol1.head;
+    result.power = pol1.power - 1;
+
+    int power = 0;
+
+    while (temp) {
+        if (power != 0) {
+            if (result.head != NULL) Polynom::appendItem(result.head, Polynom::makeItem(temp->key * power));
+            else result.head = Polynom::makeItem(temp->key * power);
+        }
+        temp = temp->next;
+        power++;
+    }
+
+    return result;
 }
 
 Polynom operator*(Polynom &p1, Polynom &p2) {
