@@ -40,20 +40,25 @@ private:
         //!pointer to next term
         PElement *next;
     };
+    //!Mod of polynom
+    int field = 6;
+    void makeMod();
     //!Pointer to the first term of every object of class "Polynom"
     PElement *head;
 
     int getLastCoefficient();
+    int modInverse(int x);
+    int gcdExtended(int a, int b, int* x, int* y);
+    int modDivision(int a, int b);
+
+
 public:
     //!empty constructor
     Polynom();
     //!constructor that take power of polinom and vector of coefficients of this polinom
     Polynom(int _power, std::vector<int> keys);
+    Polynom(int _power, int _field, std::vector<int> keys);
     ~Polynom();
-
-    //mod of polynom
-    int field = 3;
-    void makeMod();
 
     //!Getter and Setters (for me they are useless, but still...they are)
     PElement *getHead()const;

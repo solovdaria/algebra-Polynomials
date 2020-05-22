@@ -17,8 +17,10 @@ int main() {
     b.print();
     cout << "g(4) = " << b.evaluate(4) << "\n\n";
 
-    a.valuate();
-    a.print();
+    Polynom e(1, { 1,5 });
+    e.print();
+    e.valuate();
+    e.print();
 
     //!before each action, re-declare the variable (for each action - new variable)
     Polynom res = a + b;

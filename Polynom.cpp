@@ -21,6 +21,43 @@ int Polynom::getLastCoefficient()
     return temp->key;
 }
 
+int Polynom::modInverse(int number)
+{
+    int x, y; 
+    int g = gcdExtended(number, field, &x, &y);
+
+    if (g != 1)
+        return -1;
+
+    return (x % field + field) % field;
+}
+
+int Polynom::gcdExtended(int a, int b, int* x, int* y)
+{
+    if (a == 0)
+    {
+        *x = 0, * y = 1;
+        return b;
+    }
+
+    int x1, y1;
+    int gcd = gcdExtended(b % a, a, &x1, &y1);
+
+    *x = y1 - (b / a) * x1;
+    *y = x1;
+
+    return gcd;
+}
+
+int Polynom::modDivision(int a, int b)
+{
+    a = a % field;
+    int inv = modInverse(b);
+    if (inv == -1)
+        cout << "Division not defined";
+    else return (inv * a) % field;
+}
+
 Polynom::Polynom() {
     head = nullptr;
     power = 0;
@@ -34,6 +71,10 @@ Polynom::Polynom(int _power, std::vector<int> keys) {
         appendItem(head, makeItem(keys[i]));
     }
     makeMod();
+}
+
+Polynom::Polynom(int _power, int _field, std::vector<int> keys)
+{
 }
 
 void Polynom::makeMod() {
@@ -108,7 +149,7 @@ void Polynom::valuate()
     int coeffecient = getLastCoefficient();
     PElement* temp = head;
     while (temp) {
-        temp->key = temp->key / coeffecient;
+        temp->key = modDivision(temp->key, coeffecient);
         temp = temp->next;
     }
         
