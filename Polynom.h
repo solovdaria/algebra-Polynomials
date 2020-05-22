@@ -7,6 +7,7 @@
  * \details This file contains definition of the class Polynom
  */
 
+
 #ifndef POLINOMS_POLYNOM_H
 #define POLINOMS_POLYNOM_H
 
@@ -67,7 +68,7 @@ public:
     //!Adding term to the end of the polinom
     static void appendItem(PElement * head, PElement * el);
 
-    // Norming (valuation) of the polynom
+    // Valuation of the polynom
     void valuate();
     int evaluate(int x);
 

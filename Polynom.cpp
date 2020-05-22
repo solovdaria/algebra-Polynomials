@@ -107,7 +107,11 @@ void Polynom::valuate()
 {
     int coeffecient = getLastCoefficient();
     PElement* temp = head;
-    while (head) temp->key = temp->key / coeffecient;
+    while (temp) {
+        temp->key = temp->key / coeffecient;
+        temp = temp->next;
+    }
+        
 }
 
 int Polynom::evaluate(int x)
