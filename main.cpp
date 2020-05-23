@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Polynom.h"
+#include "Polynom.cpp"
 
 using std::cout;
 using std::cin;
@@ -7,9 +7,9 @@ using std::endl;
 
 int main() {
 
-    Polynom a(2, { -7, 3, 2 });
-    Polynom b(3, { 1, 1, -3, 4 });
-
+    Polynom<5> a(2, { -7, 3, 2 });
+    Polynom<5> b(3, { 1, 1, -3, 4 });
+  
     cout << "1) f(x) = ";
     a.print();
     cout << "f(4) = " << a.evaluate(4) << "\n\n";
@@ -17,29 +17,29 @@ int main() {
     b.print();
     cout << "g(4) = " << b.evaluate(4) << "\n\n";
 
-    Polynom e(1, { 1,5 });
+    Polynom<5> e(1, { 1,5 });
     e.print();
     e.valuate();
     e.print();
 
     //!before each action, re-declare the variable (for each action - new variable)
-    Polynom res = a + b;
+    Polynom<5> res = a + b;
     cout << "f(x) + g(x) = ";
     res.print();
 
-    Polynom c = a - b;
+    Polynom<5> c = a - b;
     cout << "f(x) - g(x) = ";
     c.print();
 
-    Polynom d = a * b;
+    Polynom<5> d = a * b;
     cout << "f(x) * g(x) = ";
     d.print();
 
-    Polynom der1 = derivative(a);
+    Polynom<5> der1 = derivative(a);
     cout << "f(x)' = ";
     der1.print();
 
-    Polynom der2 = derivative(b);
+    Polynom<5> der2 = derivative(b);
     cout << "g(x)' = ";
     der2.print();
 

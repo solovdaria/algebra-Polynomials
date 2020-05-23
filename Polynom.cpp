@@ -7,32 +7,37 @@
  * \brief C++ file with implementation of class Polynom
  * \details Functional of polinoms, mathematical actions
  */
-#include "Polynom.h"
+
+#include <iostream>
 #include "cmath"
+#include "Polynom.h"
 
 using std::cout;
 using std::cin;
 using std::endl;
 
-int Polynom::getLastCoefficient()
+template <int p>
+int Polynom<p>::getLastCoefficient()
 {
     PElement* temp = head;
     while (temp->next != nullptr) temp = temp->next;
     return temp->key;
 }
 
-int Polynom::modInverse(int number)
+template <int p>
+int Polynom<p>::modInverse(int number)
 {
     int x, y; 
-    int g = gcdExtended(number, field, &x, &y);
+    int g = gcdExtended(number, p, &x, &y);
 
     if (g != 1)
         return -1;
 
-    return (x % field + field) % field;
+    return (x % p + p) % p;
 }
 
-int Polynom::gcdExtended(int a, int b, int* x, int* y)
+template <int p>
+int Polynom<p>::gcdExtended(int a, int b, int* x, int* y)
 {
     if (a == 0)
     {
@@ -49,21 +54,24 @@ int Polynom::gcdExtended(int a, int b, int* x, int* y)
     return gcd;
 }
 
-int Polynom::modDivision(int a, int b)
+template <int p>
+int Polynom<p>::modDivision(int a, int b)
 {
-    a = a % field;
+    a = a % p;
     int inv = modInverse(b);
     if (inv == -1)
         cout << "Division not defined";
-    else return (inv * a) % field;
+    else return (inv * a) % p;
 }
 
-Polynom::Polynom() {
+template <int p>
+Polynom<p>::Polynom() {
     head = nullptr;
     power = 0;
 }
 
-Polynom::Polynom(int _power, std::vector<int> keys) {
+template <int p>
+Polynom<p>::Polynom(int _power, std::vector<int> keys) {
     power = _power;
     head = makeItem(keys[0]);
 
@@ -73,37 +81,42 @@ Polynom::Polynom(int _power, std::vector<int> keys) {
     makeMod();
 }
 
-Polynom::Polynom(int _power, int _field, std::vector<int> keys)
+template <int p>
+Polynom<p>::Polynom(int _power, int _field, std::vector<int> keys)
 {
 }
 
-void Polynom::makeMod() {
-    PElement *tmp = head;
+template <int p>
+void Polynom<p>::makeMod() {
+    PElement* tmp = head;
     while (tmp != nullptr) {
-        if (tmp->key >= field)
-            tmp->key = tmp->key%field;
+        if (tmp->key >= p)
+            tmp->key = tmp->key % p;
         else while (tmp->key < 0) {
-                tmp->key = tmp->key + field;
-            }
+            tmp->key = tmp->key + p;
+        }
         tmp = tmp->next;
     }
 }
 
-Polynom::PElement *Polynom::makeItem(int value) {
-    auto *el = new PElement;
+template <int p>
+typename Polynom<p>::PElement* Polynom<p>::makeItem(int value) {
+    auto* el = new PElement;
     el->key = value;
     el->next = nullptr;
     return el;
 }
 
-void Polynom::appendItem(Polynom::PElement *head, Polynom::PElement *el) {
-    PElement *tmp = head;
+template <int p>
+void Polynom<p>::appendItem(Polynom<p>::PElement* head, Polynom::PElement* el) {
+    PElement* tmp = head;
     while (tmp->next != nullptr) tmp = tmp->next;
     tmp->next = el;
 }
 
-void Polynom::print() {
-    PElement *tmp = this->head;
+template <int p>
+void Polynom<p>::print() {
+    PElement* tmp = this->head;
     int i = 0;
     bool isFirst = true;
     while (tmp != nullptr) {
@@ -115,7 +128,7 @@ void Polynom::print() {
         if (!isFirst) cout << "+";
         else isFirst = false;
         if (tmp->key != 1 || i == 0)
-        cout << tmp->key;
+            cout << tmp->key;
         if (i != 0) cout << "x^" << i;
         tmp = tmp->next;
         i++;
@@ -123,28 +136,34 @@ void Polynom::print() {
     cout << endl;
 }
 
-Polynom::~Polynom() {
+template <int p>
+Polynom<p>::~Polynom() {
     if (head)
         delete head->next;
 }
 
-Polynom::PElement *Polynom::getHead() const {
+template <int p>
+typename Polynom<p>::PElement* Polynom<p>::getHead() const {
     return head;
 }
 
-void Polynom::setHead(Polynom::PElement *_head) {
+template <int p>
+void Polynom<p>::setHead(Polynom<p>::PElement* _head) {
     head = _head;
 }
 
-int Polynom::getPower() const {
+template <int p>
+int Polynom<p>::getPower() const {
     return power;
 }
 
-void Polynom::setPower(int _power) {
+template <int p>
+void Polynom<p>::setPower(int _power) {
     power = _power;
 }
 
-void Polynom::valuate()
+template <int p>
+void Polynom<p>::valuate()
 {
     int coeffecient = getLastCoefficient();
     PElement* temp = head;
@@ -152,10 +171,11 @@ void Polynom::valuate()
         temp->key = modDivision(temp->key, coeffecient);
         temp = temp->next;
     }
-        
+
 }
 
-int Polynom::evaluate(int x)
+template <int p>
+int Polynom<p>::evaluate(int x)
 {
     PElement* temp = head;
     int result = 0;
@@ -168,12 +188,13 @@ int Polynom::evaluate(int x)
     return result;
 }
 
-void Polynom::addingPolinoms(Polynom &pol1, Polynom &pol2) {
+template <int p>
+void Polynom<p>::addingPolinoms(Polynom& pol1, Polynom& pol2) {
     power = (pol1.power > pol2.power) ? pol1.power : pol2.power;
     head = makeItem(pol1.head->key + pol2.head->key);
 
-    PElement *tmp1 = pol1.head->next;
-    PElement *tmp2 = pol2.head->next;
+    PElement* tmp1 = pol1.head->next;
+    PElement* tmp2 = pol2.head->next;
 
     while ((tmp1) && (tmp2)) {
         appendItem(head, makeItem(tmp1->key + tmp2->key));
@@ -190,12 +211,13 @@ void Polynom::addingPolinoms(Polynom &pol1, Polynom &pol2) {
     }
 }
 
-void Polynom::differencePolinom(Polynom &pol1, Polynom &pol2) {
+template <int p>
+void Polynom<p>::differencePolinom(Polynom& pol1, Polynom& pol2) {
     power = (pol1.power > pol2.power) ? pol1.power : pol2.power;
     head = makeItem(pol1.head->key - pol2.head->key);
 
-    PElement *tmp1 = pol1.head->next;
-    PElement *tmp2 = pol2.head->next;
+    PElement* tmp1 = pol1.head->next;
+    PElement* tmp2 = pol2.head->next;
 
     while ((tmp1) && (tmp2)) {
         appendItem(head, makeItem(tmp1->key - tmp2->key));
@@ -212,14 +234,15 @@ void Polynom::differencePolinom(Polynom &pol1, Polynom &pol2) {
     }
 }
 
-void Polynom::multiplicatePolinom(Polynom &pol1, Polynom &pol2) {
+template <int p>
+void Polynom<p>::multiplicatePolinom(Polynom& pol1, Polynom& pol2) {
 
     power = pol1.power * pol2.power - 1;
     int pow = power;
     std::vector<int> num(pow + 1);
 
-    PElement *tmp1 = pol1.head;
-    PElement *tmp2 = pol2.head;
+    PElement* tmp1 = pol1.head;
+    PElement* tmp2 = pol2.head;
     int i = 0, j = 0;
 
     while (tmp1) {
@@ -241,43 +264,47 @@ void Polynom::multiplicatePolinom(Polynom &pol1, Polynom &pol2) {
     }
 }
 
-Polynom &derivative(Polynom& pol1)
+template <int p>
+auto derivative(Polynom<p>& pol1)
 {
-    auto *result = new Polynom();
-    Polynom::PElement* temp = pol1.head;
+    auto* result = new Polynom<p>();
+    Polynom<p>::PElement* temp = pol1.head;
     result->power = pol1.power - 1;
 
     int power = 0;
 
     while (temp) {
         if (power != 0) {
-            if (result->head != nullptr) Polynom::appendItem(result->head, Polynom::makeItem(temp->key * power));
-            else result->head = Polynom::makeItem(temp->key * power);
+            if (result->head != nullptr) Polynom<p>::appendItem(result->head, Polynom<p>::makeItem(temp->key * power));
+            else result->head = Polynom<p>::makeItem(temp->key * power);
         }
         temp = temp->next;
         power++;
     }
-    result->makeMod();
+    result->Polynom<p>::makeMod();
     return *result;
 }
 
-Polynom &operator*(Polynom &p1, Polynom &p2) {
-    auto *c = new Polynom();
-    c->multiplicatePolinom(p1, p2);
-    c->makeMod();
+template <int p>
+auto operator*(Polynom<p>& p1, Polynom<p>& p2) {
+    auto* c = new Polynom<p>();
+    c->Polynom<p>::multiplicatePolinom(p1, p2);
+    c->Polynom<p>::makeMod();
     return *c;
 }
 
-Polynom &operator+(Polynom &p1, Polynom &p2) {
-    auto *c = new Polynom();
-    c->addingPolinoms(p1, p2);
-    c->makeMod();
+template <int p>
+auto operator+(Polynom<p>& p1, Polynom<p>& p2) {
+    auto* c = new Polynom<p>();
+    c->Polynom<p>::addingPolinoms(p1, p2);
+    c->Polynom<p>::makeMod();
     return *c;
 }
 
-Polynom &operator-(Polynom &p1, Polynom &p2) {
-    auto *c = new Polynom();
-    c->differencePolinom(p1, p2);
-    c->makeMod();
+template <int p>
+auto operator-(Polynom<p>& p1, Polynom<p>& p2) {
+    auto* c = new Polynom<p>();
+    c->Polynom<p>::differencePolinom(p1, p2);
+    c->Polynom<p>::makeMod();
     return *c;
 }

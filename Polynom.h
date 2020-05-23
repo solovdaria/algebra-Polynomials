@@ -11,10 +11,8 @@
 #ifndef POLINOMS_POLYNOM_H
 #define POLINOMS_POLYNOM_H
 
-#include <iostream>
 #include <vector>
 #include <string>
-#include <algorithm>
 
 /*!
  * \brief class Polynom contains fields that describe polinom
@@ -29,6 +27,21 @@
  * key - coefficient of term
  * next - pointer to next object of structure "PElement"
  */
+template <int p>
+class Polynom;
+
+template <int p>
+auto derivative(Polynom<p>& pol1);
+template <int p>
+auto operator*(Polynom<p>& p1, Polynom<p>& p2);
+template <int p>
+auto operator+(Polynom<p>& p1, Polynom<p>& p2);
+template <int p>
+auto operator-(Polynom<p>& p1, Polynom<p>& p2);
+
+
+template <int p>//Template parameter field
+
 class Polynom {
 private:
     //!polynomial degree (maximum degree that a variable can have)
@@ -41,7 +54,6 @@ private:
         PElement *next;
     };
     //!Mod of polynom
-    int field = 6;
     void makeMod();
     //!Pointer to the first term of every object of class "Polynom"
     PElement *head;
@@ -61,17 +73,17 @@ public:
     ~Polynom();
 
     //!Getter and Setters (for me they are useless, but still...they are)
-    PElement *getHead()const;
-    void setHead(PElement * _head);
+    PElement* getHead()const;
+    void setHead(PElement* _head);
     int getPower() const;
     void setPower(int _power);
 
     //!output polinom
     void print();
     //!Making term of structure "PElement" (element of polinom) using the value of coefficient
-    static PElement * makeItem(int val);
+    static PElement* makeItem(int val);
     //!Adding term to the end of the polinom
-    static void appendItem(PElement * head, PElement * el);
+    static void appendItem(PElement* head, PElement* el);
 
     // Valuation of the polynom
     void valuate();
@@ -80,12 +92,13 @@ public:
     void addingPolinoms(Polynom& pol1, Polynom& pol2);
     void differencePolinom(Polynom& pol1, Polynom& pol2);
     void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
-
-    friend Polynom &derivative(Polynom& pol1);
-    friend Polynom &operator *(Polynom& p1, Polynom& p2);
-    friend Polynom &operator -(Polynom& p1, Polynom& p2);
-    friend Polynom &operator +(Polynom& p1, Polynom& p2);
+   
+    friend auto derivative<p>(Polynom<p>& pol1);
+    friend auto operator *<p>(Polynom<p>& p1, Polynom<p>& p2);
+    friend auto operator -<p>(Polynom<p>& p1, Polynom<p>& p2);
+    friend auto operator +<p>(Polynom<p>& p1, Polynom<p>& p2);
 };
+
 
 
 #endif //POLINOMS_POLYNOM_H

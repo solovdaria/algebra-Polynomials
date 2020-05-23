@@ -18,6 +18,7 @@ Field::Field(int p) {
 
 Polynom Field::plus(Polynom& p1, Polynom& p2)
 {
+
 	return Polynom();
 }
 
@@ -26,12 +27,12 @@ Polynom Field::minus(Polynom& p1, Polynom& p2)
 	return Polynom();
 }
 
-Polynom Field::divide(Polynom& p1, Polynom& p2)
+Polynom Field::multiply(Polynom& p1, Polynom& p2)
 {
 	return Polynom();
 }
 
-Polynom Field::multiply(Polynom& p1, Polynom& p2)
+Polynom Field::divide(Polynom& p1, Polynom& p2)
 {
 	return Polynom();
 }

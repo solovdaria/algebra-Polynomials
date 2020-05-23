@@ -1,6 +1,7 @@
 #pragma once
 #include "Polynom.h"
 
+template <int p>//Template parameter p (module)
 
 class Ring {
 private:
@@ -9,7 +10,6 @@ private:
 	Polynom Q;
 	// module (can be not prime)
 	int p;
-
 public:
 	
 };

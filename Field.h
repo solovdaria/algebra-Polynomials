@@ -1,19 +1,21 @@
 #pragma once
 #include "Polynom.h"
 
+template <int p>//Template parameter p (module)
+
 class Field {
 private:
 	// irreducible polynomial
 	Polynom Q;
 	// module prime
 	int p;
-	bool isPrime(int number);
+	bool isPrime(int);
 public:
-	Field(int p);
+	Field(int);
 
-	Polynom plus(Polynom& p1, Polynom& p2);
-	Polynom minus(Polynom& p1, Polynom& p2);
-	Polynom divide(Polynom& p1, Polynom& p2);
-	Polynom multiply(Polynom& p1, Polynom& p2);
+	Polynom plus(Polynom&, Polynom& );
+	Polynom minus(Polynom& , Polynom& );
+	Polynom divide(Polynom& , Polynom& );
+	Polynom multiply(Polynom& , Polynom& );
 
 };
