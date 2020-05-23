@@ -27,20 +27,27 @@
  * key - coefficient of term
  * next - pointer to next object of structure "PElement"
  */
-template <int p>
+
+//forward declaration 
+template <int p>//Template parameter p(field)
 class Polynom;
 
+//forward declaration 
 template <int p>
-auto derivative(Polynom<p>& pol1);
+auto derivative(Polynom<p>& );
 template <int p>
-auto operator*(Polynom<p>& p1, Polynom<p>& p2);
+auto operator*(Polynom<p>&, Polynom<p>& );
 template <int p>
-auto operator+(Polynom<p>& p1, Polynom<p>& p2);
+auto operator+(Polynom<p>& , Polynom<p>& );
 template <int p>
-auto operator-(Polynom<p>& p1, Polynom<p>& p2);
+auto operator-(Polynom<p>& , Polynom<p>& );
+template <int p>
+auto operator !=(Polynom<p>& , Polynom<p>& );
+template <int p>
+auto operator ==(Polynom<p>& , Polynom<p>& );
 
 
-template <int p>//Template parameter field
+template <int p>//Template parameter p(field)
 
 class Polynom {
 private:
@@ -56,7 +63,11 @@ private:
     //!Mod of polynom
     void makeMod();
     //!Pointer to the first term of every object of class "Polynom"
-    PElement *head;
+    PElement *head = nullptr;
+    //Clear PElement list
+    void clear();
+    //method sets the coefficient coef. on position pos equal to the value key
+    void set(int pos, int key);
 
     int getLastCoefficient();
     int modInverse(int x);
@@ -84,21 +95,30 @@ public:
     static PElement* makeItem(int val);
     //!Adding term to the end of the polinom
     static void appendItem(PElement* head, PElement* el);
-
+    //Each coefficient is shifting upwards
+    void shift(int n);
+    //copy polynom
+    void copy(Polynom& pol);
     // Valuation of the polynom
     void valuate();
     int evaluate(int x);
+
+    //Find the quotient and remainder A = Q * B + R
+    void quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R);
 
     void addingPolinoms(Polynom& pol1, Polynom& pol2);
     void differencePolinom(Polynom& pol1, Polynom& pol2);
     void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
    
+   
     friend auto derivative<p>(Polynom<p>& pol1);
     friend auto operator *<p>(Polynom<p>& p1, Polynom<p>& p2);
     friend auto operator -<p>(Polynom<p>& p1, Polynom<p>& p2);
     friend auto operator +<p>(Polynom<p>& p1, Polynom<p>& p2);
+    
+    //equality
+    friend auto operator ==<p>(Polynom<p>& p1, Polynom<p>& p2);
+    friend auto operator !=<p>(Polynom<p>& p1, Polynom<p>& p2);
 };
-
-
 
 #endif //POLINOMS_POLYNOM_H

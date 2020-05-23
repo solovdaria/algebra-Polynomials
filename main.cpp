@@ -7,8 +7,9 @@ using std::endl;
 
 int main() {
 
-    Polynom<5> a(2, { -7, 3, 2 });
-    Polynom<5> b(3, { 1, 1, -3, 4 });
+    Polynom<5> a(2, {4, 0, 7});
+    Polynom<5> h(2, { -7, 3, 2 });
+    Polynom<5> b(4, {0, 1, 1, -3, 4 });
   
     cout << "1) f(x) = ";
     a.print();
@@ -43,6 +44,14 @@ int main() {
     cout << "g(x)' = ";
     der2.print();
 
+    cout <<"a == h "<< bool(a == h) << endl;
+    cout << "h(x) = ";
+    h.print();
+    h.shift(5); cout << endl;
+    cout << "h(x) {shift 5} = ";
+    h.print();
+    h.copy(a);
+    h.print();
     return 0;
 
 }

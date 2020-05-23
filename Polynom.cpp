@@ -110,8 +110,8 @@ typename Polynom<p>::PElement* Polynom<p>::makeItem(int value) {
 template <int p>
 void Polynom<p>::appendItem(Polynom<p>::PElement* head, Polynom::PElement* el) {
     PElement* tmp = head;
-    while (tmp->next != nullptr) tmp = tmp->next;
-    tmp->next = el;
+        while (tmp->next) tmp = tmp->next;
+        tmp->next = el;
 }
 
 template <int p>
@@ -134,6 +134,45 @@ void Polynom<p>::print() {
         i++;
     }
     cout << endl;
+}
+
+template <int p>
+void Polynom<p>::shift(int n = 1) {
+    PElement* new_head = makeItem(0);
+    for(int i(1); i < n; i++) {
+        appendItem(new_head,makeItem(0));
+    }
+    appendItem(new_head, this->head);
+    setHead(new_head);
+}
+
+template <int p>
+void Polynom<p>::clear() {
+    auto* current = this->head;
+    while (current) {
+        this->head = this->head->next;
+        free(current);
+        current = this->head;
+    }
+    this->head = nullptr;
+}
+
+template <int p>
+void Polynom<p>::set(int pos, int key) {
+
+}
+
+template <int p>
+void Polynom<p>::copy(Polynom& pol) {
+    clear();
+    auto* tmp = pol.head;
+    this->head = makeItem(tmp->key);
+    tmp = tmp->next;
+    while (tmp) {
+        appendItem(this->head,makeItem(tmp->key));
+        tmp = tmp->next;
+    }
+    this->power = pol.power;
 }
 
 template <int p>
@@ -265,6 +304,11 @@ void Polynom<p>::multiplicatePolinom(Polynom& pol1, Polynom& pol2) {
 }
 
 template <int p>
+void Polynom<p>::quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R) {
+
+}
+
+template <int p>
 auto derivative(Polynom<p>& pol1)
 {
     auto* result = new Polynom<p>();
@@ -307,4 +351,21 @@ auto operator-(Polynom<p>& p1, Polynom<p>& p2) {
     c->Polynom<p>::differencePolinom(p1, p2);
     c->Polynom<p>::makeMod();
     return *c;
+}
+
+template <int p>
+auto operator==(Polynom<p>& p1, Polynom<p>& p2) {
+    if (p1.power != p2.power) return false;
+    Polynom<p>::PElement* temp1 = p1.head,* temp2 = p2.head;
+    while (temp1) {
+        if (temp1->key!= temp2->key) return false;
+        temp1 = temp1->next;
+        temp2 = temp2->next;
+    }
+     return true;
+}
+
+template <int p>
+auto operator!=(Polynom<p>& p1, Polynom<p>& p2) {
+    return !(p1 == p2);
 }
