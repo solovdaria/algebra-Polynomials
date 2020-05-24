@@ -51,9 +51,11 @@ template <int p>
 auto operator /(Polynom<p>&, Polynom<p>&);
 template <int p>
 auto operator %(Polynom<p>&, Polynom<p>&);
+template <int p>
+auto inverse(Polynom<p>& , Polynom<p>& );
 
 
-template <int p>//Template parameter p(field)
+template <int p>//!Template parameter p(field)
 
 class Polynom {
 private:
@@ -72,7 +74,7 @@ private:
     PElement *head = nullptr;
     //Clear PElement list
    
-    //method sets the coefficient coef. on position pos equal to the value key
+    //!Set the coefficient coef. on position pos equal to the value key
     void set(int pos, int key);
     
     void clear();
@@ -86,16 +88,15 @@ private:
     int modMultiply(int a, int b);
     int findPower();
     void cutZeroes();
-    //copy polynom
+    //!Copy polynom
     void copy(Polynom& pol);
-    //A polynomial whose leading coefficientis 1 is called monic
+    //!A polynomial whose leading coefficientis 1 is called monic
     bool isMonic();
     bool isZero(Polynom p);
    
 
 
 public:
-    bool ExistGcd(Polynom& p1, Polynom& p2);
     //!empty constructor
     Polynom();
     //!constructor that take power of polinom and vector of coefficients of this polinom
@@ -115,23 +116,25 @@ public:
     static PElement* makeItem(int val);
     //!Adding term to the end of the polinom
     static void appendItem(PElement* head, PElement* el);
-    //Each coefficient is shifting upwards
+    //!Each coefficient is shifting upwards
     void shift(int n);
-    // Valuation of the polynom
+    //!Valuation of the polynom
     void valuate(int coef);
-    //A polynomial whose leading coefficientis 1 is called monic
+    //!A polynomial whose leading coefficientis 1 is called monic
     void makeMonic();
     int evaluate(int x);
 
-    //Find the quotient and remainder A = Q * B + R
+    //!Find the quotient and remainder A = Q * B + R
     void quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R);
 
     void addingPolinoms(Polynom& pol1, Polynom& pol2);
     void differencePolinom(Polynom& pol1, Polynom& pol2);
     void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
     auto gcd(Polynom& pol1, Polynom& pol2);
+    auto gcdExtended(Polynom& A, Polynom& B, Polynom& S, Polynom& T);
    
    
+    friend auto inverse<p>(Polynom<p>& pol, Polynom<p>& field );
     friend auto GCD<p>(Polynom<p>& p1, Polynom<p>& p2);
     friend auto derivative<p>(Polynom<p>& pol1);
     friend auto operator *<p>(Polynom<p>& p1, Polynom<p>& p2);
@@ -140,7 +143,7 @@ public:
     friend auto operator /<p>(Polynom<p>& p1, Polynom<p>& p2);
     friend auto operator %<p>(Polynom<p>& p1, Polynom<p>& p2);
     
-    //equality
+    //!equality operators
     friend auto operator ==<p>(Polynom<p>& p1, Polynom<p>& p2);
     friend auto operator !=<p>(Polynom<p>& p1, Polynom<p>& p2);
 };

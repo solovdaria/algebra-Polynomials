@@ -7,10 +7,10 @@ using std::endl;
 
 int main() {
 
-    Polynom<5> a(6, {1,2,1,4,2,4,1});
+    Polynom<5> a(2, {1,2,1});
     Polynom<5> g(2, {1,3,1});
     Polynom<5> h(1, {1,2});
-    Polynom<5> b(3, {1,1,4,1});
+    Polynom<5> b(1, {1,1});
     Polynom<5> zero(0, {0});
 
     cout << "1) f(x) = ";
@@ -54,11 +54,11 @@ int main() {
 
     a.print();
     b.print();
-    Polynom<5> div1 = b/a;
+    Polynom<5> div1 = a/b;
     cout << "f(x) / g(x) = ";
     div1.print();
     
-    Polynom<5> div2 = a % zero;
+    Polynom<5> div2 = a % b;
     cout << "f(x) % g(x) = ";
     div2.print();
 

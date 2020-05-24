@@ -411,37 +411,59 @@ void Polynom<p>::quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R) {
 }
 
 template <int p>
-bool Polynom<p>::ExistGcd(Polynom& p1, Polynom& p2) {
-    if (p1.power < p2.power) {
-        Polynom temp = p1;
-        p1 = p2;
-        p2 = temp;
-    }
-    if (p1.isZero(p1 % p2)) return true;
-    return false;
-}
-
-template <int p>
 auto Polynom<p>::gcd(Polynom& pol1, Polynom& pol2) {
-    if (isZero(pol2)) {
+    if (pol2.isZero(pol2)) {
         if (pol1.isMonic()) return pol1;
         Polynom<p> pol1_copy; pol1_copy.copy(pol1);
         pol1_copy.makeMonic();
         return pol1_copy;
     }
-    Polynom<p> odd;
-    odd = pol1 % pol2;
-    return gcd(pol2,odd);
+    Polynom<p> odd = pol1 % pol2;
+    if (odd.power == 0 && odd.head->key != 0) return Polynom(0, {1});
+    return gcd(pol2, odd);
 }
 
 template <int p>
-auto GCD(Polynom<p>& p1, Polynom<p>& p2) {
-    if (p1.Polynom<p>::ExistGcd(p1,p2)) {
-        Polynom<p>c = p1.Polynom<p>::gcd(p1, p2);
-        c.Polynom<p>::makeMod();
-        return c;
+auto Polynom<p>::gcdExtended(Polynom& A, Polynom& B, Polynom& S, Polynom& T) {
+    Polynom D;
+
+    if (A.isZero(A) && B.isZero(B)) {
+        S.clear();
+        T.clear();
+        return D;
     }
-    Polynom<p>c(0, {1});
+
+    if (B.isZero(B)) {
+        D.copy(A);
+        int a_lead = A.getLastCoefficient();
+        D.makeMonic();
+        S = Polynom(0, { modDivision(1,a_lead) });
+        T.clear();
+        return D;
+    }
+
+    Polynom Q, R;
+    quot_rem(A, B, Q, R);
+    if (R.power == 0 && R.head->key != 0) return Polynom(0, { 1 });
+    Polynom S_copy, T_copy;
+
+    D = gcdExtended(B, R, S_copy, T_copy);
+    S = T_copy;
+    Polynom temp = Q * T_copy;
+    if(temp.head)
+    T = S_copy - temp; 
+    return D;
+ }
+
+template <int p>
+auto GCD(Polynom<p>& p1, Polynom<p>& p2) {
+    if (p1.power < p2.power) {
+        Polynom<p> temp = p1;
+        p1 = p2;
+        p2 = temp;
+    }
+    Polynom<p>c = p1.Polynom<p>::gcd(p1, p2);
+    c.Polynom<p>::makeMod();
     return c;
 }
 
@@ -532,4 +554,9 @@ auto operator==(Polynom<p>& p1, Polynom<p>& p2) {
 template <int p>
 auto operator!=(Polynom<p>& p1, Polynom<p>& p2) {
     return !(p1 == p2);
+}
+
+template <int p>
+auto inverse(Polynom<p>& pol, Polynom<p>& field) {
+
 }
