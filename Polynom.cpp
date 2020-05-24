@@ -186,7 +186,7 @@ void Polynom<p>::print() {
 }
 
 template <int p>
-void Polynom<p>::shift(int n = 1) {
+void Polynom<p>::shift(int n) {
     PElement* new_head = makeItem(0);
     for(int i(1); i < n; i++) {
         appendItem(new_head,makeItem(0));
@@ -313,10 +313,10 @@ int Polynom<p>::evaluate(int x)
 {
     PElement* temp = head;
     int result = 0;
-    int p = 0;
+    int pp = 0;
     while (temp != nullptr) {
         result = result + temp->key * pow(x, p);
-        p++;
+        pp++;
         temp = temp->next;
     }
     return result;
@@ -471,7 +471,7 @@ template <int p>
 auto derivative(Polynom<p>& pol1)
 {
     auto* result = new Polynom<p>();
-    Polynom<p>::PElement* temp = pol1.head;
+    auto temp = pol1.head;
     result->power = pol1.power - 1;
 
     int power = 0;
@@ -542,7 +542,7 @@ auto operator%(Polynom<p>& p1, Polynom<p>& p2) {
 template <int p>
 auto operator==(Polynom<p>& p1, Polynom<p>& p2) {
     if (p1.power != p2.power) return false;
-    Polynom<p>::PElement* temp1 = p1.head,* temp2 = p2.head;
+    auto temp1 = p1.head, temp2 = p2.head;
     while (temp1) {
         if (temp1->key!= temp2->key) return false;
         temp1 = temp1->next;
