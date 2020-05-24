@@ -68,6 +68,7 @@ private:
     void clear();
     //method sets the coefficient coef. on position pos equal to the value key
     void set(int pos, int key);
+    
 
     int getLastCoefficient();
     int modInverse(int x);
@@ -76,6 +77,7 @@ private:
 
 
 public:
+   
     //!empty constructor
     Polynom();
     //!constructor that take power of polinom and vector of coefficients of this polinom

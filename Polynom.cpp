@@ -144,6 +144,7 @@ void Polynom<p>::shift(int n = 1) {
     }
     appendItem(new_head, this->head);
     setHead(new_head);
+    this->power += n;
 }
 
 template <int p>
@@ -155,11 +156,34 @@ void Polynom<p>::clear() {
         current = this->head;
     }
     this->head = nullptr;
+    this->power = -1;
 }
 
 template <int p>
 void Polynom<p>::set(int pos, int key) {
-
+    auto* tmp = this->head;
+    if (pos <= this->power) {
+        int counter = 0;
+        while (counter!=pos) {
+            if (counter == pos) break;
+            tmp = tmp->next;
+            counter++;
+        }
+        tmp->key = key;
+    }
+    else {
+        int counter = 0;
+        while (tmp) {
+            tmp = tmp->next;
+            counter++;
+        }
+        for (int j(counter); j < pos; j++) {
+            appendItem(this->head, makeItem(0));
+        }
+        appendItem(this->head, makeItem(key));
+        this->power = pos;
+    }
+    makeMod();
 }
 
 template <int p>

@@ -50,8 +50,8 @@ int main() {
     h.shift(5); cout << endl;
     cout << "h(x) {shift 5} = ";
     h.print();
-    h.copy(a);
-    h.print();
+   
+
     return 0;
 
 }
