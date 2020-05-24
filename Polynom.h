@@ -90,7 +90,7 @@ private:
     void copy(Polynom& pol);
     //A polynomial whose leading coefficientis 1 is called monic
     bool isMonic();
-    bool isZero(Polynom p);
+    bool isZero(Polynom pol);
    
 
 
@@ -116,7 +116,7 @@ public:
     //!Adding term to the end of the polinom
     static void appendItem(PElement* head, PElement* el);
     //Each coefficient is shifting upwards
-    void shift(int n);
+    void shift(int n = 1);
     // Valuation of the polynom
     void valuate(int coef);
     //A polynomial whose leading coefficientis 1 is called monic
