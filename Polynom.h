@@ -32,7 +32,9 @@
 template <int p>//Template parameter p(field)
 class Polynom;
 
-//forward declaration 
+//forward declaration
+template <int p>
+auto GCD(Polynom<p>&, Polynom<p>&);
 template <int p>
 auto derivative(Polynom<p>& );
 template <int p>
@@ -86,10 +88,14 @@ private:
     void cutZeroes();
     //copy polynom
     void copy(Polynom& pol);
+    //A polynomial whose leading coefficientis 1 is called monic
+    bool isMonic();
+    bool isZero(Polynom p);
+   
 
 
 public:
-    
+    bool ExistGcd(Polynom& p1, Polynom& p2);
     //!empty constructor
     Polynom();
     //!constructor that take power of polinom and vector of coefficients of this polinom
@@ -113,6 +119,7 @@ public:
     void shift(int n);
     // Valuation of the polynom
     void valuate(int coef);
+    //A polynomial whose leading coefficientis 1 is called monic
     void makeMonic();
     int evaluate(int x);
 
@@ -122,8 +129,10 @@ public:
     void addingPolinoms(Polynom& pol1, Polynom& pol2);
     void differencePolinom(Polynom& pol1, Polynom& pol2);
     void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
+    auto gcd(Polynom& pol1, Polynom& pol2);
    
    
+    friend auto GCD<p>(Polynom<p>& p1, Polynom<p>& p2);
     friend auto derivative<p>(Polynom<p>& pol1);
     friend auto operator *<p>(Polynom<p>& p1, Polynom<p>& p2);
     friend auto operator -<p>(Polynom<p>& p1, Polynom<p>& p2);

@@ -36,6 +36,7 @@ int Polynom<p>::getCoefficient(int pos) {
     return temp->key;
 }
 
+
 template <int p>
 void Polynom<p>::cutZeroes() {
     int flag = this->findPower();
@@ -295,6 +296,19 @@ void Polynom<p>::makeMonic() {
 }
 
 template <int p>
+bool Polynom<p>::isMonic() {
+    int coef = getLastCoefficient();
+    return(coef == 1);
+}
+
+template <int p>
+bool Polynom<p>::isZero(Polynom pol) {
+    Polynom<p> zero(0, {0});
+    return (pol == zero);
+
+}
+
+template <int p>
 int Polynom<p>::evaluate(int x)
 {
     PElement* temp = head;
@@ -356,8 +370,7 @@ void Polynom<p>::differencePolinom(Polynom& pol1, Polynom& pol2) {
 
 template <int p>
 void Polynom<p>::multiplicatePolinom(Polynom& pol1, Polynom& pol2) {
-    Polynom zero(0, {0});
-    if (pol1 == zero || pol2 == zero) return;
+    if (isZero(pol1)|| isZero(pol2)) return;
     
     int pow = pol1.power + pol2.power;
     for (size_t k(0); k <= pow; k++) {
@@ -372,29 +385,64 @@ void Polynom<p>::multiplicatePolinom(Polynom& pol1, Polynom& pol2) {
 
 template <int p>
 void Polynom<p>::quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R) {
-    Polynom<p> AA; AA.copy(A);
+    Polynom<p> A_copy; A_copy.copy(A);
     Q.clear(); R.clear();
-    while (AA.power >= B.power) {
-        int k = AA.power - B.power;
-        Polynom<p> BB; BB.copy(B);
+    while (A_copy.power >= B.power) {
+        int k = A_copy.power - B.power;
+        Polynom<p> B_copy; B_copy.copy(B);
         if(k)
-        BB.shift(k);
-        int a_lead = AA.getLastCoefficient();
-        int b_lead = BB.getLastCoefficient();
+        B_copy.shift(k);
+        int a_lead = A_copy.getLastCoefficient();
+        int b_lead = B_copy.getLastCoefficient();
 
-        for (size_t j(0); j <= BB.power; j++) {
-            int set_value = BB.getCoefficient(j) * (a_lead / b_lead);
-            BB.set(j,set_value);
+        for (size_t j(0); j <= B_copy.power; j++) {
+            int set_value = modMultiply(B_copy.getCoefficient(j),modDivision(a_lead , b_lead));
+            B_copy.set(j,set_value);
         }
-        Polynom<p> temp = AA - BB;
-        AA = temp;
-        AA.cutZeroes();
+        Polynom<p> temp = A_copy - B_copy;
+        A_copy = temp;
+        A_copy.cutZeroes();
         Q.set(k, modDivision(a_lead, b_lead));
     }
     Polynom<p> temp = Q * B;
     temp.cutZeroes();
     R = A - temp;
     R.cutZeroes();
+}
+
+template <int p>
+bool Polynom<p>::ExistGcd(Polynom& p1, Polynom& p2) {
+    if (p1.power < p2.power) {
+        Polynom temp = p1;
+        p1 = p2;
+        p2 = temp;
+    }
+    if (p1.isZero(p1 % p2)) return true;
+    return false;
+}
+
+template <int p>
+auto Polynom<p>::gcd(Polynom& pol1, Polynom& pol2) {
+    if (isZero(pol2)) {
+        if (pol1.isMonic()) return pol1;
+        Polynom<p> pol1_copy; pol1_copy.copy(pol1);
+        pol1_copy.makeMonic();
+        return pol1_copy;
+    }
+    Polynom<p> odd;
+    odd = pol1 % pol2;
+    return gcd(pol2,odd);
+}
+
+template <int p>
+auto GCD(Polynom<p>& p1, Polynom<p>& p2) {
+    if (p1.Polynom<p>::ExistGcd(p1,p2)) {
+        Polynom<p>c = p1.Polynom<p>::gcd(p1, p2);
+        c.Polynom<p>::makeMod();
+        return c;
+    }
+    Polynom<p>c(0, {1});
+    return c;
 }
 
 template <int p>
@@ -444,6 +492,8 @@ auto operator-(Polynom<p>& p1, Polynom<p>& p2) {
 
 template <int p>
 auto operator/(Polynom<p>& p1, Polynom<p>& p2) {
+    if (p1.power < p2.power) { cout << "Can`t divide! The degree of dividend is always greater than divisor!\n\n"; return Polynom<p>(); }
+    if(p1.isZero(p2)){ cout << "Can't divide by 0!\n"; return Polynom<p>(); }
     Polynom<p> Q, R;
     if (p2.power == 0) {
         p1.valuate(p2.head->key);
@@ -456,6 +506,8 @@ auto operator/(Polynom<p>& p1, Polynom<p>& p2) {
 
 template <int p>
 auto operator%(Polynom<p>& p1, Polynom<p>& p2) {
+    if (p1.power < p2.power) { cout << "Can`t divide! The degree of dividend is always greater than divisor!\n\n"; return Polynom<p>(); }
+    if (p1.isZero(p2)) { cout << "Can't divide by 0!\n"; return Polynom<p>(); }
     Polynom<p> Q, R;
     if (p2.power == 0) {
         return Polynom<p>(0, {0});

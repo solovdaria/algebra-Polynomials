@@ -7,11 +7,12 @@ using std::endl;
 
 int main() {
 
-    Polynom<5> a(3, {0,2,1,1});
+    Polynom<5> a(6, {1,2,1,4,2,4,1});
     Polynom<5> g(2, {1,3,1});
-    Polynom<5> h(1, { 1,2});
-    Polynom<5> b(1, {3,1});
-  
+    Polynom<5> h(1, {1,2});
+    Polynom<5> b(3, {1,1,4,1});
+    Polynom<5> zero(0, {0});
+
     cout << "1) f(x) = ";
     a.print();
     cout << "f(4) = " << a.evaluate(4) << "\n\n";
@@ -53,15 +54,22 @@ int main() {
 
     a.print();
     b.print();
-    Polynom<5> div1 = a/b;
+    Polynom<5> div1 = b/a;
     cout << "f(x) / g(x) = ";
     div1.print();
     
-    Polynom<5> div2 = a % b;
+    Polynom<5> div2 = a % zero;
     cout << "f(x) % g(x) = ";
     div2.print();
 
-   
+    Polynom<5> gcd1 = GCD(b,a);
+    cout << "gcd(b,a) = ";
+    gcd1.print();
+
+    Polynom<5> gcd2 = GCD(a,b);
+    cout << "gcd(a,b) = ";
+    gcd2.print();
+
     return 0;
 
 }
