@@ -74,7 +74,7 @@ void Polynom::print() {
         if (!isFirst) cout << "+";
         else isFirst = false;
         if (tmp->key != 1 || i == 0)
-        cout << tmp->key;
+            cout << tmp->key;
         if (i != 0) cout << "x^" << i;
         tmp = tmp->next;
         i++;
