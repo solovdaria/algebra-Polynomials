@@ -45,6 +45,10 @@ template <int p>
 auto operator !=(Polynom<p>& , Polynom<p>& );
 template <int p>
 auto operator ==(Polynom<p>& , Polynom<p>& );
+template <int p>
+auto operator /(Polynom<p>&, Polynom<p>&);
+template <int p>
+auto operator %(Polynom<p>&, Polynom<p>&);
 
 
 template <int p>//Template parameter p(field)
@@ -65,19 +69,27 @@ private:
     //!Pointer to the first term of every object of class "Polynom"
     PElement *head = nullptr;
     //Clear PElement list
-    void clear();
+   
     //method sets the coefficient coef. on position pos equal to the value key
     void set(int pos, int key);
     
-
+    void clear();
+    
+  
     int getLastCoefficient();
+    int getCoefficient(int pos);
     int modInverse(int x);
     int gcdExtended(int a, int b, int* x, int* y);
     int modDivision(int a, int b);
+    int modMultiply(int a, int b);
+    int findPower();
+    void cutZeroes();
+    //copy polynom
+    void copy(Polynom& pol);
 
 
 public:
-   
+    
     //!empty constructor
     Polynom();
     //!constructor that take power of polinom and vector of coefficients of this polinom
@@ -99,10 +111,9 @@ public:
     static void appendItem(PElement* head, PElement* el);
     //Each coefficient is shifting upwards
     void shift(int n);
-    //copy polynom
-    void copy(Polynom& pol);
     // Valuation of the polynom
-    void valuate();
+    void valuate(int coef);
+    void makeMonic();
     int evaluate(int x);
 
     //Find the quotient and remainder A = Q * B + R
@@ -117,6 +128,8 @@ public:
     friend auto operator *<p>(Polynom<p>& p1, Polynom<p>& p2);
     friend auto operator -<p>(Polynom<p>& p1, Polynom<p>& p2);
     friend auto operator +<p>(Polynom<p>& p1, Polynom<p>& p2);
+    friend auto operator /<p>(Polynom<p>& p1, Polynom<p>& p2);
+    friend auto operator %<p>(Polynom<p>& p1, Polynom<p>& p2);
     
     //equality
     friend auto operator ==<p>(Polynom<p>& p1, Polynom<p>& p2);

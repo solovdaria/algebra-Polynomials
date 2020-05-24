@@ -7,9 +7,10 @@ using std::endl;
 
 int main() {
 
-    Polynom<5> a(2, {4, 0, 7});
-    Polynom<5> h(2, { -7, 3, 2 });
-    Polynom<5> b(4, {0, 1, 1, -3, 4 });
+    Polynom<5> a(3, {0,2,1,1});
+    Polynom<5> g(2, {1,3,1});
+    Polynom<5> h(1, { 1,2});
+    Polynom<5> b(1, {3,1});
   
     cout << "1) f(x) = ";
     a.print();
@@ -20,19 +21,18 @@ int main() {
 
     Polynom<5> e(1, { 1,5 });
     e.print();
-    e.valuate();
+    e.makeMonic();
     e.print();
 
     //!before each action, re-declare the variable (for each action - new variable)
     Polynom<5> res = a + b;
     cout << "f(x) + g(x) = ";
     res.print();
+    a.print(); b.print();
 
-    Polynom<5> c = a - b;
-    cout << "f(x) - g(x) = ";
-    c.print();
 
-    Polynom<5> d = a * b;
+    Polynom<5> d = g * h;
+    g.print(); h.print();
     cout << "f(x) * g(x) = ";
     d.print();
 
@@ -50,8 +50,18 @@ int main() {
     h.shift(5); cout << endl;
     cout << "h(x) {shift 5} = ";
     h.print();
-   
 
+    a.print();
+    b.print();
+    Polynom<5> div1 = a/b;
+    cout << "f(x) / g(x) = ";
+    div1.print();
+    
+    Polynom<5> div2 = a % b;
+    cout << "f(x) % g(x) = ";
+    div2.print();
+
+   
     return 0;
 
 }

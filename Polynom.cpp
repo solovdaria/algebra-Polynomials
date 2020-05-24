@@ -25,6 +25,32 @@ int Polynom<p>::getLastCoefficient()
 }
 
 template <int p>
+int Polynom<p>::getCoefficient(int pos) {
+    PElement* temp = this->head;
+    int counter(0);
+    while (temp->next) { 
+        if (counter == pos) break;
+        temp = temp->next;
+        counter++;
+    }
+    return temp->key;
+}
+
+template <int p>
+void Polynom<p>::cutZeroes() {
+    int flag = this->findPower();
+    auto* temp = this->head;
+    PElement* new_head = makeItem(this->head->key);
+    for (size_t i(0); i < flag; i++) {
+        temp = temp->next;
+        appendItem(new_head, makeItem(temp->key));
+    }
+    clear();
+    setHead(new_head);
+    this->power = flag;
+}
+
+template <int p>
 int Polynom<p>::modInverse(int number)
 {
     int x, y; 
@@ -65,6 +91,11 @@ int Polynom<p>::modDivision(int a, int b)
 }
 
 template <int p>
+int Polynom<p>::modMultiply(int a, int b) {
+    return (a * b) % p;
+}
+
+template <int p>
 Polynom<p>::Polynom() {
     head = nullptr;
     power = 0;
@@ -100,6 +131,22 @@ void Polynom<p>::makeMod() {
 }
 
 template <int p>
+int Polynom<p>::findPower() {
+    int flag=0,counter=0;
+    auto* tmp = this->head;
+    while (tmp) {
+        if (tmp->key) {
+            flag = counter;
+            counter++;
+        }
+        else 
+            counter++;
+        tmp = tmp->next;
+    }
+    return flag;
+}
+
+template <int p>
 typename Polynom<p>::PElement* Polynom<p>::makeItem(int value) {
     auto* el = new PElement;
     el->key = value;
@@ -117,6 +164,7 @@ void Polynom<p>::appendItem(Polynom<p>::PElement* head, Polynom::PElement* el) {
 template <int p>
 void Polynom<p>::print() {
     PElement* tmp = this->head;
+
     int i = 0;
     bool isFirst = true;
     while (tmp != nullptr) {
@@ -155,8 +203,7 @@ void Polynom<p>::clear() {
         free(current);
         current = this->head;
     }
-    this->head = nullptr;
-    this->power = -1;
+    this->power = 0;
 }
 
 template <int p>
@@ -164,20 +211,26 @@ void Polynom<p>::set(int pos, int key) {
     auto* tmp = this->head;
     if (pos <= this->power) {
         int counter = 0;
-        while (counter!=pos) {
+        while (tmp) {
             if (counter == pos) break;
             tmp = tmp->next;
             counter++;
         }
-        tmp->key = key;
+        if (this->power == 0)
+            this->head = makeItem(key);
+        else
+            tmp->key = key;
     }
     else {
         int counter = 0;
+        if(tmp)
         while (tmp) {
             tmp = tmp->next;
             counter++;
         }
-        for (int j(counter); j < pos; j++) {
+        int j = counter;
+        if (counter == 0) { this->head = makeItem(0); counter++; }
+        for (int j(counter); j <pos; j++) {
             appendItem(this->head, makeItem(0));
         }
         appendItem(this->head, makeItem(key));
@@ -201,8 +254,7 @@ void Polynom<p>::copy(Polynom& pol) {
 
 template <int p>
 Polynom<p>::~Polynom() {
-    if (head)
-        delete head->next;
+   //
 }
 
 template <int p>
@@ -226,15 +278,20 @@ void Polynom<p>::setPower(int _power) {
 }
 
 template <int p>
-void Polynom<p>::valuate()
+void Polynom<p>::valuate(int coef)
 {
-    int coeffecient = getLastCoefficient();
     PElement* temp = head;
     while (temp) {
-        temp->key = modDivision(temp->key, coeffecient);
+        temp->key = modDivision(temp->key, coef);
         temp = temp->next;
     }
 
+}
+
+template<int p>
+void Polynom<p>::makeMonic() {
+    int coef = getLastCoefficient();
+    valuate(coef);
 }
 
 template <int p>
@@ -276,7 +333,7 @@ void Polynom<p>::addingPolinoms(Polynom& pol1, Polynom& pol2) {
 
 template <int p>
 void Polynom<p>::differencePolinom(Polynom& pol1, Polynom& pol2) {
-    power = (pol1.power > pol2.power) ? pol1.power : pol2.power;
+    this->power = (pol1.power > pol2.power) ? pol1.power : pol2.power;
     head = makeItem(pol1.head->key - pol2.head->key);
 
     PElement* tmp1 = pol1.head->next;
@@ -299,37 +356,45 @@ void Polynom<p>::differencePolinom(Polynom& pol1, Polynom& pol2) {
 
 template <int p>
 void Polynom<p>::multiplicatePolinom(Polynom& pol1, Polynom& pol2) {
-
-    power = pol1.power * pol2.power - 1;
-    int pow = power;
-    std::vector<int> num(pow + 1);
-
-    PElement* tmp1 = pol1.head;
-    PElement* tmp2 = pol2.head;
-    int i = 0, j = 0;
-
-    while (tmp1) {
-        while (tmp2) {
-            if ((i + j) < (power + 1))
-                num[i + j] += tmp1->key * tmp2->key;
-            j++;
-            tmp2 = tmp2->next;
+    Polynom zero(0, {0});
+    if (pol1 == zero || pol2 == zero) return;
+    
+    int pow = pol1.power + pol2.power;
+    for (size_t k(0); k <= pow; k++) {
+        int c(0);
+        for (size_t j(0); j <= k; j++) {
+            if ((j <= pol1.power) && (k - j <= pol2.power))
+                c += modMultiply(pol1.getCoefficient(j), pol2.getCoefficient(k - j));
         }
-        tmp1 = tmp1->next;
-        i++;
-        tmp2 = pol2.head;
-        j = 0;
-    }
-    head = makeItem(num[0]);
-
-    for (int n = 1; n < num.size(); n++) {
-        appendItem(head, makeItem(num[n]));
+        this->set(k,c);
     }
 }
 
 template <int p>
 void Polynom<p>::quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R) {
+    Polynom<p> AA; AA.copy(A);
+    Q.clear(); R.clear();
+    while (AA.power >= B.power) {
+        int k = AA.power - B.power;
+        Polynom<p> BB; BB.copy(B);
+        if(k)
+        BB.shift(k);
+        int a_lead = AA.getLastCoefficient();
+        int b_lead = BB.getLastCoefficient();
 
+        for (size_t j(0); j <= BB.power; j++) {
+            int set_value = BB.getCoefficient(j) * (a_lead / b_lead);
+            BB.set(j,set_value);
+        }
+        Polynom<p> temp = AA - BB;
+        AA = temp;
+        AA.cutZeroes();
+        Q.set(k, modDivision(a_lead, b_lead));
+    }
+    Polynom<p> temp = Q * B;
+    temp.cutZeroes();
+    R = A - temp;
+    R.cutZeroes();
 }
 
 template <int p>
@@ -375,6 +440,29 @@ auto operator-(Polynom<p>& p1, Polynom<p>& p2) {
     c->Polynom<p>::differencePolinom(p1, p2);
     c->Polynom<p>::makeMod();
     return *c;
+}
+
+template <int p>
+auto operator/(Polynom<p>& p1, Polynom<p>& p2) {
+    Polynom<p> Q, R;
+    if (p2.power == 0) {
+        p1.valuate(p2.head->key);
+        Q.copy(p1);
+    }
+    else
+    p1.Polynom<p>::quot_rem(p1,p2,Q,R);
+    return Q;
+}
+
+template <int p>
+auto operator%(Polynom<p>& p1, Polynom<p>& p2) {
+    Polynom<p> Q, R;
+    if (p2.power == 0) {
+        return Polynom<p>(0, {0});
+    }
+    else
+    p1.Polynom<p>::quot_rem(p1, p2, Q, R);
+    return R;
 }
 
 template <int p>
