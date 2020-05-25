@@ -430,8 +430,9 @@ auto Polynom<p>::gcd(Polynom& pol1, Polynom& pol2) {
 
 template <int p>
 auto Polynom<p>::gcdExtended(Polynom& A, Polynom& B) {
-    Polynom S, R, V(0, {0}), U(0, {1});
+    Polynom S, R, V(0, {0}), U(0, {1});//U is inverse of A mod B(p^m)
     Polynom Rshift, Ushift,temp;
+
     S.copy(B); R.copy(A);
 
     while (R.power) {
@@ -446,6 +447,7 @@ auto Polynom<p>::gcdExtended(Polynom& A, Polynom& B) {
         S = S - Rshift;
         V = V - Ushift;
     }
+
     U.makeMonic();
     return U;
 }
@@ -556,6 +558,6 @@ auto operator!=(Polynom<p>& p1, Polynom<p>& p2) {
 
 template <int p>
 auto inverse(Polynom<p>& pol, Polynom<p>& field) {
-    Polynom<p>c = pol.Polynom<p>::gcdExtended(pol, field);
-    return c;
+    Polynom<p> result = pol.Polynom<p>::gcdExtended(pol, field);
+    return result;
 }

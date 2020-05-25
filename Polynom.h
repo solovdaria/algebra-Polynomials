@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by Taisiia on 07.03.2020.
 //
 /*!
@@ -94,8 +94,6 @@ private:
     bool isMonic();
     bool isZero(Polynom pol);
    
-
-
 public:
     //!empty constructor
     Polynom();
@@ -131,9 +129,10 @@ public:
     void differencePolinom(Polynom& pol1, Polynom& pol2);
     void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
     auto gcd(Polynom& pol1, Polynom& pol2);
+    //U = A^(-1) in field B(p^m)
     auto gcdExtended(Polynom& A, Polynom& B);
    
-   
+    //Algorithm for Inversion in field GF(p^m) based on Extended Euclid’s Algorithm
     friend auto inverse<p>(Polynom<p>& pol, Polynom<p>& field );
     friend auto GCD<p>(Polynom<p>& p1, Polynom<p>& p2);
     friend auto derivative<p>(Polynom<p>& pol1);
