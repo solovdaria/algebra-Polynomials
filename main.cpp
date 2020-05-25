@@ -90,6 +90,26 @@ int main() {
     cout << "gcd(h, g) = ";
     gcd4.print();
 
+    Polynom<3> x(1, {0,1}), field(3, {1,0,1,1});
+    Polynom<3> inv = inverse(x, field);
+    cout << "inverse(x, field) = ";
+    inv.print();
+
+    Polynom<3> irr(3, {1,2,0,1});
+    Polynom<3> tar(2, {1,1,1});
+
+    Polynom<3> div3 = irr / tar ;
+    cout << "irr / tar = ";
+    div3.print();
+
+    Polynom<3> div4 = irr % tar ;
+    cout << "irr % tar = ";
+    div4.print();
+
+    Polynom<3> gcd5 = GCD(irr, tar);
+    cout << "gcd(irr, tar) = ";
+    gcd4.print();
+
     return 0;
 
 }

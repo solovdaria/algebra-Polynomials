@@ -110,8 +110,8 @@ Polynom<p>::Polynom(int _power, std::vector<int> keys) {
     for (int i = 1; i < keys.size(); i++) {
         appendItem(head, makeItem(keys[i]));
     }
-    cutZeroes();
     makeMod();
+    cutZeroes();
 }
 
 template <int p>
@@ -188,6 +188,7 @@ void Polynom<p>::print() {
 
 template <int p>
 void Polynom<p>::shift(int n) {
+    if (n == 0) return;
     PElement* new_head = makeItem(0);
     for (int i(1); i < n; i++) {
         appendItem(new_head, makeItem(0));
@@ -408,7 +409,6 @@ void Polynom<p>::quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R) {
     Polynom<p> temp = Q * B;
     temp.cutZeroes();
     R = A - temp;
-    R.cutZeroes();
 }
 
 template <int p>
@@ -425,35 +425,25 @@ auto Polynom<p>::gcd(Polynom& pol1, Polynom& pol2) {
 }
 
 template <int p>
-auto Polynom<p>::gcdExtended(Polynom& A, Polynom& B, Polynom& S, Polynom& T) {
-    Polynom D;
+auto Polynom<p>::gcdExtended(Polynom& A, Polynom& B) {
+    Polynom S, R, V(0, {0}), U(0, {1});
+    Polynom Rshift, Ushift,temp;
+    S.copy(B); R.copy(A);
 
-    if (A.isZero(A) && B.isZero(B)) {
-        S.clear();
-        T.clear();
-        return D;
+    while (R.power) {
+        int s = S.power - R.power;
+        if (s < 0) {
+            temp.copy(S); S.copy(R); R.copy(temp);
+            temp.copy(V); V.copy(U); U.copy(temp);
+            s *= -1;
+        }
+        Rshift.copy(R); Ushift.copy(U);
+        Rshift.shift(s); Ushift.shift(s);
+        S = S - Rshift;
+        V = V - Ushift;
     }
-
-    if (B.isZero(B)) {
-        D.copy(A);
-        int a_lead = A.getLastCoefficient();
-        D.makeMonic();
-        S = Polynom(0, { modDivision(1,a_lead) });
-        T.clear();
-        return D;
-    }
-
-    Polynom Q, R;
-    quot_rem(A, B, Q, R);
-    if (R.power == 0 && R.head->key != 0) return Polynom(0, { 1 });
-    Polynom S_copy, T_copy;
-
-    D = gcdExtended(B, R, S_copy, T_copy);
-    S = T_copy;
-    Polynom temp = Q * T_copy;
-    if (temp.head)
-        T = S_copy - temp;
-    return D;
+    U.makeMonic();
+    return U;
 }
 
 template <int p>
@@ -562,5 +552,6 @@ auto operator!=(Polynom<p>& p1, Polynom<p>& p2) {
 
 template <int p>
 auto inverse(Polynom<p>& pol, Polynom<p>& field) {
-
+    Polynom<p>c = pol.Polynom<p>::gcdExtended(pol, field);
+    return c;
 }

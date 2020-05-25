@@ -131,7 +131,7 @@ public:
     void differencePolinom(Polynom& pol1, Polynom& pol2);
     void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
     auto gcd(Polynom& pol1, Polynom& pol2);
-    auto gcdExtended(Polynom& A, Polynom& B, Polynom& S, Polynom& T);
+    auto gcdExtended(Polynom& A, Polynom& B);
    
    
     friend auto inverse<p>(Polynom<p>& pol, Polynom<p>& field );
