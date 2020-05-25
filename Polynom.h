@@ -92,7 +92,7 @@ private:
     void copy(Polynom& pol);
     //!A polynomial whose leading coefficientis 1 is called monic
     bool isMonic();
-    bool isZero(Polynom pol);
+    bool isZero();
    
 public:
     //!empty constructor
@@ -120,6 +120,7 @@ public:
     void valuate(int coef);
     //!A polynomial whose leading coefficientis 1 is called monic
     void makeMonic();
+    bool isIrreducible();
     int evaluate(int x);
 
     //!Find the quotient and remainder A = Q * B + R

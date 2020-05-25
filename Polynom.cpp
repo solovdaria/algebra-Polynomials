@@ -110,10 +110,6 @@ Polynom<p>::Polynom(int _power, std::vector<int> keys) {
     for (int i = 1; i < keys.size(); i++) {
         appendItem(head, makeItem(keys[i]));
     }
-<<<<<<< HEAD
-=======
-    
->>>>>>> 96f82da8c8d33011bb35390ea6ae5bace390f767
     makeMod();
     cutZeroes();
 }
@@ -308,10 +304,32 @@ bool Polynom<p>::isMonic() {
 }
 
 template <int p>
-bool Polynom<p>::isZero(Polynom pol) {
+bool Polynom<p>::isZero() {
     Polynom<p> zero(0, { 0 });
-    return (pol == zero);
+    return ((*this) == zero);
 
+}
+
+template <int p>
+bool Polynom<p>::isIrreducible() {
+    Polynom tmp, odd(1, { 0, 1 }),gcd_;
+    Polynom one(0, {1});
+    makeMonic();
+    int power_;
+    for (size_t i(1); i <= this->power / 2; i++) {
+        tmp.copy(one);
+        power_ = pow(p,i);
+        tmp.shift(power_);
+        if((tmp - odd).power >= this->power)
+        gcd_ = gcd((*this), (tmp - odd) % (*this));
+        else {
+            gcd_ = gcd((*this), tmp - odd);
+        }
+        if (gcd_ != one) return false;
+        tmp.clear();
+
+    }
+    return true;
 }
 
 template <int p>
@@ -376,7 +394,7 @@ void Polynom<p>::differencePolinom(Polynom& pol1, Polynom& pol2) {
 
 template <int p>
 void Polynom<p>::multiplicatePolinom(Polynom& pol1, Polynom& pol2) {
-    if (isZero(pol1) || isZero(pol2)) return;
+    if (pol1.isZero() || pol2.isZero()) return;
 
     int pow = pol1.power + pol2.power;
     for (size_t k(0); k <= pow; k++) {
@@ -417,7 +435,7 @@ void Polynom<p>::quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R) {
 
 template <int p>
 auto Polynom<p>::gcd(Polynom& pol1, Polynom& pol2) {
-    if (pol2.isZero(pol2)) {
+    if (pol2.isZero()) {
         if (pol1.isMonic()) return pol1;
         Polynom<p> pol1_copy; pol1_copy.copy(pol1);
         pol1_copy.makeMonic();
@@ -515,7 +533,7 @@ auto operator-(Polynom<p>& p1, Polynom<p>& p2) {
 template <int p>
 auto operator/(Polynom<p>& p1, Polynom<p>& p2) {
     if (p1.power < p2.power) { cout << "Can`t divide! The degree of dividend is always greater than divisor!\n\n"; return Polynom<p>(); }
-    if (p1.isZero(p2)) { cout << "Can't divide by 0!\n"; return Polynom<p>(); }
+    if (p2.isZero()) { cout << "Can't divide by 0!\n"; return Polynom<p>(); }
     Polynom<p> Q, R;
     if (p2.power == 0) {
         p1.valuate(p2.head->key);
@@ -529,7 +547,7 @@ auto operator/(Polynom<p>& p1, Polynom<p>& p2) {
 template <int p>
 auto operator%(Polynom<p>& p1, Polynom<p>& p2) {
     if (p1.power < p2.power) { cout << "Can`t divide! The degree of dividend is always greater than divisor!\n\n"; return Polynom<p>(); }
-    if (p1.isZero(p2)) { cout << "Can't divide by 0!\n"; return Polynom<p>(); }
+    if (p2.isZero()) { cout << "Can't divide by 0!\n"; return Polynom<p>(); }
     Polynom<p> Q, R;
     if (p2.power == 0) {
         return Polynom<p>(0, { 0 });
