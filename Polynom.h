@@ -92,6 +92,8 @@ private:
     void cutZeroes();
     //!Copy polynom
     void copy(Polynom& pol);
+
+protected:
     //!A polynomial whose leading coefficientis 1 is called monic
     bool isMonic();
     //!Compare the polynomial with f(x) = 0
