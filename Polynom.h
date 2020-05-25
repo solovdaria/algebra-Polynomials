@@ -120,6 +120,7 @@ public:
     void valuate(int coef);
     //!A polynomial whose leading coefficientis 1 is called monic
     void makeMonic();
+    //!Ben-Or Irreducibility Test
     bool isIrreducible();
     int evaluate(int x);
 

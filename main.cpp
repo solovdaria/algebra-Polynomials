@@ -123,11 +123,6 @@ int main() {
     Polynom<5> pol2(3, { 1,0,1,1 });
     cout << pol2.isIrreducible();
 
-    cout << endl;
-
-    Polynom<7> pol3(4, { 1,0,0,0,1 });
-    cout << pol3.isIrreducible();
-
     return 0;
 
 }
