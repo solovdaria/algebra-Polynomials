@@ -1,9 +1,9 @@
 #pragma once
-#include "Polynom.h"
+#include "Ring.h"
 
 template <int p>//Template parameter p (module)
 
-class Field {
+class Field :public Ring<p> {
 private:
 	// irreducible polynomial
 	Polynom Q;
@@ -12,10 +12,8 @@ private:
 	bool isPrime(int);
 public:
 	Field(int);
-
-	Polynom plus(Polynom&, Polynom& );
-	Polynom minus(Polynom& , Polynom& );
-	Polynom divide(Polynom& , Polynom& );
-	Polynom multiply(Polynom& , Polynom& );
-
+	// /
+	// %
+	// gcd
+	// inverse
 };
