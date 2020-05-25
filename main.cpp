@@ -32,15 +32,16 @@ int main() {
     cout << "b(4) = " << b.evaluate(4) << "\n\n";
 
 
-    cout << "\n\nMake monic\n";
-    Polynom<5> e(1, { 1,3,5 });
+    cout << "\n\nMaking polynomial monic\n";
+    Polynom<5> e(1, { 1, 3, 5, 5 });
+    cout << "e(x) = ";
     e.print();
     e.makeMonic();
-    e.print();
+    cout << "e(x) {monic} = "; e.print();
 
     //!before each action, re-declare the variable (for each action - new variable)
     Polynom<5> res = f + g;
-    cout << "f(x) + g(x) = ";
+    cout << "\nf(x) + g(x) = ";
     res.print();
 
 
@@ -73,13 +74,15 @@ int main() {
     cout << "f(x) % g(x) = ";
     div2.print();
 
-    Polynom<5> gcd1 = GCD(b, f);
-    cout << "gcd(b, f) = ";
-    gcd1.print();
+    //TODO fix gcd
 
-    Polynom<5> gcd2 = GCD(f, b);
-    cout << "gcd(f, b) = ";
-    gcd2.print();
+    //Polynom<5> gcd1 = GCD(b, f);
+    //cout << "gcd(b, f) = ";
+    //gcd1.print();
+
+    //Polynom<5> gcd2 = GCD(f, b);
+    //cout << "gcd(f, b) = ";
+    //gcd2.print();
 
     return 0;
 

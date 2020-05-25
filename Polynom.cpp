@@ -131,11 +131,11 @@ void Polynom<p>::makeMod() {
         else while (tmp->key < 0) {
             tmp->key = tmp->key + p;
         }
-        if (tmp->key == 0) {
+        if (tmp->key == 0 && !prevZero) {
             firstZero = tmp;
             prevZero = true;
             prevPrevZero = prev;
-        } else prevZero = false;
+        } else if (tmp->key != 0) prevZero = false;
         prev = tmp;
         tmp = tmp->next;
     }
