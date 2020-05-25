@@ -74,15 +74,13 @@ int main() {
     cout << "f(x) % g(x) = ";
     div2.print();
 
-    //TODO fix gcd
+    Polynom<5> gcd1 = GCD(b, f);
+    cout << "gcd(b, f) = ";
+    gcd1.print();
 
-    //Polynom<5> gcd1 = GCD(b, f);
-    //cout << "gcd(b, f) = ";
-    //gcd1.print();
-
-    //Polynom<5> gcd2 = GCD(f, b);
-    //cout << "gcd(f, b) = ";
-    //gcd2.print();
+    Polynom<5> gcd2 = GCD(f, b);
+    cout << "gcd(f, b) = ";
+    gcd2.print();   
 
     return 0;
 
