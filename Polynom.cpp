@@ -110,10 +110,6 @@ Polynom<p>::Polynom(int _power, std::vector<int> keys) {
     for (int i = 1; i < keys.size(); i++) {
         appendItem(head, makeItem(keys[i]));
     }
-<<<<<<< HEAD
-=======
-    
->>>>>>> 96f82da8c8d33011bb35390ea6ae5bace390f767
     makeMod();
     cutZeroes();
 }
