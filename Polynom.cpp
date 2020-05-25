@@ -110,6 +110,7 @@ Polynom<p>::Polynom(int _power, std::vector<int> keys) {
     for (int i = 1; i < keys.size(); i++) {
         appendItem(head, makeItem(keys[i]));
     }
+    cutZeroes();
     makeMod();
 }
 
@@ -121,36 +122,13 @@ Polynom<p>::Polynom(int _power, int _field, std::vector<int> keys)
 template <int p>
 void Polynom<p>::makeMod() {
     PElement* tmp = head;
-    PElement* firstZero = NULL;
-    bool prevZero = false;
-    PElement* prevPrevZero = NULL;
-    PElement* prev = NULL;
     while (tmp != nullptr) {
         if (tmp->key >= p)
             tmp->key = tmp->key % p;
         else while (tmp->key < 0) {
             tmp->key = tmp->key + p;
         }
-        if (tmp->key == 0) {
-            firstZero = tmp;
-            prevZero = true;
-            prevPrevZero = prev;
-        }
-        else prevZero = false;
-        prev = tmp;
         tmp = tmp->next;
-    }
-    if (firstZero != NULL) {
-        if (prevZero) {
-            if (prevPrevZero) prevPrevZero->next = NULL;
-            PElement* x = firstZero;
-            PElement* deleted = x;
-            while (x->next != NULL) {
-                x = x->next;
-                delete deleted;
-                deleted = nullptr;
-            }
-        }
     }
 }
 
@@ -210,7 +188,6 @@ void Polynom<p>::print() {
 
 template <int p>
 void Polynom<p>::shift(int n) {
-    n = 1;
     PElement* new_head = makeItem(0);
     for (int i(1); i < n; i++) {
         appendItem(new_head, makeItem(0));
@@ -516,6 +493,7 @@ template <int p>
 auto operator*(Polynom<p>& p1, Polynom<p>& p2) {
     auto* c = new Polynom<p>();
     c->Polynom<p>::multiplicatePolinom(p1, p2);
+    c->Polynom<p>::cutZeroes();
     c->Polynom<p>::makeMod();
     return *c;
 }
@@ -524,6 +502,7 @@ template <int p>
 auto operator+(Polynom<p>& p1, Polynom<p>& p2) {
     auto* c = new Polynom<p>();
     c->Polynom<p>::addingPolinoms(p1, p2);
+    c->Polynom<p>::cutZeroes();
     c->Polynom<p>::makeMod();
     return *c;
 }
@@ -532,6 +511,7 @@ template <int p>
 auto operator-(Polynom<p>& p1, Polynom<p>& p2) {
     auto* c = new Polynom<p>();
     c->Polynom<p>::differencePolinom(p1, p2);
+    c->Polynom<p>::cutZeroes();
     c->Polynom<p>::makeMod();
     return *c;
 }

@@ -33,7 +33,7 @@ int main() {
 
 
     cout << "\n\nMaking polynomial monic\n";
-    Polynom<5> e(1, { 1, 3, 5, 5 });
+    Polynom<5> e(3, { 1, 3, 5, 5 });
     cout << "e(x) = ";
     e.print();
     e.makeMonic();
@@ -80,7 +80,15 @@ int main() {
 
     Polynom<5> gcd2 = GCD(f, b);
     cout << "gcd(f, b) = ";
-    gcd2.print();   
+    gcd2.print();
+
+    Polynom<5> gcd3 = GCD(f, f);
+    cout << "gcd(f, f) = ";
+    gcd3.print(); 
+
+    Polynom<5> gcd4 = GCD(h, g);
+    cout << "gcd(h, g) = ";
+    gcd4.print();
 
     return 0;
 
