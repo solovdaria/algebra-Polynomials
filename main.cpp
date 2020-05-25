@@ -90,11 +90,6 @@ int main() {
     cout << "gcd(h, g) = ";
     gcd4.print();
 
-    Polynom<2> x1(5, { 1, 0, 0, 0 ,0,1 }), y1(2, { 0,1,1 });
-    Polynom<2> gcd5 = GCD(x1, y1);
-    cout << "gcd(x1, y1) = ";
-    gcd5.print();
-
     Polynom<5> x(1, {2,1}), field(3, { 2,3,0,1 });
     Polynom<5> inv = inverse(x, field);
     cout << "inverse(x, field) = ";
