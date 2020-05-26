@@ -333,6 +333,35 @@ int Polynom<p>::evaluate(int x)
     return result;
 }
 
+template<int p>
+int Polynom<p>::irrPolynomOrder()
+{
+    if (this->evaluate(0) == 0)
+        return -1;
+
+    if (!this->isIrreducible())
+        return -1;
+
+    for (auto i = this->power - 1; ; ++i) {
+
+        //Creates vector of this form (x^e - 1)
+        // -1 transform by the laws of the field
+        std::vector<int> vec{ -1 };
+        for (auto j = 0; j < i; ++j) {
+            vec.push_back(0);
+        }
+        vec.push_back(1);
+
+        // Creates Polynom by vector vec
+        Polynom<p> pol(vec.size() - 1, vec);
+
+        // if pol % this == 0
+        if ((pol % *this).isZero()) {
+            return vec.size() - 1; //order
+        }
+    }
+}
+
 template <int p>
 void Polynom<p>::addingPolinoms(Polynom& pol1, Polynom& pol2) {
     power = (pol1.power > pol2.power) ? pol1.power : pol2.power;

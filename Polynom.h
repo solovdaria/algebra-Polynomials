@@ -52,11 +52,10 @@ auto operator /(Polynom<p>&, Polynom<p>&);
 template <int p>
 auto operator %(Polynom<p>&, Polynom<p>&);
 template <int p>
-auto inverse(Polynom<p>& , Polynom<p>& );
+auto inverse(Polynom<p>& , Polynom<p>&);
 
 
 template <int p>//!Template parameter p(field)
-
 class Polynom {
 private:
     //!polynomial degree (maximum degree that a variable can have)
@@ -126,6 +125,11 @@ public:
     //!Ben-Or Irreducibility Test
     bool isIrreducible();
     int evaluate(int x);
+
+    //Calculates order of Irreducible polynom
+    //returns -1 if Polynom is reducible or f(0) = 0
+    int irrPolynomOrder();
+
 
     //!Find the quotient and remainder A = Q * B + R
     void quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R);
