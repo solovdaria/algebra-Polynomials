@@ -40,6 +40,7 @@ int main() {
     cout << "e(x) {monic} = "; e.print();
 
     //!before each action, re-declare the variable (for each action - new variable)
+    cout << "--------------------------------------------------------------------\n";
     Polynom<5> res = f + g;
     cout << "\nf(x) + g(x) = ";
     res.print();
@@ -65,7 +66,12 @@ int main() {
     cout << endl;
     cout << "h(x) {shift 5} = ";
     h.print();
+    cout << "--------------------------------------------------------------------\n";
 
+    cout << "f(x) = ";
+    f.print();
+    cout << "g(x) = ";
+    g.print();
     Polynom<5> div1 = f / g;
     cout << "f(x) / g(x) = ";
     div1.print();
@@ -74,6 +80,12 @@ int main() {
     cout << "f(x) % g(x) = ";
     div2.print();
 
+    cout << "--------------------------------------------------------------------\n";
+
+    cout << "b(x) = ";
+    b.print();
+    cout << "f(x) = ";
+    f.print();
     Polynom<5> gcd1 = GCD(b, f);
     cout << "gcd(b, f) = ";
     gcd1.print();
@@ -86,37 +98,40 @@ int main() {
     cout << "gcd(f, f) = ";
     gcd3.print(); 
 
+    cout << "--------------------------------------------------------------------\n";
+
+    cout << "h(x) = ";
+    h.print();
+    cout << "g(x) = ";
+    g.print();
     Polynom<5> gcd4 = GCD(h, g);
     cout << "gcd(h, g) = ";
     gcd4.print();
 
-    Polynom<5> x(1, {2,1}), field(3, { 2,3,0,1 });
+    cout << "--------------------------------------------------------------------\n";
+
+    Polynom<5> x(1, { 2,1 }), field(3, { 2,3,0,1 });
+    cout << "x = ";
+    x.print();
+    cout << "field = ";
+    field.print();
     Polynom<5> inv = inverse(x, field);
     cout << "inverse(x, field) = ";
     inv.print();
 
-    Polynom<3> irr(3, {1,2,0,1});
-    Polynom<3> tar(2, {1,1,1});
-
-    Polynom<3> div3 = irr / tar ;
-    cout << "irr / tar = ";
-    div3.print();
-
-    Polynom<3> div4 = irr % tar ;
-    cout << "irr % tar = ";
-    div4.print();
-
-    Polynom<3> gcd6 = GCD(irr, tar);
-    cout << "gcd(irr, tar) = ";
-    gcd6.print();
+    cout << "--------------------------------------------------------------------\n";
 
     Polynom<2> pol1(4, {1,0,0,1,1});
-    cout << pol1.isIrreducible();
+    if (pol1.isIrreducible())
+        cout << "Yes\n";
+             else cout << "No\n";
 
-    cout << endl;
 
     Polynom<5> pol2(3, { 1,0,1,1 });
-    cout << pol2.isIrreducible();
+    if (pol2.isIrreducible())
+        cout << "Yes\n";
+    else cout << "No\n";
+
 
     return 0;
 

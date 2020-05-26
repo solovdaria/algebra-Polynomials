@@ -183,7 +183,7 @@ void Polynom<p>::print() {
         tmp = tmp->next;
         i++;
     }
-    cout << endl;
+    cout << endl << endl;
 }
 
 template <int p>
