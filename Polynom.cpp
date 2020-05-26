@@ -324,6 +324,31 @@ int Polynom<p>::evaluate(int x)
     return result;
 }
 
+template<int p>
+int Polynom<p>::irrPolynomOrder()
+{
+    if (this->evaluate(0) == 0)
+        return -1;
+
+    for (auto i = 0; ; ++i) {
+        std::vector<int> vec{ -1 };
+        for (auto j = 0; j < i; ++j) {
+            ex.push_back(0);
+        }
+        ex.push_back(1);
+
+        Polynom<p> pol(vec.size() - 1, ex);
+        if (pol.power > this->power)
+            return -1;
+
+        pol = pol % *this;
+
+        if (pol.head->key == 0 && pol.getLastCoefficient() == 0) {
+            return ex.size() - 1; //order
+        }
+    }
+}
+
 template <int p>
 void Polynom<p>::addingPolinoms(Polynom& pol1, Polynom& pol2) {
     power = (pol1.power > pol2.power) ? pol1.power : pol2.power;

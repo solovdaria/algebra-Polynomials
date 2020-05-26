@@ -56,7 +56,6 @@ auto inverse(Polynom<p>& , Polynom<p>& );
 
 
 template <int p>//!Template parameter p(field)
-
 class Polynom {
 private:
     //!polynomial degree (maximum degree that a variable can have)
@@ -121,6 +120,8 @@ public:
     //!A polynomial whose leading coefficientis 1 is called monic
     void makeMonic();
     int evaluate(int x);
+
+    int irrPolynomOrder();
 
     //!Find the quotient and remainder A = Q * B + R
     void quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R);
