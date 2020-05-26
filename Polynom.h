@@ -130,6 +130,12 @@ public:
     //returns -1 if Polynom is reducible or f(0) = 0
     int irrPolynomOrder();
 
+    //!Calculate order of derivative polynom
+    int derivativePolynomOrder();
+
+    //!LCM of given vector numbers
+    int LCM(std::vector<int> numbers);
+    int gcd(int a, int b);
 
     //!Find the quotient and remainder A = Q * B + R
     void quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R);

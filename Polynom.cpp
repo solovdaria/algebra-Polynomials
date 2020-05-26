@@ -362,6 +362,38 @@ int Polynom<p>::irrPolynomOrder()
     }
 }
 
+template<int p>
+int Polynom<p>::derivativePolynomOrder() {    
+    if (this->evaluate(0) == 0)
+        return -1;
+
+    // Yaroslav should to do function (derivativeToIrrPolynoms)
+    std::vector<Polynom<p>> irrPolymons = derivativeToIrrPolynoms(this);
+    std::vector<int> ords(irrPolymons.size());
+    for (auto irrPol : irrPolymons) {
+        ords.push_back(irrPol.irrPolynomOrder());
+    }
+    return LCM(ords);
+}
+
+template<int p>
+int Polynom<p>::LCM(std::vector<int> ords) {
+    int ans = ords[0];
+
+    // ans contains LCM of arr[0], ..arr[i] 
+    // after i'th iteration, 
+    for (int i = 1; i < ords.size(); i++)
+        ans = (((ords[i] * ans)) /
+            (gcd(ords[i], ans)));
+
+    return ans;
+}
+
+template<int p>
+int Polynom<p>::gcd(int a, int b) {
+    return b ? gcd(b, a % b) : a;
+}
+
 template <int p>
 void Polynom<p>::addingPolinoms(Polynom& pol1, Polynom& pol2) {
     power = (pol1.power > pol2.power) ? pol1.power : pol2.power;
