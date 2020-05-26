@@ -55,7 +55,7 @@ template <int p>
 auto inverse(Polynom<p>& , Polynom<p>&);
 
 
-template <int p>//!Template parameter p(field)
+template <int p>//!Template parameter p(field) - should be prime
 class Polynom {
 private:
     //!polynomial degree (maximum degree that a variable can have)
