@@ -115,11 +115,6 @@ Polynom<p>::Polynom(int _power, std::vector<int> keys) {
 }
 
 template <int p>
-Polynom<p>::Polynom(int _power, int _field, std::vector<int> keys)
-{
-}
-
-template <int p>
 void Polynom<p>::makeMod() {
     PElement* tmp = head;
     while (tmp != nullptr) {
@@ -310,6 +305,26 @@ bool Polynom<p>::isZero(Polynom pol) {
 
 }
 
+template<int p>
+Polynom<p> Polynom<p>::copyPolynom(Polynom& pol)
+{
+    this->clear();
+    if (pol.isZero(pol)) {
+        this->cutZeroes();
+        return *this;
+    }
+    PElement *temp = pol.head;
+    this->head = makeItem(temp->key);
+    this->power = pol.power;
+//    if (temp->next)
+//        temp = temp->next;
+    while (temp->next) {
+        this->appendItem(this->head, makeItem(temp->key));
+        temp = temp->next;
+    }
+    return *this;
+}
+
 template <int p>
 int Polynom<p>::evaluate(int x)
 {
@@ -330,21 +345,22 @@ int Polynom<p>::irrPolynomOrder()
     if (this->evaluate(0) == 0)
         return -1;
 
-    for (auto i = 0; ; ++i) {
+    for (auto i = this->power - 1; ; ++i) {
+
+        //Creates vector of this form (x^e - 1)
+        // -1 transform by the laws of the field
         std::vector<int> vec{ -1 };
         for (auto j = 0; j < i; ++j) {
-            ex.push_back(0);
+            vec.push_back(0);
         }
-        ex.push_back(1);
+        vec.push_back(1);
 
-        Polynom<p> pol(vec.size() - 1, ex);
-        if (pol.power > this->power)
-            return -1;
+        // Creates Polynom by vector vec
+        Polynom<p> pol(vec.size() - 1, vec);
 
-        pol = pol % *this;
-
-        if (pol.head->key == 0 && pol.getLastCoefficient() == 0) {
-            return ex.size() - 1; //order
+        // if pol % this == 0
+        if (isZero(pol % *this)) {
+            return vec.size() - 1; //order
         }
     }
 }

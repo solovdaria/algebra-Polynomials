@@ -12,11 +12,6 @@ int main() {
     Polynom<5> h(1, {1,2});
     Polynom<5> b(1, {1,1});
     Polynom<5> zero(0, {0});
-    Polynom<3> irred(7, { 1, 0, 0, 1, 1, 0, 1 });
-
-    cout << "1) irred(x) = ";
-    irred.print();
-    cout << "Order: " << irred.irrPolynomOrder() << "\n\n";
 
     cout << "1) f(x) = ";
     f.print();
@@ -114,6 +109,27 @@ int main() {
     Polynom<3> gcd5 = GCD(irr, tar);
     cout << "gcd(irr, tar) = ";
     gcd4.print();
+
+
+    Polynom<3> irred(7, { 1, 0, 0, 1, 1, 0, 1 });
+    Polynom<3> irred2(3, { 1, 0, 1 });
+    Polynom<3> irred3(6, { 1, 0, 1, 1, 1, 3 });
+    Polynom<3> irred4(7, { 1, 0, 3, 1, 1, 2, });
+
+    cout << "\n\n\n";
+
+    cout << "1) irred(x) = ";
+    irred.print();
+    cout << "1) irred2(x) = ";
+    irred2.print();
+    cout << "1) irred3(x) = ";
+    irred3.print();
+    cout << "1) irred4(x) = ";
+    irred4.print();
+    cout << "irred Order: " << irred.irrPolynomOrder() << "\n";
+    cout << "irred2 Order: " << irred3.irrPolynomOrder() << "\n";
+    cout << "irred3 Order: " << irred3.irrPolynomOrder() << "\n";
+    cout << "irred4 Order: " << irred4.irrPolynomOrder() << "\n";
 
 
 

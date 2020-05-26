@@ -52,7 +52,7 @@ auto operator /(Polynom<p>&, Polynom<p>&);
 template <int p>
 auto operator %(Polynom<p>&, Polynom<p>&);
 template <int p>
-auto inverse(Polynom<p>& , Polynom<p>& );
+auto inverse(Polynom<p>& , Polynom<p>&);
 
 
 template <int p>//!Template parameter p(field)
@@ -98,7 +98,6 @@ public:
     Polynom();
     //!constructor that take power of polinom and vector of coefficients of this polinom
     Polynom(int _power, std::vector<int> keys);
-    Polynom(int _power, int _field, std::vector<int> keys);
     ~Polynom();
 
     //!Getter and Setters (for me they are useless, but still...they are)
@@ -121,7 +120,17 @@ public:
     void makeMonic();
     int evaluate(int x);
 
+    //Calculates order of Irreducible polynom
     int irrPolynomOrder();
+
+    //Copy polynom values from pol to this
+    //pol - polynomial that is copied
+    //this - result
+    Polynom<p> copyPolynom(Polynom& pol);
+
+
+
+
 
     //!Find the quotient and remainder A = Q * B + R
     void quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R);
