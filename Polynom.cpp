@@ -257,7 +257,7 @@ void Polynom<p>::copy(Polynom& pol) {
 
 template <int p>
 Polynom<p>::~Polynom() {
-    //
+
 }
 
 template <int p>
@@ -477,9 +477,9 @@ auto GCD(Polynom<p>& p1, Polynom<p>& p2) {
         p1 = p2;
         p2 = temp;
     }
-    Polynom<p>c = p1.Polynom<p>::gcd(p1, p2);
-    c.Polynom<p>::makeMod();
-    return c;
+    Polynom<p>result = p1.Polynom<p>::gcd(p1, p2);
+    result.Polynom<p>::makeMod();
+    return result;
 }
 
 template <int p>
@@ -505,29 +505,29 @@ auto derivative(Polynom<p>& pol1)
 
 template <int p>
 auto operator*(Polynom<p>& p1, Polynom<p>& p2) {
-    auto* c = new Polynom<p>();
-    c->Polynom<p>::multiplicatePolinom(p1, p2);
-    c->Polynom<p>::cutZeroes();
-    c->Polynom<p>::makeMod();
-    return *c;
+    auto* result = new Polynom<p>();
+    result->Polynom<p>::multiplicatePolinom(p1, p2);
+    result->Polynom<p>::cutZeroes();
+    result->Polynom<p>::makeMod();
+    return *result;
 }
 
 template <int p>
 auto operator+(Polynom<p>& p1, Polynom<p>& p2) {
-    auto* c = new Polynom<p>();
-    c->Polynom<p>::addingPolinoms(p1, p2);
-    c->Polynom<p>::cutZeroes();
-    c->Polynom<p>::makeMod();
-    return *c;
+    auto* result = new Polynom<p>();
+    result->Polynom<p>::addingPolinoms(p1, p2);
+    result->Polynom<p>::cutZeroes();
+    result->Polynom<p>::makeMod();
+    return *result;
 }
 
 template <int p>
 auto operator-(Polynom<p>& p1, Polynom<p>& p2) {
-    auto* c = new Polynom<p>();
-    c->Polynom<p>::differencePolinom(p1, p2);
-    c->Polynom<p>::cutZeroes();
-    c->Polynom<p>::makeMod();
-    return *c;
+    auto* result = new Polynom<p>();
+    result->Polynom<p>::differencePolinom(p1, p2);
+    result->Polynom<p>::cutZeroes();
+    result->Polynom<p>::makeMod();
+    return *result;
 }
 
 template <int p>

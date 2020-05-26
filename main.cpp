@@ -12,7 +12,7 @@ int main() {
     Polynom<5> h(1, {1,2});
     Polynom<5> b(1, {1,1});
     Polynom<5> zero(0, {0});
-
+    
     cout << "1) f(x) = ";
     f.print();
     cout << "f(4) = " << f.evaluate(4) << "\n\n";

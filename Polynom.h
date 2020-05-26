@@ -103,8 +103,8 @@ public:
     //!empty constructor
     Polynom();
     //!constructor that take power of polinom and vector of coefficients of this polinom
-    Polynom(int _power, std::vector<int> keys);
-    Polynom(int _power, int _field, std::vector<int> keys);
+    explicit Polynom(int _power, std::vector<int> keys);
+    explicit Polynom(int _power, int _field, std::vector<int> keys);
     ~Polynom();
 
     //!Getter and Setters (for me they are useless, but still...they are)
