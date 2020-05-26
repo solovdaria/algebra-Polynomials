@@ -104,6 +104,9 @@ Polynom<p>::Polynom() {
 
 template <int p>
 Polynom<p>::Polynom(int _power, std::vector<int> keys) {
+    if (p < 0 || !isPrime(p))
+        throw std::invalid_argument("Module p should be prime and more than zero");
+
     power = _power;
     head = makeItem(keys[0]);
 
@@ -112,11 +115,6 @@ Polynom<p>::Polynom(int _power, std::vector<int> keys) {
     }
     makeMod();
     cutZeroes();
-}
-
-template <int p>
-Polynom<p>::Polynom(int _power, int _field, std::vector<int> keys)
-{
 }
 
 template <int p>
@@ -161,29 +159,6 @@ void Polynom<p>::appendItem(Polynom<p>::PElement* head, Polynom::PElement* el) {
     PElement* tmp = head;
     while (tmp->next) tmp = tmp->next;
     tmp->next = el;
-}
-
-template <int p>
-void Polynom<p>::print() {
-    PElement* tmp = this->head;
-
-    int i = 0;
-    bool isFirst = true;
-    while (tmp != nullptr) {
-        if (tmp->key == 0) {
-            tmp = tmp->next;
-            i++;
-            continue;
-        }
-        if (!isFirst) cout << "+";
-        else isFirst = false;
-        if (tmp->key != 1 || i == 0)
-            cout << tmp->key;
-        if (i != 0) cout << "x^" << i;
-        tmp = tmp->next;
-        i++;
-    }
-    cout << endl << endl;
 }
 
 template <int p>
@@ -253,6 +228,18 @@ void Polynom<p>::copy(Polynom& pol) {
         tmp = tmp->next;
     }
     this->power = pol.power;
+}
+
+template<int p>
+bool Polynom<p>::isPrime(int number)
+{
+    int root = sqrt(number);
+    for (int i = 2; i <= root; i++)
+    {
+        if (number % i == 0)
+            return false;
+    }
+    return true;
 }
 
 template <int p>
@@ -501,6 +488,31 @@ auto derivative(Polynom<p>& pol1)
     }
     result->Polynom<p>::makeMod();
     return *result;
+}
+
+template <int p>
+std::ostream& operator<<(std::ostream& stream, Polynom<p>& polynomial)
+{
+    Polynom<p>::PElement* tmp = polynomial.Polynom<p>::head;
+    int i = 0;
+    bool isFirst = true;
+    while (tmp != nullptr) {
+        if (tmp->key == 0) {
+            tmp = tmp->next;
+            i++;
+            continue;
+        }
+        if (!isFirst) cout << "+";
+        else isFirst = false;
+        if (tmp->key != 1 || i == 0)
+            stream << tmp->key;
+        if (i != 0) stream << "x^" << i;
+        tmp = tmp->next;
+        i++;
+    }
+    stream << "\n";
+    
+    return stream;
 }
 
 template <int p>

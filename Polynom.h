@@ -92,6 +92,7 @@ private:
     void cutZeroes();
     //!Copy polynom
     void copy(Polynom& pol);
+    bool isPrime(int number);
 
 protected:
     //!A polynomial whose leading coefficientis 1 is called monic
@@ -104,7 +105,6 @@ public:
     Polynom();
     //!constructor that take power of polinom and vector of coefficients of this polinom
     explicit Polynom(int _power, std::vector<int> keys);
-    explicit Polynom(int _power, int _field, std::vector<int> keys);
     ~Polynom();
 
     //!Getter and Setters (for me they are useless, but still...they are)
@@ -113,8 +113,6 @@ public:
     int getPower() const;
     void setPower(int _power);
 
-    //!output polinom
-    void print();
     //!Making term of structure "PElement" (element of polinom) using the value of coefficient
     static PElement* makeItem(int val);
     //!Adding term to the end of the polinom
@@ -148,6 +146,10 @@ public:
     friend auto operator +<p>(Polynom<p>& p1, Polynom<p>& p2);
     friend auto operator /<p>(Polynom<p>& p1, Polynom<p>& p2);
     friend auto operator %<p>(Polynom<p>& p1, Polynom<p>& p2);
+
+    //!output polynomial
+    template <int p>
+    friend std::ostream& operator <<(std::ostream& stream, Polynom<p>& polynomial);
     
     //!equality operators
     friend auto operator ==<p>(Polynom<p>& p1, Polynom<p>& p2);
