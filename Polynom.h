@@ -34,7 +34,7 @@ class Polynom;
 
 //forward declaration
 template <int p>
-auto GCD(Polynom<p>&, Polynom<p>&);
+auto GCD(Polynom<p>, Polynom<p>);
 template <int p>
 auto derivative(Polynom<p>& );
 template <int p>
@@ -144,7 +144,7 @@ public:
     void addingPolinoms(Polynom& pol1, Polynom& pol2);
     void differencePolinom(Polynom& pol1, Polynom& pol2);
     void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
-    auto gcd(Polynom& pol1, Polynom& pol2);
+    auto gcd(Polynom& a, Polynom& b);
     //!find A^(-1) in field B(p^m)
     auto gcdExtended(Polynom& A, Polynom& B);
    
@@ -152,7 +152,7 @@ public:
 
     //!Algorithm for Inversion in field GF(p^m) based on Extended Euclid’s Algorithm
     friend auto inverse<p>(Polynom<p>& pol, Polynom<p>& field );
-    friend auto GCD<p>(Polynom<p>& p1, Polynom<p>& p2);
+    friend auto GCD<p>(Polynom<p> a, Polynom<p> b);
     friend auto derivative<p>(Polynom<p>& pol1);
     friend auto operator *<p>(Polynom<p>& p1, Polynom<p>& p2);
     friend auto operator -<p>(Polynom<p>& p1, Polynom<p>& p2);
