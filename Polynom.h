@@ -104,6 +104,7 @@ public:
     Polynom();
     //!constructor that take power of polinom and vector of coefficients of this polinom
     explicit Polynom(int _power, std::vector<int> keys);
+    Polynom(Polynom& other);
     ~Polynom();
 
     //!Getter and Setters (for me they are useless, but still...they are)
@@ -147,6 +148,8 @@ public:
     //!find A^(-1) in field B(p^m)
     auto gcdExtended(Polynom& A, Polynom& B);
    
+    Polynom<p>& operator=(Polynom& other);
+
     //!Algorithm for Inversion in field GF(p^m) based on Extended Euclid’s Algorithm
     friend auto inverse<p>(Polynom<p>& pol, Polynom<p>& field );
     friend auto GCD<p>(Polynom<p>& p1, Polynom<p>& p2);

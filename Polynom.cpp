@@ -117,6 +117,12 @@ Polynom<p>::Polynom(int _power, std::vector<int> keys) {
     cutZeroes();
 }
 
+template<int p>
+Polynom<p>::Polynom(Polynom& other)
+{
+    this->copy(other);
+}
+
 template <int p>
 void Polynom<p>::makeMod() {
     PElement* tmp = head;
@@ -520,6 +526,15 @@ auto Polynom<p>::gcdExtended(Polynom& A, Polynom& B) {
 
     U.makeMonic();
     return U;
+}
+
+template<int p>
+Polynom<p>& Polynom<p>::operator=(Polynom& other)
+{
+    if (this != &other) {
+        this->copy(other);
+    }
+    return *this;
 }
 
 template <int p>
