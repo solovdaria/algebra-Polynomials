@@ -107,7 +107,7 @@ int main() {
     cout << "Irreducible : ";
     if (pol2.isIrreducible())
         cout << "Yes\n\n";
-    else cout << "No\n\ns";
+    else cout << "No\n\n";
 
 
 

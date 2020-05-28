@@ -342,23 +342,27 @@ int Polynom<p>::irrPolynomOrder()
     if (!this->isIrreducible())
         return -1;
 
-    for (auto i = this->power - 1; ; ++i) {
+    //Creates vector for Polynom of this form (x^e - 1)
+    //-1 transforms by laws of the field.
+    //vector have (power - 1) and this fixes in first iteration of while loop.
+    std::vector<int> vec{ -1 };
+    if (this->power > 1) {
+        for (auto i = 0; i < this->power - 2; ++i)
+            vec.push_back(0);
+        vec.push_back(1);
+    }
 
-        //Creates vector of this form (x^e - 1)
-        // -1 transform by the laws of the field
-        std::vector<int> vec{ -1 };
-        for (auto j = 0; j < i; ++j) {
+    while(true) {
+        
+        if (vec[vec.size() - 1] == 1) { //if last element is 1 then delete it and add 0.
+            vec.pop_back();
             vec.push_back(0);
         }
         vec.push_back(1);
 
-        // Creates Polynom by vector vec
-        Polynom<p> pol(vec.size() - 1, vec);
-
         // if pol % this == 0
-        if ((pol % *this).isZero()) {
+        if ((Polynom<p>(vec.size() - 1, vec) % *this).isZero())
             return vec.size() - 1; //order
-        }
     }
 }
 
