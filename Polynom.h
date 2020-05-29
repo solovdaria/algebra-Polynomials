@@ -14,19 +14,19 @@
 #include <vector>
 #include <string>
 
-/*!
- * \brief class Polynom contains fields that describe polinom
- * \details Every object of this class describe separate polinom
- *
- * a + bx + cx^2
- * power of this polinom - 2
- * a, b, c - coefficients of polinom (key)
- *
- * Every object of this class have structure "PElement"
- * Every structure "PElement" have objects that contains fields "key" and "next"
- * key - coefficient of term
- * next - pointer to next object of structure "PElement"
- */
+ /*!
+  * \brief class Polynom contains fields that describe polinom
+  * \details Every object of this class describe separate polinom
+  *
+  * a + bx + cx^2
+  * power of this polinom - 2
+  * a, b, c - coefficients of polinom (key)
+  *
+  * Every object of this class have structure "PElement"
+  * Every structure "PElement" have objects that contains fields "key" and "next"
+  * key - coefficient of term
+  * next - pointer to next object of structure "PElement"
+  */
 
 class Polynom;
 //forward declaration
@@ -42,20 +42,20 @@ private:
         //!coefficient of terms of polinom
         int key;
         //!pointer to next term
-        PElement *next;
+        PElement* next;
     };
     //!Mod of polynom
     void makeMod();
     //!Pointer to the first term of every object of class "Polynom"
-    PElement *head = nullptr;
+    PElement* head = nullptr;
     //Clear PElement list
-   
+
     //!Set the coefficient coef. on position pos equal to the value key
     void set(int pos, int key);
-    
+
     void clear();
-    
-  
+
+
     int getLastCoefficient();
     int getCoefficient(int pos);
     int modInverse(int x);
@@ -75,14 +75,14 @@ protected:
     bool isMonic();
     //!Compare the polynomial with f(x) = 0
     bool isZero();
-   
+
 public:
     //!empty constructor
     Polynom(int _p);
     //!constructor that take power of polinom and vector of coefficients of this polinom
     explicit Polynom(int _p, int _power, std::vector<int> keys);
     /** Copy constructor.
-     * The copy constructor added here to make a deep copy 
+     * The copy constructor added here to make a deep copy
      * when initialize one object using another object.
      */
     Polynom(Polynom& other);
@@ -126,18 +126,18 @@ public:
     void addingPolinoms(Polynom& pol1, Polynom& pol2);
     void differencePolinom(Polynom& pol1, Polynom& pol2);
     void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
-    
+
     /** Polynomial greatest common divisor.
      * Calculate and return a polynomial which is the greatest common divisor of two polynomials.
      *
      * This member function assumes that the degree of the polynomial 'a'
      * is greater than or equal to the degree of the polynomial 'b' (a.power >= b.power).
      * Otherwise, the result is undefined.
-     * 
+     *
      * The returned polynomial (gcd) is monic (i.e. the leading coefficient is equal to 1).
      */
     Polynom& gcd(Polynom& a, Polynom& b);
-    
+
     //!find A^(-1) in field B(p^m)
     void gcdExtended(Polynom& A, Polynom& B);
 
@@ -148,17 +148,18 @@ public:
     Polynom& operator=(Polynom& other);
 
     //!Algorithm for Inversion in field GF(p^m) based on Extended Euclid’s Algorithm
-    friend Polynom& inverse(Polynom& pol, Polynom& field );
+    friend Polynom& inverse(Polynom& pol, Polynom& field);
+
     /** Polynomial greatest common divisor.
      * Calculate and return a polynomial which is the greatest common divisor of two polynomials.
-     * 
+     *
      * This function does not require the degree of the polynomial 'a' to be greater than or equal
      * to the degree of the polynomial 'b' (a.order >= b.order is not required).
-     * 
+     *
      * The returned polynomial (gcd) is monic (i.e. the leading coefficient is equal to 1).
      */
     friend Polynom& GCD(Polynom a, Polynom b);
-    
+
     friend Polynom& derivative(Polynom& pol1);
     friend Polynom& operator *(Polynom& p1, Polynom& p2);
     friend Polynom& operator -(Polynom& p1, Polynom& p2);
@@ -168,7 +169,7 @@ public:
 
     //!output polynomial
     friend std::ostream& operator <<(std::ostream& stream, Polynom& polynomial);
-    
+
     //!equality operators
     friend bool operator ==(Polynom& p1, Polynom& p2);
     friend bool  operator !=(Polynom& p1, Polynom& p2);

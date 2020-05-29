@@ -25,7 +25,6 @@ int Polynom::getLastCoefficient()
     return temp->key;
 }
 
-
 int Polynom::getCoefficient(int pos) {
     PElement* temp = this->head;
     int counter(0);
@@ -36,6 +35,7 @@ int Polynom::getCoefficient(int pos) {
     }
     return temp->key;
 }
+
 
 void Polynom::cutZeroes() {
     int flag = this->findPower();
@@ -62,6 +62,7 @@ int Polynom::modInverse(int number)
     return (x % p + p) % p;
 }
 
+
 int Polynom::gcdExtended(int a, int b, int* x, int* y)
 {
     if (a == 0)
@@ -78,6 +79,7 @@ int Polynom::gcdExtended(int a, int b, int* x, int* y)
 
     return gcd;
 }
+
 
 int Polynom::modDivision(int a, int b)
 {
@@ -114,13 +116,13 @@ Polynom::Polynom(int _p, int _power, std::vector<int> keys) {
     cutZeroes();
 }
 
-
-Polynom::Polynom(Polynom& other){
+Polynom::Polynom(Polynom& other)
+{
     this->copy(other);
 }
 
-void Polynom::makeMod() {
 
+void Polynom::makeMod() {
     PElement* tmp = head;
     while (tmp != nullptr) {
         if (tmp->key >= p)
@@ -131,6 +133,7 @@ void Polynom::makeMod() {
         tmp = tmp->next;
     }
 }
+
 
 int Polynom::findPower() {
     int flag = 0, counter = 0;
@@ -147,12 +150,14 @@ int Polynom::findPower() {
     return flag;
 }
 
+
 typename Polynom::PElement* Polynom::makeItem(int value) {
     auto* el = new PElement;
     el->key = value;
     el->next = nullptr;
     return el;
 }
+
 
 void Polynom::appendItem(Polynom::PElement* head, Polynom::PElement* el) {
     PElement* tmp = head;
@@ -268,6 +273,7 @@ void Polynom::setPower(int _power) {
     power = _power;
 }
 
+
 void Polynom::valuate(int coef)
 {
     if (coef != 0) {
@@ -279,10 +285,12 @@ void Polynom::valuate(int coef)
     }
 }
 
+
 void Polynom::makeMonic() {
     int coef = getLastCoefficient();
     valuate(coef);
 }
+
 
 bool Polynom::isMonic() {
     int coef = getLastCoefficient();
@@ -291,23 +299,23 @@ bool Polynom::isMonic() {
 
 
 bool Polynom::isZero() {
-    Polynom zero(this->p,0, { 0 });
+    Polynom zero(this->p, 0, { 0 });
     return ((*this) == zero);
 
 }
 
 
 bool Polynom::isIrreducible() {
-    Polynom tmp(p), odd(p,1, { 0, 1 }),gcd_(p);
-    Polynom one(this->p,0, {1});
+    Polynom tmp(p), odd(p, 1, { 0, 1 }), gcd_(p);
+    Polynom one(this->p, 0, { 1 });
     makeMonic();
     int power_;
     for (size_t i(1); i <= this->power / 2; i++) {
         tmp = one;
-        power_ = pow(p,i);
+        power_ = pow(p, i);
         tmp.shift(power_);
-        if((tmp - odd).power >= this->power)
-        gcd_ = gcd((*this), (tmp - odd) % (*this));
+        if ((tmp - odd).power >= this->power)
+            gcd_ = gcd((*this), (tmp - odd) % (*this));
         else {
             gcd_ = gcd((*this), tmp - odd);
         }
@@ -351,8 +359,8 @@ int Polynom::irrPolynomOrder()
         vec.push_back(1);
     }
 
-    while(true) {
-        
+    while (true) {
+
         if (vec[vec.size() - 1] == 1) { //if last element is 1 then delete it and add 0.
             vec.pop_back();
             vec.push_back(0);
@@ -360,7 +368,7 @@ int Polynom::irrPolynomOrder()
         vec.push_back(1);
 
         // if pol % this == 0
-        if ((Polynom(p,vec.size() - 1, vec) % *this).isZero())
+        if ((Polynom(p, vec.size() - 1, vec) % *this).isZero())
             return vec.size() - 1; //order
     }
 }
@@ -445,6 +453,7 @@ void Polynom::differencePolinom(Polynom& pol1, Polynom& pol2) {
     }
 }
 
+
 void Polynom::multiplicatePolinom(Polynom& pol1, Polynom& pol2) {
     if (pol1.isZero() || pol2.isZero()) {
         this->power = 0;
@@ -495,13 +504,13 @@ Polynom& Polynom::gcd(Polynom& a, Polynom& b) {
         a.makeMonic();
         return a;
     }
-    return gcd(b, a%b);
+    return gcd(b, a % b);
 }
 
 
 void Polynom::gcdExtended(Polynom& A, Polynom& B) {
-    Polynom S(p), R(p), V(p, 0, {0}), U(p, 0, { 1 });//U is inverse of A mod B(p^m)
-    Polynom Rshift(p), Ushift(p),temp(p);
+    Polynom S(p), R(p), V(p, 0, { 0 }), U(p, 0, { 1 });//U is inverse of A mod B(p^m)
+    Polynom Rshift(p), Ushift(p), temp(p);
 
     S = B; R = A;
 
@@ -531,6 +540,7 @@ Polynom& Polynom::operator=(Polynom& other)
     return *this;
 }
 
+
 Polynom& GCD(Polynom a, Polynom b) {
     if (a.power < b.power) {
         std::swap(a, b);
@@ -545,21 +555,21 @@ Polynom& derivative(Polynom& pol1)
     auto temp = pol1.head;
     result->power = pol1.power - 1;
 
-    int power_ = 0;
+    int power = 0;
 
     while (temp) {
-        if (power_ != 0) {
-            if (result->head != nullptr) Polynom::appendItem(result->head, Polynom::makeItem(temp->key * power_));
-            else result->head = Polynom::makeItem(temp->key * power_);
+        if (power != 0) {
+            if (result->head != nullptr) Polynom::appendItem(result->head, Polynom::makeItem(temp->key * power));
+            else result->head = Polynom::makeItem(temp->key * power);
         }
         temp = temp->next;
-        power_++;
+        power++;
     }
     result->Polynom::makeMod();
-    result->Polynom::cutZeroes();
     return *result;
 }
-  
+
+
 std::ostream& operator<<(std::ostream& stream, Polynom& polynomial)
 {
     if (polynomial.Polynom::isZero()) {
@@ -584,7 +594,7 @@ std::ostream& operator<<(std::ostream& stream, Polynom& polynomial)
         i++;
     }
     stream << "\n";
-    
+
     return stream;
 }
 
@@ -620,7 +630,7 @@ Polynom& operator/(Polynom& p1, Polynom& p2) {
     int field = p1.p;
     if (p1.power < p2.power) { cout << "Can`t divide! The degree of dividend is always greater than divisor!\n\n"; return Polynom(field); }
     if (p2.isZero()) { cout << "Can't divide by 0!\n"; return Polynom(field); }
-    Polynom *Q = new Polynom(field),*R = new Polynom(field);
+    Polynom* Q = new Polynom(field), * R = new Polynom(field);
     if (p2.power == 0) {
         p1.valuate(p2.head->key);
         Q->copy(p1);
