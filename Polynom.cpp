@@ -9,9 +9,10 @@
  */
 
 #include <iostream>
+#include <utility>
+#include <stdlib.h>
 #include "cmath"
 #include "Polynom.h"
-#include <utility>
 
 using std::cout;
 using std::cin;
@@ -109,8 +110,16 @@ void Polynom::changeField(int new_p) {
 }
 
 Polynom::Polynom(int _p, int _power, std::vector<int> keys) {
-    if (_p < 0 || !isPrime(_p))
-        throw std::invalid_argument("Module p should be prime and more than zero");
+
+    try {
+        if (_p < 0 || !isPrime(_p))
+            throw 1;
+    }
+    catch (int res)
+    {
+        cout << "Module p should be prime and more than zero\n";
+        exit(0);
+    }
     p = _p;
     power = _power;
     head = makeItem(keys[0]);

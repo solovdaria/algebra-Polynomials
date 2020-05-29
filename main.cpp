@@ -143,7 +143,7 @@ int main() {
     cout << "irred3 Order: " << irred3.irrPolynomOrder() << "\n";
     // cout << "red Order: " << red.irrPolynomOrder() << "\n";
 
-    cout << "--------------------------------------------------------------------\n";
+   
 
     cout << "--------------------------------Changing field(p)--------------------\n";
     Polynom first(7, 2, {0,1,4}), second(7, 3, { 0,1,4,1});
@@ -158,6 +158,7 @@ int main() {
     cout << "mod 2\n";
     cout << first << second;
     cout << first + second;
+    cout << "--------------------------------------------------------------------\n";
 
     return 0;
 
