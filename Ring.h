@@ -3,6 +3,7 @@
 
 
 class Ring : public Polynom {
+
 private:
 
 protected:

@@ -149,7 +149,6 @@ public:
 
     //!Algorithm for Inversion in field GF(p^m) based on Extended Euclid’s Algorithm
     friend Polynom& inverse(Polynom& pol, Polynom& field );
-    
     /** Polynomial greatest common divisor.
      * Calculate and return a polynomial which is the greatest common divisor of two polynomials.
      * 

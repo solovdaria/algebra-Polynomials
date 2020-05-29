@@ -25,6 +25,7 @@ int Polynom::getLastCoefficient()
     return temp->key;
 }
 
+
 int Polynom::getCoefficient(int pos) {
     PElement* temp = this->head;
     int counter(0);
@@ -35,7 +36,6 @@ int Polynom::getCoefficient(int pos) {
     }
     return temp->key;
 }
-
 
 void Polynom::cutZeroes() {
     int flag = this->findPower();
@@ -62,7 +62,6 @@ int Polynom::modInverse(int number)
     return (x % p + p) % p;
 }
 
-
 int Polynom::gcdExtended(int a, int b, int* x, int* y)
 {
     if (a == 0)
@@ -79,7 +78,6 @@ int Polynom::gcdExtended(int a, int b, int* x, int* y)
 
     return gcd;
 }
-
 
 int Polynom::modDivision(int a, int b)
 {
@@ -116,13 +114,13 @@ Polynom::Polynom(int _p, int _power, std::vector<int> keys) {
     cutZeroes();
 }
 
-Polynom::Polynom(Polynom& other)
-{
+
+Polynom::Polynom(Polynom& other){
     this->copy(other);
 }
 
-
 void Polynom::makeMod() {
+
     PElement* tmp = head;
     while (tmp != nullptr) {
         if (tmp->key >= p)
@@ -133,7 +131,6 @@ void Polynom::makeMod() {
         tmp = tmp->next;
     }
 }
-
 
 int Polynom::findPower() {
     int flag = 0, counter = 0;
@@ -150,14 +147,12 @@ int Polynom::findPower() {
     return flag;
 }
 
-
 typename Polynom::PElement* Polynom::makeItem(int value) {
     auto* el = new PElement;
     el->key = value;
     el->next = nullptr;
     return el;
 }
-
 
 void Polynom::appendItem(Polynom::PElement* head, Polynom::PElement* el) {
     PElement* tmp = head;
@@ -238,6 +233,7 @@ void Polynom::copy(Polynom& pol) {
 
 bool Polynom::isPrime(int number)
 {
+    if (number < 2) return false;
     int root = sqrt(number);
     for (int i = 2; i <= root; i++)
     {
@@ -272,23 +268,22 @@ void Polynom::setPower(int _power) {
     power = _power;
 }
 
-
-void Polynom::valuate(int coef)
+template <int p>
+void Polynom<p>::valuate(int coef)
 {
-    PElement* temp = head;
-    while (temp) {
-        temp->key = modDivision(temp->key, coef);
-        temp = temp->next;
+    if (coef != 0) {
+        PElement* temp = head;
+        while (temp) {
+            temp->key = modDivision(temp->key, coef);
+            temp = temp->next;
+        }
     }
-
 }
-
 
 void Polynom::makeMonic() {
     int coef = getLastCoefficient();
     valuate(coef);
 }
-
 
 bool Polynom::isMonic() {
     int coef = getLastCoefficient();
@@ -451,9 +446,12 @@ void Polynom::differencePolinom(Polynom& pol1, Polynom& pol2) {
     }
 }
 
-
 void Polynom::multiplicatePolinom(Polynom& pol1, Polynom& pol2) {
-    if (pol1.isZero() || pol2.isZero()) return;
+    if (pol1.isZero() || pol2.isZero()) {
+        this->power = 0;
+        this->head = makeItem(0);
+        return;
+    }
     p = pol1.p;
     int pow = pol1.power + pol2.power;
     for (size_t k(0); k <= pow; k++) {
@@ -534,7 +532,6 @@ Polynom& Polynom::operator=(Polynom& other)
     return *this;
 }
 
-
 Polynom& GCD(Polynom a, Polynom b) {
     if (a.power < b.power) {
         std::swap(a, b);
@@ -549,23 +546,27 @@ Polynom& derivative(Polynom& pol1)
     auto temp = pol1.head;
     result->power = pol1.power - 1;
 
-    int power = 0;
+    int power_ = 0;
 
     while (temp) {
-        if (power != 0) {
-            if (result->head != nullptr) Polynom::appendItem(result->head, Polynom::makeItem(temp->key * power));
-            else result->head = Polynom::makeItem(temp->key * power);
+        if (power_ != 0) {
+            if (result->head != nullptr) Polynom<p>::appendItem(result->head, Polynom<p>::makeItem(temp->key * power_));
+            else result->head = Polynom<p>::makeItem(temp->key * power_);
         }
         temp = temp->next;
-        power++;
+        power_++;
     }
-    result->Polynom::makeMod();
+    result->Polynom<p>::makeMod();
+    result->Polynom<p>::cutZeroes();
     return *result;
 }
-
-
+  
 std::ostream& operator<<(std::ostream& stream, Polynom& polynomial)
 {
+    if (polynomial.Polynom<p>::isZero()) {
+        stream << "0\n";
+        return stream;
+    }
     Polynom::PElement* tmp = polynomial.Polynom::head;
     int i = 0;
     bool isFirst = true;
