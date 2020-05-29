@@ -28,38 +28,15 @@
  * next - pointer to next object of structure "PElement"
  */
 
-//forward declaration 
-template <int p>//Template parameter p(field)
 class Polynom;
-
 //forward declaration
-template <int p>
-auto GCD(Polynom<p>, Polynom<p>);
-template <int p>
-auto derivative(Polynom<p>& );
-template <int p>
-auto operator*(Polynom<p>&, Polynom<p>& );
-template <int p>
-auto operator+(Polynom<p>& , Polynom<p>& );
-template <int p>
-auto operator-(Polynom<p>& , Polynom<p>& );
-template <int p>
-auto operator !=(Polynom<p>& , Polynom<p>& );
-template <int p>
-auto operator ==(Polynom<p>& , Polynom<p>& );
-template <int p>
-auto operator /(Polynom<p>&, Polynom<p>&);
-template <int p>
-auto operator %(Polynom<p>&, Polynom<p>&);
-template <int p>
-auto inverse(Polynom<p>& , Polynom<p>&);
 
-
-template <int p>//!Template parameter p(field) - should be prime
 class Polynom {
 private:
     //!polynomial degree (maximum degree that a variable can have)
     int power;
+    //!polynomial field
+    int p;
     //!Structure that shows every term of every object of class "Polynom"
     struct PElement {
         //!coefficient of terms of polinom
@@ -101,10 +78,9 @@ protected:
    
 public:
     //!empty constructor
-    Polynom();
+    Polynom(int _p);
     //!constructor that take power of polinom and vector of coefficients of this polinom
-    explicit Polynom(int _power, std::vector<int> keys);
-    
+    explicit Polynom(int _p, int _power, std::vector<int> keys);
     /** Copy constructor.
      * The copy constructor added here to make a deep copy 
      * when initialize one object using another object.
@@ -160,20 +136,19 @@ public:
      * 
      * The returned polynomial (gcd) is monic (i.e. the leading coefficient is equal to 1).
      */
-    auto gcd(Polynom& a, Polynom& b);
+    Polynom& gcd(Polynom& a, Polynom& b);
     
     //!find A^(-1) in field B(p^m)
-    auto gcdExtended(Polynom& A, Polynom& B);
+    void gcdExtended(Polynom& A, Polynom& B);
 
     /** Copy assignment operator.
      * The copy assignment operator added here to make a deep copy
      * when the "=" is used to assign one instance to another.
      */
-    Polynom<p>& operator=(Polynom& other);
+    Polynom& operator=(Polynom& other);
 
     //!Algorithm for Inversion in field GF(p^m) based on Extended Euclid’s Algorithm
-    friend auto inverse<p>(Polynom<p>& pol, Polynom<p>& field );
-    
+    friend Polynom& inverse(Polynom& pol, Polynom& field );
     /** Polynomial greatest common divisor.
      * Calculate and return a polynomial which is the greatest common divisor of two polynomials.
      * 
@@ -182,22 +157,21 @@ public:
      * 
      * The returned polynomial (gcd) is monic (i.e. the leading coefficient is equal to 1).
      */
-    friend auto GCD<p>(Polynom<p> a, Polynom<p> b);
+    friend Polynom& GCD(Polynom a, Polynom b);
     
-    friend auto derivative<p>(Polynom<p>& pol1);
-    friend auto operator *<p>(Polynom<p>& p1, Polynom<p>& p2);
-    friend auto operator -<p>(Polynom<p>& p1, Polynom<p>& p2);
-    friend auto operator +<p>(Polynom<p>& p1, Polynom<p>& p2);
-    friend auto operator /<p>(Polynom<p>& p1, Polynom<p>& p2);
-    friend auto operator %<p>(Polynom<p>& p1, Polynom<p>& p2);
+    friend Polynom& derivative(Polynom& pol1);
+    friend Polynom& operator *(Polynom& p1, Polynom& p2);
+    friend Polynom& operator -(Polynom& p1, Polynom& p2);
+    friend Polynom& operator +(Polynom& p1, Polynom& p2);
+    friend Polynom& operator /(Polynom& p1, Polynom& p2);
+    friend Polynom& operator %(Polynom& p1, Polynom& p2);
 
     //!output polynomial
-    template <int p>
-    friend std::ostream& operator <<(std::ostream& stream, Polynom<p>& polynomial);
+    friend std::ostream& operator <<(std::ostream& stream, Polynom& polynomial);
     
     //!equality operators
-    friend auto operator ==<p>(Polynom<p>& p1, Polynom<p>& p2);
-    friend auto operator !=<p>(Polynom<p>& p1, Polynom<p>& p2);
+    friend bool operator ==(Polynom& p1, Polynom& p2);
+    friend bool  operator !=(Polynom& p1, Polynom& p2);
 };
 
 #endif //POLINOMS_POLYNOM_H

@@ -1,9 +1,9 @@
 #pragma once
 #include "Polynom.h"
 
-template <int p>//Template parameter p (module can be not prime)
 
-class Ring : public Polynom <p> {
+class Ring : public Polynom {
+
 private:
 
 protected:

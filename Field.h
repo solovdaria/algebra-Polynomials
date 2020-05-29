@@ -1,15 +1,14 @@
 #pragma once
 #include "Ring.h"
 
-template <int p>//Template parameter p (module)
 
-class Field :public Ring<p> {
+class Field :public Ring {
 private:
 	
 	//Q is reducible
 	//p is prime
 public:
-	Field(int);
+	Field(int p);
 	// /
 	// %
 	// gcd
