@@ -64,25 +64,39 @@ int main() {
     Polynom<5> div2 = f % g;
     cout << "f(x) % g(x) = " << div2;
 
-    cout << "--------------------------------------------------------------------\n";
+    cout << "-------------------------------- GCD ------------------------------\n";
 
-    cout << "b(x) = " << b;
-    cout << "f(x) = " << f;
-    Polynom<5> gcd1 = GCD(b, f);
-    cout << "gcd(b, f) = " << gcd1;
+    Polynom<2> p1(7, { 1, 0, 0, 0, 0, 0, 0, 1 });
+    Polynom<2> p2(5, { 1, 1, 0, 1, 0, 1 });
 
-    Polynom<5> gcd2 = GCD(f, b);
-    cout << "gcd(f, b) = " << gcd2;
+    cout << "p1(x) = " << p1;
+    cout << "p2(x) = " << p2;
+    cout << "gcd(p1, p2) = " << GCD(p1, p2); // 1+x^1
 
-    Polynom<5> gcd3 = GCD(f, f);
-    cout << "gcd(f, f) = " << gcd3;
+    cout << "---" << endl;
 
-    cout << "--------------------------------------------------------------------\n";
+    p1 = Polynom<2>(5, { 1, 1, 0, 0, 0, 1 });
+    p2 = Polynom<2>(5, { 1, 0, 0, 1, 1, 1 });
+
+    cout << "p1(x) = " << p1;
+    cout << "p2(x) = " << p2;
+    cout << "gcd(p1, p2) = " << GCD(p1, p2); // 1+x^2+x^3
+
+    cout << "---" << endl;
+
+    Polynom<3> p3(8, { 1, 0, 1, 1, 0, 2, 0, 0, 1 });
+    Polynom<3> p4(6, { 2, 0, 2, 2, 0, 1, 2 });
+    cout << "p3(x) = " << p3;
+    cout << "p4(x) = " << p4;
+    Polynom<3> gcd1 = GCD(p3, p4);
+    cout << "gcd(p3, p4) = " << gcd1; // 2+x^2
+
+    cout << "---" << endl;
 
     cout << "h(x) = " << h;
     cout << "g(x) = " << g;
-    Polynom<5> gcd4 = GCD(h, g);
-    cout << "gcd(h, g) = " << gcd4;
+    Polynom<5> gcd2 = GCD(h, g);
+    cout << "gcd(h, g) = " << gcd2; // 1
 
     cout << "--------------------------------------------------------------------\n";
 

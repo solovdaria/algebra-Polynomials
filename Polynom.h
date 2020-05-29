@@ -34,7 +34,7 @@ class Polynom;
 
 //forward declaration
 template <int p>
-auto GCD(Polynom<p>&, Polynom<p>&);
+auto GCD(Polynom<p>, Polynom<p>);
 template <int p>
 auto derivative(Polynom<p>& );
 template <int p>
@@ -104,6 +104,13 @@ public:
     Polynom();
     //!constructor that take power of polinom and vector of coefficients of this polinom
     explicit Polynom(int _power, std::vector<int> keys);
+    
+    /** Copy constructor.
+     * The copy constructor added here to make a deep copy 
+     * when initialize one object using another object.
+     */
+    Polynom(Polynom& other);
+
     ~Polynom();
 
     //!Getter and Setters (for me they are useless, but still...they are)
@@ -143,13 +150,40 @@ public:
     void addingPolinoms(Polynom& pol1, Polynom& pol2);
     void differencePolinom(Polynom& pol1, Polynom& pol2);
     void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
-    auto gcd(Polynom& pol1, Polynom& pol2);
+    
+    /** Polynomial greatest common divisor.
+     * Calculate and return a polynomial which is the greatest common divisor of two polynomials.
+     *
+     * This member function assumes that the degree of the polynomial 'a'
+     * is greater than or equal to the degree of the polynomial 'b' (a.power >= b.power).
+     * Otherwise, the result is undefined.
+     * 
+     * The returned polynomial (gcd) is monic (i.e. the leading coefficient is equal to 1).
+     */
+    auto gcd(Polynom& a, Polynom& b);
+    
     //!find A^(-1) in field B(p^m)
     auto gcdExtended(Polynom& A, Polynom& B);
-   
+
+    /** Copy assignment operator.
+     * The copy assignment operator added here to make a deep copy
+     * when the "=" is used to assign one instance to another.
+     */
+    Polynom<p>& operator=(Polynom& other);
+
     //!Algorithm for Inversion in field GF(p^m) based on Extended Euclid’s Algorithm
     friend auto inverse<p>(Polynom<p>& pol, Polynom<p>& field );
-    friend auto GCD<p>(Polynom<p>& p1, Polynom<p>& p2);
+    
+    /** Polynomial greatest common divisor.
+     * Calculate and return a polynomial which is the greatest common divisor of two polynomials.
+     * 
+     * This function does not require the degree of the polynomial 'a' to be greater than or equal
+     * to the degree of the polynomial 'b' (a.order >= b.order is not required).
+     * 
+     * The returned polynomial (gcd) is monic (i.e. the leading coefficient is equal to 1).
+     */
+    friend auto GCD<p>(Polynom<p> a, Polynom<p> b);
+    
     friend auto derivative<p>(Polynom<p>& pol1);
     friend auto operator *<p>(Polynom<p>& p1, Polynom<p>& p2);
     friend auto operator -<p>(Polynom<p>& p1, Polynom<p>& p2);
