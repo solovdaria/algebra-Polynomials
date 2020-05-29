@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Polynom.cpp"
+#include "Polynom.h"
 
 using std::cout;
 using std::cin;
@@ -127,9 +127,7 @@ int main() {
     Polynom irred(3, 6, { 1, 0, 0, 1, 1, 0, 1 });
     Polynom irred2(3, 2, { 1, 0, 1 });
     Polynom irred3(3, 5, { 1, 0, 1, 1, 1, 3 });
-   // Polynom<4> red(2, { 1, 2, 1 });
-   // Polynom<4> red2(6, { 1, 1, 3, 0, 3, 0, 1 });
-
+ 
     cout << "\n\n\n";
 
     cout << "3) irred(x) = " << irred;
@@ -144,68 +142,5 @@ int main() {
    // cout << "red Order: " << red.irrPolynomOrder() << "\n";
 
     cout << "--------------------------------------------------------------------\n";
-
-    cout << "---" << endl;
-
-    cout << "h(x) = " << h;
-    cout << "g(x) = " << g;
-    Polynom<5> gcd2 = GCD(h, g);
-    cout << "gcd(h, g) = " << gcd2; // 1
-
-    cout << "--------------------------------------------------------------------\n";
-
-    Polynom<5> x(1, { 2,1 }), field(3, { 2,3,0,1 });
-    cout << "x = " << x;
-    cout << "field = " << field;
-    Polynom<5> inv = inverse(x, field);
-    cout << "inverse(x, field) = " << inv;
-
-    cout << "--------------------------------------------------------------------\n";
-
-    Polynom<2> pol1(4, {1,0,0,1,1});
-    cout << "1) pol1(x) = " << pol1;
-    cout << "Irreducible : ";
-    if (pol1.isIrreducible())
-        cout << "Yes\n\n";
-             else cout << "No\n\n";
-
-
-    Polynom<5> pol2(3, { 1,0,1,1 });
-    cout << "2) pol2(x) = " << pol2;
-    cout << "Irreducible : ";
-    if (pol2.isIrreducible())
-        cout << "Yes\n\n";
-    else cout << "No\n\n";
-
-
-
-    Polynom<3> irred(6, { 1, 0, 0, 1, 1, 0, 1 });
-    Polynom<3> irred2(2, { 1, 0, 1 });
-    Polynom<3> irred3(5, { 1, 0, 1, 1, 1, 3 });
-    cout << "pol1 Order: " << pol1.irrPolynomOrder() << "\n";
-    cout << "pol2 Order: " << pol2.irrPolynomOrder() << "\n";
-   // Polynom<4> red(2, { 1, 2, 1 });
-   // Polynom<4> red2(6, { 1, 1, 3, 0, 3, 0, 1 });
-
-    cout << "\n\n\n";
-
-    cout << "3) irred(x) = " << irred;
-    cout << "4) irred2(x) = " << irred2;
-    cout << "5) irred3(x) = " << irred3;
-   // cout << "6) red(x) = " << red;
-  
-    cout << "irred Order: " << irred.irrPolynomOrder() << "\n";
-    cout << "irred2 Order: " << irred2.irrPolynomOrder() << "\n";
-    cout << "irred3 Order: " << irred3.irrPolynomOrder() << "\n";
-   // cout << "red Order: " << red.irrPolynomOrder() << "\n";
-
-    cout << "--------------------------------------------------------------------\n";
-
-    Polynom<2> test(8, {1,0,0,1,1,0,1,0,1});
-    cout << test;
-    cout << derivative(test);
-    cout << GCD(test,derivative(test));
     return 0;
-
-
 }

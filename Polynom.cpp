@@ -268,8 +268,7 @@ void Polynom::setPower(int _power) {
     power = _power;
 }
 
-template <int p>
-void Polynom<p>::valuate(int coef)
+void Polynom::valuate(int coef)
 {
     if (coef != 0) {
         PElement* temp = head;
@@ -550,20 +549,20 @@ Polynom& derivative(Polynom& pol1)
 
     while (temp) {
         if (power_ != 0) {
-            if (result->head != nullptr) Polynom<p>::appendItem(result->head, Polynom<p>::makeItem(temp->key * power_));
-            else result->head = Polynom<p>::makeItem(temp->key * power_);
+            if (result->head != nullptr) Polynom::appendItem(result->head, Polynom::makeItem(temp->key * power_));
+            else result->head = Polynom::makeItem(temp->key * power_);
         }
         temp = temp->next;
         power_++;
     }
-    result->Polynom<p>::makeMod();
-    result->Polynom<p>::cutZeroes();
+    result->Polynom::makeMod();
+    result->Polynom::cutZeroes();
     return *result;
 }
   
 std::ostream& operator<<(std::ostream& stream, Polynom& polynomial)
 {
-    if (polynomial.Polynom<p>::isZero()) {
+    if (polynomial.Polynom::isZero()) {
         stream << "0\n";
         return stream;
     }
