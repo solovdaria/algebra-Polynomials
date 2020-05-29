@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Polynom.cpp"
+#include "Field.cpp"
 
 using std::cout;
 using std::cin;
@@ -7,11 +8,12 @@ using std::endl;
 
 int main() {
 
-    Polynom<5> f(2, {1,2,1});
+   Polynom<5> f(2, {1,2,1});
     Polynom<5> g(2, {1,3,1});
     Polynom<5> h(1, {1,2});
     Polynom<5> b(1, {1,1});
     Polynom<5> zero(0, {0});
+
     
     cout << "1) f(x) = " << f;
     cout << "f(4) = " << f.evaluate(4) << "\n\n";
@@ -131,6 +133,14 @@ int main() {
    // cout << "red Order: " << red.irrPolynomOrder() << "\n";
 
     cout << "--------------------------------------------------------------------\n";
+
+    Field<5> fi(5);
+
+   
+    
+    cout << fi.buildCircularPolynom(6) << endl;
+   
+    
 
     return 0;
 

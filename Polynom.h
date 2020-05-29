@@ -91,7 +91,7 @@ private:
     void cutZeroes();
     //!Copy polynom
     void copy(Polynom& pol);
-    bool isPrime(int number);
+    
 
 protected:
     //!A polynomial whose leading coefficientis 1 is called monic
@@ -100,6 +100,7 @@ protected:
     bool isZero();
    
 public:
+    bool isPrime(int number);
     //!empty constructor
     Polynom();
     //!constructor that take power of polinom and vector of coefficients of this polinom
@@ -164,6 +165,8 @@ public:
     //!equality operators
     friend auto operator ==<p>(Polynom<p>& p1, Polynom<p>& p2);
     friend auto operator !=<p>(Polynom<p>& p1, Polynom<p>& p2);
+
+    
 };
 
 #endif //POLINOMS_POLYNOM_H

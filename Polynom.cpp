@@ -233,6 +233,8 @@ void Polynom<p>::copy(Polynom& pol) {
 template<int p>
 bool Polynom<p>::isPrime(int number)
 {
+    if (number < 2)
+        return false;
     int root = sqrt(number);
     for (int i = 2; i <= root; i++)
     {
@@ -656,3 +658,6 @@ auto inverse(Polynom<p>& pol, Polynom<p>& field) {
     Polynom<p> result = pol.Polynom<p>::gcdExtended(pol, field);
     return result;
 }
+
+
+
