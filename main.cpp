@@ -18,14 +18,17 @@ int main() {
 
 
     cout << "2) g(x) = " << g;
-    cout << "h(4) = " << g.evaluate(4) << "\n\n";
+    cout << "g(4) = " << g.evaluate(4) << "\n\n";
 
 
     cout << "3) h(x) = " << h;
-    cout << "b(4) = " << h.evaluate(4) << "\n\n";
+    cout << "h(4) = " << h.evaluate(4) << "\n\n";
 
     cout << "4) b(x) = " << b;
     cout << "b(4) = " << b.evaluate(4) << "\n\n";
+
+    cout << "4) zero = " << zero;
+    cout << "zero(4) = " << zero.evaluate(4) << "\n\n";
 
 
     cout << "\n\nMaking polynomial monic\n";
@@ -42,6 +45,9 @@ int main() {
 
     Polynom<5> d = f * g;
     cout << "f(x) * g(x) = " << d;
+
+    Polynom<5> k = f * zero;
+    cout << "f(x) * zero = " << k;
 
     Polynom<5> der1 = derivative(f);
     cout << "f(x)' = " << der1;
@@ -128,6 +134,8 @@ int main() {
     Polynom<3> irred(6, { 1, 0, 0, 1, 1, 0, 1 });
     Polynom<3> irred2(2, { 1, 0, 1 });
     Polynom<3> irred3(5, { 1, 0, 1, 1, 1, 3 });
+    cout << "pol1 Order: " << pol1.irrPolynomOrder() << "\n";
+    cout << "pol2 Order: " << pol2.irrPolynomOrder() << "\n";
    // Polynom<4> red(2, { 1, 2, 1 });
    // Polynom<4> red2(6, { 1, 1, 3, 0, 3, 0, 1 });
 
@@ -137,8 +145,7 @@ int main() {
     cout << "4) irred2(x) = " << irred2;
     cout << "5) irred3(x) = " << irred3;
    // cout << "6) red(x) = " << red;
-    cout << "pol1 Order: " << pol1.irrPolynomOrder() << "\n";
-    cout << "pol2 Order: " << pol2.irrPolynomOrder() << "\n";
+  
     cout << "irred Order: " << irred.irrPolynomOrder() << "\n";
     cout << "irred2 Order: " << irred2.irrPolynomOrder() << "\n";
     cout << "irred3 Order: " << irred3.irrPolynomOrder() << "\n";
@@ -149,7 +156,10 @@ int main() {
     Polynom<2> test(8, {1,0,0,1,1,0,1,0,1});
     cout << test;
     cout << derivative(test);
-   cout << GCD(test,derivative(test));
+    cout << GCD(test,derivative(test));
     return 0;
+
+
+
 
 }

@@ -240,6 +240,7 @@ void Polynom<p>::copy(Polynom& pol) {
 template<int p>
 bool Polynom<p>::isPrime(int number)
 {
+    if (number < 2) return false;
     int root = sqrt(number);
     for (int i = 2; i <= root; i++)
     {
@@ -277,12 +278,13 @@ void Polynom<p>::setPower(int _power) {
 template <int p>
 void Polynom<p>::valuate(int coef)
 {
-    PElement* temp = head;
-    while (temp) {
-        temp->key = modDivision(temp->key, coef);
-        temp = temp->next;
+    if (coef != 0) {
+        PElement* temp = head;
+        while (temp) {
+            temp->key = modDivision(temp->key, coef);
+            temp = temp->next;
+        }
     }
-
 }
 
 template<int p>
@@ -453,7 +455,11 @@ void Polynom<p>::differencePolinom(Polynom& pol1, Polynom& pol2) {
 
 template <int p>
 void Polynom<p>::multiplicatePolinom(Polynom& pol1, Polynom& pol2) {
-    if (pol1.isZero() || pol2.isZero()) return;
+    if (pol1.isZero() || pol2.isZero()) {
+        this->power = 0;
+        this->head = makeItem(0);
+        return;
+    }
 
     int pow = pol1.power + pol2.power;
     for (size_t k(0); k <= pow; k++) {
@@ -567,6 +573,10 @@ auto derivative(Polynom<p>& pol1)
 template <int p>
 std::ostream& operator<<(std::ostream& stream, Polynom<p>& polynomial)
 {
+    if (polynomial.Polynom<p>::isZero()) {
+        stream << "0\n";
+        return stream;
+    }
     Polynom<p>::PElement* tmp = polynomial.Polynom<p>::head;
     int i = 0;
     bool isFirst = true;
