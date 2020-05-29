@@ -146,6 +146,10 @@ int main() {
 
     cout << "--------------------------------------------------------------------\n";
 
+    Polynom<2> test(8, {1,0,0,1,1,0,1,0,1});
+    cout << test;
+    cout << derivative(test);
+   cout << GCD(test,derivative(test));
     return 0;
 
 }

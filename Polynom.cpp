@@ -549,17 +549,18 @@ auto derivative(Polynom<p>& pol1)
     auto temp = pol1.head;
     result->power = pol1.power - 1;
 
-    int power = 0;
+    int power_ = 0;
 
     while (temp) {
-        if (power != 0) {
-            if (result->head != nullptr) Polynom<p>::appendItem(result->head, Polynom<p>::makeItem(temp->key * power));
-            else result->head = Polynom<p>::makeItem(temp->key * power);
+        if (power_ != 0) {
+            if (result->head != nullptr) Polynom<p>::appendItem(result->head, Polynom<p>::makeItem(temp->key * power_));
+            else result->head = Polynom<p>::makeItem(temp->key * power_);
         }
         temp = temp->next;
-        power++;
+        power_++;
     }
     result->Polynom<p>::makeMod();
+    result->Polynom<p>::cutZeroes();
     return *result;
 }
 
