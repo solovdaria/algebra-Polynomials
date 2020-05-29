@@ -145,6 +145,20 @@ int main() {
 
     cout << "--------------------------------------------------------------------\n";
 
+    cout << "--------------------------------Changing field(p)--------------------\n";
+    Polynom first(7, 2, {0,1,4}), second(7, 3, { 0,1,4,1});
+
+    cout << first<< second;
+
+    cout << "mod 7\n";
+    cout << first + second; cout << endl;
+
+    first.changeField(2); second.changeField(2);
+
+    cout << "mod 2\n";
+    cout << first << second;
+    cout << first + second;
+
     return 0;
 
 }

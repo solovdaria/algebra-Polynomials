@@ -89,6 +89,7 @@ public:
 
     ~Polynom();
 
+    void changeField(int new_p);
     //!Getter and Setters (for me they are useless, but still...they are)
     PElement* getHead()const;
     void setHead(PElement* _head);

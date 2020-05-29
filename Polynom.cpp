@@ -102,6 +102,12 @@ Polynom::Polynom(int _p) {
     p = _p;
 }
 
+void Polynom::changeField(int new_p) {
+    this->p = new_p;
+    this->makeMod();
+    this->cutZeroes();
+}
+
 Polynom::Polynom(int _p, int _power, std::vector<int> keys) {
     if (_p < 0 || !isPrime(_p))
         throw std::invalid_argument("Module p should be prime and more than zero");
