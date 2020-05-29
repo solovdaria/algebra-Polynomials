@@ -311,7 +311,7 @@ bool Polynom<p>::isIrreducible() {
     makeMonic();
     int power_;
     for (size_t i(1); i <= this->power / 2; i++) {
-        tmp.copy(one);
+        tmp = one;
         power_ = pow(p,i);
         tmp.shift(power_);
         if((tmp - odd).power >= this->power)
@@ -468,11 +468,11 @@ void Polynom<p>::multiplicatePolinom(Polynom& pol1, Polynom& pol2) {
 
 template <int p>
 void Polynom<p>::quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R) {
-    Polynom<p> A_copy; A_copy.copy(A);
+    Polynom<p> A_copy; A_copy = A;
     Q.clear(); R.clear();
     while (A_copy.power >= B.power) {
         int k = A_copy.power - B.power;
-        Polynom<p> B_copy; B_copy.copy(B);
+        Polynom<p> B_copy; B_copy = B;
         if (k)
             B_copy.shift(k);
         int a_lead = A_copy.getLastCoefficient();
@@ -506,16 +506,16 @@ auto Polynom<p>::gcdExtended(Polynom& A, Polynom& B) {
     Polynom S, R, V(0, {0}), U(0, {1});//U is inverse of A mod B(p^m)
     Polynom Rshift, Ushift,temp;
 
-    S.copy(B); R.copy(A);
+    S = B; R = A;
 
     while (R.power) {
         int s = S.power - R.power;
         if (s < 0) {
-            temp.copy(S); S.copy(R); R.copy(temp);
-            temp.copy(V); V.copy(U); U.copy(temp);
+            temp = S; S = R; R = temp;
+            temp = V; V = U; U = temp;
             s *= -1;
         }
-        Rshift.copy(R); Ushift.copy(U);
+        Rshift = R; Ushift = U;
         Rshift.shift(s); Ushift.shift(s);
         S = S - Rshift;
         V = V - Ushift;
