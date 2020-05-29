@@ -11,7 +11,6 @@
 #include <iostream>
 #include "cmath"
 #include "Polynom.h"
-#include <utility>
 
 using std::cout;
 using std::cin;
@@ -116,12 +115,6 @@ Polynom<p>::Polynom(int _power, std::vector<int> keys) {
     }
     makeMod();
     cutZeroes();
-}
-
-template<int p>
-Polynom<p>::Polynom(Polynom& other)
-{
-    this->copy(other);
 }
 
 template <int p>
@@ -493,12 +486,16 @@ void Polynom<p>::quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R) {
 }
 
 template <int p>
-auto Polynom<p>::gcd(Polynom& a, Polynom& b) {
-    if (b.isZero()) {
-        a.makeMonic();
-        return a;
+auto Polynom<p>::gcd(Polynom& pol1, Polynom& pol2) {
+    if (pol2.isZero()) {
+        if (pol1.isMonic()) return pol1;
+        Polynom<p> pol1_copy; pol1_copy.copy(pol1);
+        pol1_copy.makeMonic();
+        return pol1_copy;
     }
-    return gcd(b, a % b);
+    Polynom<p> odd = pol1 % pol2;
+    if (odd.power == 0 && odd.head->key != 0) return Polynom(0, { 1 });
+    return gcd(pol2, odd);
 }
 
 template <int p>
@@ -525,21 +522,16 @@ auto Polynom<p>::gcdExtended(Polynom& A, Polynom& B) {
     return U;
 }
 
-template<int p>
-Polynom<p>& Polynom<p>::operator=(Polynom& other)
-{
-    if (this != &other) {
-        this->copy(other);
-    }
-    return *this;
-}
-
 template <int p>
-auto GCD(Polynom<p> a, Polynom<p> b) {
-    if (a.power < b.power) {
-        std::swap(a, b);
+auto GCD(Polynom<p>& p1, Polynom<p>& p2) {
+    if (p1.power < p2.power) {
+        Polynom<p> temp = p1;
+        p1 = p2;
+        p2 = temp;
     }
-    return a.gcd(a, b);
+    Polynom<p>result = p1.Polynom<p>::gcd(p1, p2);
+    result.Polynom<p>::makeMod();
+    return result;
 }
 
 template <int p>
