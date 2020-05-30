@@ -14,71 +14,48 @@
 #include <vector>
 #include <string>
 
-/*!
- * \brief class Polynom contains fields that describe polinom
- * \details Every object of this class describe separate polinom
- *
- * a + bx + cx^2
- * power of this polinom - 2
- * a, b, c - coefficients of polinom (key)
- *
- * Every object of this class have structure "PElement"
- * Every structure "PElement" have objects that contains fields "key" and "next"
- * key - coefficient of term
- * next - pointer to next object of structure "PElement"
- */
+ /*!
+  * \brief class Polynom contains fields that describe polinom
+  * \details Every object of this class describe separate polinom
+  *
+  * a + bx + cx^2
+  * power of this polinom - 2
+  * a, b, c - coefficients of polinom (key)
+  *
+  * Every object of this class have structure "PElement"
+  * Every structure "PElement" have objects that contains fields "key" and "next"
+  * key - coefficient of term
+  * next - pointer to next object of structure "PElement"
+  */
 
-//forward declaration 
-template <int p>//Template parameter p(field)
 class Polynom;
-
 //forward declaration
-template <int p>
-auto GCD(Polynom<p>&, Polynom<p>&);
-template <int p>
-auto derivative(Polynom<p>& );
-template <int p>
-auto operator*(Polynom<p>&, Polynom<p>& );
-template <int p>
-auto operator+(Polynom<p>& , Polynom<p>& );
-template <int p>
-auto operator-(Polynom<p>& , Polynom<p>& );
-template <int p>
-auto operator !=(Polynom<p>& , Polynom<p>& );
-template <int p>
-auto operator ==(Polynom<p>& , Polynom<p>& );
-template <int p>
-auto operator /(Polynom<p>&, Polynom<p>&);
-template <int p>
-auto operator %(Polynom<p>&, Polynom<p>&);
-template <int p>
-auto inverse(Polynom<p>& , Polynom<p>&);
 
-
-template <int p>//!Template parameter p(field) - should be prime
 class Polynom {
 private:
     //!polynomial degree (maximum degree that a variable can have)
     int power;
+    //!polynomial field
+    int p;
     //!Structure that shows every term of every object of class "Polynom"
     struct PElement {
         //!coefficient of terms of polinom
         int key;
         //!pointer to next term
-        PElement *next;
+        PElement* next;
     };
     //!Mod of polynom
     void makeMod();
     //!Pointer to the first term of every object of class "Polynom"
-    PElement *head = nullptr;
+    PElement* head = nullptr;
     //Clear PElement list
-   
+
     //!Set the coefficient coef. on position pos equal to the value key
     void set(int pos, int key);
-    
+
     void clear();
-    
-  
+
+
     int getLastCoefficient();
     int getCoefficient(int pos);
     int modInverse(int x);
@@ -90,22 +67,37 @@ private:
     //!Cut last zeroes and update power
     void cutZeroes();
     //!Copy polynom
-    void copy(Polynom& pol);
+    void copy(const Polynom& pol);
     
+
+    void addingPolinoms(Polynom& pol1, Polynom& pol2);
+    void differencePolinom(Polynom& pol1, Polynom& pol2);
+    void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
 
 protected:
     //!A polynomial whose leading coefficientis 1 is called monic
     bool isMonic();
     //!Compare the polynomial with f(x) = 0
     bool isZero();
-   
-public:
+    static void handleException(Polynom& p1, Polynom& p2);
     bool isPrime(int number);
+public:
+
     //!empty constructor
-    Polynom();
+    Polynom(int _p);
+
     //!constructor that take power of polinom and vector of coefficients of this polinom
-    explicit Polynom(int _power, std::vector<int> keys);
+    explicit Polynom(int _p, int _power, std::vector<int> keys);
+
+    /** Copy constructor.
+     * The copy constructor added here to make a deep copy
+     * when initialize one object using another object.
+     */
+    Polynom(const Polynom& other);
+
     ~Polynom();
+
+    void changeField(int new_p);
 
     //!Getter and Setters (for me they are useless, but still...they are)
     PElement* getHead()const;
@@ -137,36 +129,57 @@ public:
     //!LCM of given vector numbers
     int LCM(std::vector<int> numbers);
     int gcd(int a, int b);
-
+    std::vector<int> findRoots();
+    int findRootNumber();
     //!Find the quotient and remainder A = Q * B + R
     void quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R);
 
-    void addingPolinoms(Polynom& pol1, Polynom& pol2);
-    void differencePolinom(Polynom& pol1, Polynom& pol2);
-    void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
-    auto gcd(Polynom& pol1, Polynom& pol2);
+    /** Polynomial greatest common divisor.
+     * Calculate and return a polynomial which is the greatest common divisor of two polynomials.
+     *
+     * This member function assumes that the degree of the polynomial 'a'
+     * is greater than or equal to the degree of the polynomial 'b' (a.power >= b.power).
+     * Otherwise, the result is undefined.
+     *
+     * The returned polynomial (gcd) is monic (i.e. the leading coefficient is equal to 1).
+     */
+    Polynom& gcd(Polynom& a, Polynom& b);
+
     //!find A^(-1) in field B(p^m)
-    auto gcdExtended(Polynom& A, Polynom& B);
-   
+    void gcdExtended(Polynom& A, Polynom& B);
+
+    /** Copy assignment operator.
+     * The copy assignment operator added here to make a deep copy
+     * when the "=" is used to assign one instance to another.
+     */
+    Polynom& operator=(Polynom& other);
+
     //!Algorithm for Inversion in field GF(p^m) based on Extended Euclid’s Algorithm
-    friend auto inverse<p>(Polynom<p>& pol, Polynom<p>& field );
-    friend auto GCD<p>(Polynom<p>& p1, Polynom<p>& p2);
-    friend auto derivative<p>(Polynom<p>& pol1);
-    friend auto operator *<p>(Polynom<p>& p1, Polynom<p>& p2);
-    friend auto operator -<p>(Polynom<p>& p1, Polynom<p>& p2);
-    friend auto operator +<p>(Polynom<p>& p1, Polynom<p>& p2);
-    friend auto operator /<p>(Polynom<p>& p1, Polynom<p>& p2);
-    friend auto operator %<p>(Polynom<p>& p1, Polynom<p>& p2);
+    friend Polynom& inverse(Polynom& pol, Polynom& field);
+
+    /** Polynomial greatest common divisor.
+     * Calculate and return a polynomial which is the greatest common divisor of two polynomials.
+     *
+     * This function does not require the degree of the polynomial 'a' to be greater than or equal
+     * to the degree of the polynomial 'b' (a.order >= b.order is not required).
+     *
+     * The returned polynomial (gcd) is monic (i.e. the leading coefficient is equal to 1).
+     */
+    friend Polynom& GCD(Polynom a, Polynom b);
+
+    friend Polynom& derivative(Polynom& pol1);
+    friend Polynom& operator *(Polynom& p1, Polynom& p2);
+    friend Polynom& operator -(Polynom& p1, Polynom& p2);
+    friend Polynom& operator +(Polynom& p1, Polynom& p2);
+    friend Polynom& operator /(Polynom& p1, Polynom& p2);
+    friend Polynom& operator %(Polynom& p1, Polynom& p2);
 
     //!output polynomial
-    template <int p>
-    friend std::ostream& operator <<(std::ostream& stream, Polynom<p>& polynomial);
-    
-    //!equality operators
-    friend auto operator ==<p>(Polynom<p>& p1, Polynom<p>& p2);
-    friend auto operator !=<p>(Polynom<p>& p1, Polynom<p>& p2);
+    friend std::ostream& operator <<(std::ostream& stream, Polynom& polynomial);
 
-    
+    //!equality operators
+    friend bool operator ==(Polynom& p1, Polynom& p2);
+    friend bool  operator !=(Polynom& p1, Polynom& p2);
 };
 
 #endif //POLINOMS_POLYNOM_H
