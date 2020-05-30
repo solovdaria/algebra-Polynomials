@@ -9,6 +9,7 @@ private:
 	//Q is reducible
 	//p is prime
 public:
+	Field();
 	Field(int p);
 	Polynom buildCircularPolynom(int n, int p);
 	// /

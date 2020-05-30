@@ -84,6 +84,7 @@ protected:
 public:
 
     //!empty constructor
+    Polynom();
     Polynom(int _p);
 
     //!constructor that take power of polinom and vector of coefficients of this polinom

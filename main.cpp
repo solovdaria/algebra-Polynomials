@@ -226,11 +226,17 @@ int main() {
     }
 
 
-    cout << "------------------------------------Circular----------------------------\n";
+    cout << "----------------------------Circular polynom----------------------------\n";
 
 
     Field fi(5);
+    cout << "n = 6: ";
     cout << fi.buildCircularPolynom(6, 5) << endl;
+    cout << "n = 12: ";
+    cout << fi.buildCircularPolynom(12, 5) << endl;
+    cout << "n = 29: ";
+    cout << fi.buildCircularPolynom(29, 5) << endl;
+   
 
     return 0;
 }
