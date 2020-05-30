@@ -113,11 +113,11 @@ Polynom::Polynom(int _p, int _power, std::vector<int> keys) {
 
     try {
         if (_p < 0 || !isPrime(_p))
-            throw 1;
+            throw std::invalid_argument("Module p should be prime and more than zero\n");
     }
-    catch (int res)
+    catch (std::exception & e)
     {
-        cout << "Module p should be prime and more than zero\n";
+        std::cout << "Caught " << e.what() << endl;
         exit(0);
     }
     p = _p;
@@ -317,6 +317,19 @@ bool Polynom::isZero() {
     Polynom zero(this->p, 0, { 0 });
     return ((*this) == zero);
 
+}
+
+void Polynom::handleException(Polynom& p1, Polynom& p2)
+{
+    try {
+        if (p1.p != p2.p)
+            throw std::invalid_argument("Modules of the polynoms should be the same\n");
+    }
+    catch (std::exception & e)
+    {
+        std::cout << "Caught " << e.what() << endl;
+        exit(0);
+    }
 }
 
 
@@ -579,6 +592,8 @@ Polynom& Polynom::operator=(Polynom& other)
 
 
 Polynom& GCD(Polynom a, Polynom b) {
+    Polynom::handleException(a, b);
+
     if (a.power < b.power) {
         std::swap(a, b);
     }
@@ -637,6 +652,8 @@ std::ostream& operator<<(std::ostream& stream, Polynom& polynomial)
 
 
 Polynom& operator*(Polynom& p1, Polynom& p2) {
+    Polynom::handleException(p1, p2);
+
     auto* result = new Polynom(p1.p);
     result->Polynom::multiplicatePolinom(p1, p2);
     result->Polynom::cutZeroes();
@@ -646,6 +663,8 @@ Polynom& operator*(Polynom& p1, Polynom& p2) {
 
 
 Polynom& operator+(Polynom& p1, Polynom& p2) {
+    Polynom::handleException(p1, p2);
+
     auto* result = new Polynom(p1.p);
     result->Polynom::addingPolinoms(p1, p2);
     result->Polynom::cutZeroes();
@@ -655,6 +674,8 @@ Polynom& operator+(Polynom& p1, Polynom& p2) {
 
 
 Polynom& operator-(Polynom& p1, Polynom& p2) {
+    Polynom::handleException(p1, p2);
+
     Polynom* result = new Polynom(p1.p);
     result->Polynom::differencePolinom(p1, p2);
     result->Polynom::cutZeroes();
@@ -664,6 +685,8 @@ Polynom& operator-(Polynom& p1, Polynom& p2) {
 
 
 Polynom& operator/(Polynom& p1, Polynom& p2) {
+    Polynom::handleException(p1, p2);
+
     int field = p1.p;
     if (p1.power < p2.power) { cout << "Can`t divide! The degree of dividend is always greater than divisor!\n\n"; return Polynom(field); }
     if (p2.isZero()) { cout << "Can't divide by 0!\n"; return Polynom(field); }
@@ -678,6 +701,8 @@ Polynom& operator/(Polynom& p1, Polynom& p2) {
 }
 
 Polynom& operator%(Polynom& p1, Polynom& p2) {
+    Polynom::handleException(p1, p2);
+
     int field = p1.p;
     if (p1.power < p2.power) { cout << "Can`t divide! The degree of dividend is always greater than divisor!\n\n"; return Polynom(field); }
     if (p2.isZero()) { cout << "Can't divide by 0!\n"; return Polynom(field); }
@@ -693,6 +718,8 @@ Polynom& operator%(Polynom& p1, Polynom& p2) {
 
 
 bool operator==(Polynom& p1, Polynom& p2) {
+    Polynom::handleException(p1, p2);
+
     if (p1.power != p2.power || p1.p != p2.p) return false;
     auto temp1 = p1.head, temp2 = p2.head;
     while (temp1) {
@@ -705,11 +732,15 @@ bool operator==(Polynom& p1, Polynom& p2) {
 
 
 bool operator!=(Polynom& p1, Polynom& p2) {
+    Polynom::handleException(p1, p2);
+
     return !(p1 == p2);
 }
 
 
 Polynom& inverse(Polynom& pol, Polynom& field) {
+    Polynom::handleException(pol, field);
+
     Polynom* result = new Polynom(pol.p);
     result->Polynom::gcdExtended(pol, field);
     result->p = pol.p;

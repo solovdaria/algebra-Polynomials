@@ -70,18 +70,25 @@ private:
     void copy(const Polynom& pol);
     bool isPrime(int number);
 
+    void addingPolinoms(Polynom& pol1, Polynom& pol2);
+    void differencePolinom(Polynom& pol1, Polynom& pol2);
+    void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
+
 protected:
     //!A polynomial whose leading coefficientis 1 is called monic
     bool isMonic();
     //!Compare the polynomial with f(x) = 0
     bool isZero();
+    static void handleException(Polynom& p1, Polynom& p2);
 
 public:
 
     //!empty constructor
     Polynom(int _p);
+
     //!constructor that take power of polinom and vector of coefficients of this polinom
     explicit Polynom(int _p, int _power, std::vector<int> keys);
+
     /** Copy constructor.
      * The copy constructor added here to make a deep copy
      * when initialize one object using another object.
@@ -91,6 +98,7 @@ public:
     ~Polynom();
 
     void changeField(int new_p);
+
     //!Getter and Setters (for me they are useless, but still...they are)
     PElement* getHead()const;
     void setHead(PElement* _head);
@@ -125,10 +133,6 @@ public:
     int findRootNumber();
     //!Find the quotient and remainder A = Q * B + R
     void quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R);
-
-    void addingPolinoms(Polynom& pol1, Polynom& pol2);
-    void differencePolinom(Polynom& pol1, Polynom& pol2);
-    void multiplicatePolinom(Polynom& pol1, Polynom& pol2);
 
     /** Polynomial greatest common divisor.
      * Calculate and return a polynomial which is the greatest common divisor of two polynomials.

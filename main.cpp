@@ -7,7 +7,7 @@ using std::endl;
 
 int main() {
 
-    Polynom f(3, 2, { 1,2,1 });
+    Polynom f(5, 2, { 1,2,1 });
     Polynom g(5, 2, { 1,3,1 });
     Polynom h(5, 1, { 1,2 });
     Polynom b(5, 1, { 1,1 });
@@ -123,7 +123,6 @@ int main() {
     else cout << "No\n\n";
 
 
-
     Polynom irred(3, 6, { 1, 0, 0, 1, 1, 0, 1 });
     Polynom irred2(3, 2, { 1, 0, 1 });
     Polynom irred3(3, 5, { 1, 0, 1, 1, 1, 3 });
@@ -224,7 +223,6 @@ int main() {
         cout << endl;
         cout << root5.findRootNumber() << endl;
     }
-
 
     return 0;
 }
