@@ -170,6 +170,7 @@ int main() {
             cout << rootvec1[i] << " ";
         }
         cout << endl;
+        cout << root1.findRootNumber() << endl;
     }
 
     Polynom root2(5, 2, { 1,3,1 });
@@ -182,6 +183,7 @@ int main() {
             cout << rootvec2[i] << " ";
         }
         cout << endl;
+        cout << root2.findRootNumber() << endl;
     }
 
     Polynom root3(5, 4, { 1,0,0,0,2});
@@ -194,6 +196,7 @@ int main() {
             cout << rootvec3[i] << " ";
         }
         cout << endl;
+        cout << root3.findRootNumber() << endl;
     }
 
     Polynom root4(5, 3, { 0,2,3,1 });
@@ -206,6 +209,7 @@ int main() {
             cout << rootvec4[i] << " ";
         }
         cout << endl;
+        cout << root4.findRootNumber() << endl;
     }
 
     Polynom root5(5, 3, { 2,3,3,1 });
@@ -218,6 +222,7 @@ int main() {
             cout << rootvec5[i] << " ";
         }
         cout << endl;
+        cout << root5.findRootNumber() << endl;
     }
 
 

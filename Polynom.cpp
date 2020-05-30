@@ -373,6 +373,11 @@ std::vector<int> Polynom::findRoots() {
     return res;
 }
 
+int Polynom::findRootNumber() {
+    std::vector<int> res = findRoots();
+    return res.size();
+}
+
 int Polynom::irrPolynomOrder()
 {
     if (this->evaluate(0) == 0)
