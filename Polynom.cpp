@@ -747,3 +747,4 @@ Polynom& inverse(Polynom& pol, Polynom& field) {
     result->p = pol.p;
     return *result;
 }
+

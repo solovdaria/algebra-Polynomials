@@ -23,7 +23,7 @@ int Field::mobius(int n)
 Polynom Field::buildCircularPolynom(int n, int p)
 {
     Polynom one(p, 0, { 1 }); //1
-    std::vector<int> dividers; //делители
+    std::vector<int> dividers; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     std::vector<Polynom> polynoms1;
     std::vector<Polynom> polynoms2;
     for (int i = 1; i <= n; i++)
@@ -71,3 +71,4 @@ Polynom Field::buildCircularPolynom(int n, int p)
     Polynom circular = circular1/circular2;
     return circular;
 }
+
