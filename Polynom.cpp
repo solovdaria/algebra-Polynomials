@@ -131,7 +131,7 @@ Polynom::Polynom(int _p, int _power, std::vector<int> keys) {
     cutZeroes();
 }
 
-Polynom::Polynom(Polynom& other)
+Polynom::Polynom(const Polynom& other)
 {
     this->copy(other);
 }
@@ -237,7 +237,7 @@ void Polynom::set(int pos, int key) {
 }
 
 
-void Polynom::copy(Polynom& pol) {
+void Polynom::copy(const Polynom& pol) {
     this->p = pol.p;
     clear();
     auto* tmp = pol.head;
@@ -355,6 +355,23 @@ int Polynom::evaluate(int x)
     return result;
 }
 
+
+std::vector<int> Polynom::findRoots() {
+
+    std::vector<int> res;
+    Polynom temp = *this, divider(this->p, 1, { 0,1 }), root(this->p, 0, { 0 });
+    for (size_t i(0); i < this->p; i++) {
+        root.head->key = i;
+        while ((temp % (divider + root)).isZero()) {
+            res.push_back(this->p-i);
+            temp = temp / (divider + root);
+            if (res.size() == this->power) break;
+        }
+        if (res.size() == this->power) break;
+    }
+
+    return res;
+}
 
 int Polynom::irrPolynomOrder()
 {

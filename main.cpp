@@ -7,7 +7,7 @@ using std::endl;
 
 int main() {
 
-    Polynom f(5, 2, { 1,2,1 });
+    Polynom f(3, 2, { 1,2,1 });
     Polynom g(5, 2, { 1,3,1 });
     Polynom h(5, 1, { 1,2 });
     Polynom b(5, 1, { 1,1 });
@@ -158,8 +158,68 @@ int main() {
     cout << "mod 2\n";
     cout << first << second;
     cout << first + second;
-    cout << "--------------------------------------------------------------------\n";
+    cout << "------------------------------------FindRoots----------------------------\n";
+
+    Polynom root1(5, 2, {1,2,1});
+    cout << root1;
+    cout << "roots: ";
+    std::vector<int> rootvec1 = root1.findRoots();
+    if (rootvec1.size() == 0) cout << "No roots\n";
+    else {
+        for (int i(0); i < rootvec1.size(); i++) {
+            cout << rootvec1[i] << " ";
+        }
+        cout << endl;
+    }
+
+    Polynom root2(5, 2, { 1,3,1 });
+    cout << root2;
+    cout << "roots: ";
+    std::vector<int> rootvec2 = root2.findRoots();
+    if (rootvec2.size() == 0) cout << "No roots\n";
+    else {
+        for (int i(0); i < rootvec2.size(); i++) {
+            cout << rootvec2[i] << " ";
+        }
+        cout << endl;
+    }
+
+    Polynom root3(5, 4, { 1,0,0,0,2});
+    cout << root3;
+    cout << "roots: ";
+    std::vector<int> rootvec3 = root3.findRoots();
+    if (rootvec3.size() == 0) cout << "No roots\n";
+    else {
+        for (int i(0); i < rootvec3.size(); i++) {
+            cout << rootvec3[i] << " ";
+        }
+        cout << endl;
+    }
+
+    Polynom root4(5, 3, { 0,2,3,1 });
+    cout << root4;
+    cout << "roots: ";
+    std::vector<int> rootvec4 = root4.findRoots();
+    if (rootvec4.size() == 0) cout << "No roots\n";
+    else {
+        for (int i(0); i < rootvec4.size(); i++) {
+            cout << rootvec4[i] << " ";
+        }
+        cout << endl;
+    }
+
+    Polynom root5(5, 3, { 2,3,3,1 });
+    cout << root5;
+    cout << "roots: ";
+    std::vector<int> rootvec5 = root5.findRoots();
+    if (rootvec5.size() == 0) cout << "No roots\n";
+    else {
+        for (int i(0); i < rootvec5.size(); i++) {
+            cout << rootvec5[i] << " ";
+        }
+        cout << endl;
+    }
+
 
     return 0;
-
 }

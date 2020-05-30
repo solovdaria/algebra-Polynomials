@@ -67,7 +67,7 @@ private:
     //!Cut last zeroes and update power
     void cutZeroes();
     //!Copy polynom
-    void copy(Polynom& pol);
+    void copy(const Polynom& pol);
     bool isPrime(int number);
 
 protected:
@@ -86,7 +86,7 @@ public:
      * The copy constructor added here to make a deep copy
      * when initialize one object using another object.
      */
-    Polynom(Polynom& other);
+    Polynom(const Polynom& other);
 
     ~Polynom();
 
@@ -121,7 +121,8 @@ public:
     //!LCM of given vector numbers
     int LCM(std::vector<int> numbers);
     int gcd(int a, int b);
-
+    std::vector<int> findRoots();
+    int findRootNumber();
     //!Find the quotient and remainder A = Q * B + R
     void quot_rem(Polynom& A, Polynom& B, Polynom& Q, Polynom& R);
 
